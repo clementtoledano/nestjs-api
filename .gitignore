@@ -4,6 +4,14 @@
 /dist
 /node_modules
 
+
+# postgres storage
+/pgadmin-data
+/pgdata
+
+# Keep migration folder
+./src/migration/.gitkeep
+
 # Logs
 logs
 *.log
@@ -29,9 +37,9 @@ lerna-debug.log*
 .settings/
 *.sublime-workspace
 
-# IDE - VSCode
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
+# # IDE - VSCode
+# .vscode/*
+# !.vscode/settings.json
+# !.vscode/tasks.json
+# !.vscode/launch.json
+# !.vscode/extensions.json

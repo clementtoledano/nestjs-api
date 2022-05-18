@@ -7,9 +7,11 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 
 import configuration from './config/configuration';
+import * as typeOrmConfig from './typeorm.config';
 
 @Module({
   imports: [
+    TypeOrmModule.forRoot(typeOrmConfig),
     ConfigModule.forRoot({
       isGlobal: true,
       load: [configuration /**, authConfig */],

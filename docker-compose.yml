@@ -13,7 +13,7 @@ services:
   nestjs:
     build: 
       context: .
-      dockerfile: ./Dockerfile
+      dockerfile: Dockerfile
     #image: tusharchy/nest-and-postgres-application:latest
     environment: 
       - DB_TYPE=${DB_TYPE}
@@ -28,12 +28,12 @@ services:
       - APP_PORT=${APP_PORT}
     ports: 
       - "3000:3000" # expose-to-the-world : only-in-the-docker
-    container_name: nest-todo-app-be
+    container_name: nest-app
     depends_on: 
       - db
     volumes: 
-      - .:/app
-      - /app/node_modules
+      - .:/root/app
+      - /root/app/node_modules
   pgadmin:
     image: dpage/pgadmin4
     restart: always
