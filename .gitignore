@@ -6,8 +6,8 @@
 
 
 # postgres storage
-/pgadmin-data
-/pgdata
+/.data
+
 
 # Keep migration folder
 ./src/migration/.gitkeep

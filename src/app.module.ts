@@ -5,16 +5,20 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 
 import { AppService } from './app.service';
+import { TypeOrmConfigService } from './database/typeorm-config.service';
 
-import configuration from './config/configuration';
-import * as typeOrmConfig from './typeorm.config';
+import appConfig from './config/app.config';
+import databaseConfig from './config/database.config';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot(typeOrmConfig),
     ConfigModule.forRoot({
       isGlobal: true,
-      load: [configuration /**, authConfig */],
+      load: [databaseConfig, appConfig],
+      envFilePath: ['.env'],
+    }),
+    TypeOrmModule.forRootAsync({
+      useClass: TypeOrmConfigService,
     }),
   ],
   controllers: [AppController],
