@@ -9,7 +9,7 @@ import { SharedModule } from './shared/shared.module';
 import appConfig from './config/app.config';
 import databaseConfig from './config/database.config';
 import { HeaderResolver, I18nJsonLoader, I18nModule } from 'nestjs-i18n';
-import path from 'path';
+import * as path from 'path';
 
 @Module({
   imports: [
@@ -25,7 +25,7 @@ import path from 'path';
       useFactory: (configService: ConfigService) => ({
         fallbackLanguage: configService.get('app.fallbackLanguage'),
         loaderOptions: {
-          path: path.join(configService.get('app.workingDirectory'), 'src', 'i18n', 'translations'),
+          path: path.join(configService.get('app.workingDirectory'), 'src', 'i18n'),
         },
       }),
       loader: I18nJsonLoader,

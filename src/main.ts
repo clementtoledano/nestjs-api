@@ -12,7 +12,6 @@ import rateLimit from 'express-rate-limit';
 
 const port = process.env.APP_PORT;
 
-
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
