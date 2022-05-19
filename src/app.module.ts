@@ -1,16 +1,15 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { AppController } from './app.controller';
-
-import { AppService } from './app.service';
 import { TypeOrmConfigService } from './database/typeorm-config.service';
 import { CoreModule } from './core/core.module';
 import { SharedModule } from './shared/shared.module';
 
 import appConfig from './config/app.config';
 import databaseConfig from './config/database.config';
+import { HeaderResolver, I18nJsonLoader, I18nModule } from 'nestjs-i18n';
+import path from 'path';
 
 @Module({
   imports: [
@@ -22,10 +21,20 @@ import databaseConfig from './config/database.config';
     TypeOrmModule.forRootAsync({
       useClass: TypeOrmConfigService,
     }),
-    CoreModule,
+    I18nModule.forRootAsync({
+      useFactory: (configService: ConfigService) => ({
+        fallbackLanguage: configService.get('app.fallbackLanguage'),
+        loaderOptions: {
+          path: path.join(configService.get('app.workingDirectory'), 'src', 'i18n', 'translations'),
+        },
+      }),
+      loader: I18nJsonLoader,
+      resolvers: [new HeaderResolver(['x-custom-lang'])],
+      inject: [ConfigService],
+    }),
     SharedModule,
+    CoreModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  providers: [],
 })
-export class AppModule {}
+export class AppModule { }

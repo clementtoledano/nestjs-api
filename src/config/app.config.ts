@@ -8,5 +8,5 @@ export default registerAs('app', () => ({
   //backendDomain: process.env.BACKEND_DOMAIN,
   port: parseInt(process.env.APP_PORT || process.env.PORT, 10) || 3000,
   apiPrefix: process.env.API_PREFIX || 'api',
-  //fallbackLanguage: process.env.APP_FALLBACK_LANGUAGE || 'en',
+  fallbackLanguage: process.env.APP_FALLBACK_LANGUAGE || 'en',
 }));

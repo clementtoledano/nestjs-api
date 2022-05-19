@@ -1,12 +1,17 @@
-import { NestFactory } from '@nestjs/core';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import { Logger } from '@nestjs/common';
-import { AppModule } from './app.module';
-
-import { runDbMigrations } from './shared/utils';
 import 'dotenv/config';
 
+import { NestFactory } from '@nestjs/core';
+import { AppModule } from './app.module';
+import 'reflect-metadata';
+import { Logger } from '@nestjs/common';
+import { runDbMigrations } from './shared/utils';
+
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import helmet from 'helmet';
+import rateLimit from 'express-rate-limit';
+
 const port = process.env.APP_PORT;
+
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -25,6 +30,21 @@ async function bootstrap() {
 
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
+
+  //Middleware set security-related HTTP headers
+  app.use(helmet());
+  //Middleware provides various options that you can customize based on your requirements
+  app.enableCors();
+  //Midleware protects your applications from brute-force attacks
+  app.use(
+    rateLimit({
+      windowMs: 15 * 60 * 1000,
+      max: 100,
+    }),
+  );
+
+
+
 
   /**
    * Run DB migrations
