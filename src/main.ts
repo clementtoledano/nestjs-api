@@ -1,10 +1,16 @@
-import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { Logger } from '@nestjs/common';
 import { AppModule } from './app.module';
+
+import { runDbMigrations } from './shared/utils';
+import 'dotenv/config';
+
+const port = process.env.APP_PORT;
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
   const port = +process.env.APP_PORT || 3000;
   app.setGlobalPrefix('api');
   console.log('Port running on: ', port);
@@ -20,8 +26,13 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
 
+  /**
+   * Run DB migrations
+   */
+  await runDbMigrations();
+
   await app.listen(port);
-  Logger.log(`Server started running on http://localhost:${port}`, 'Bootstrap');
+  await Logger.log(`Server started running on http://localhost:${port}`, 'Bootstrap');
 }
 
 bootstrap();
