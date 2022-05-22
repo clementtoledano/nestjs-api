@@ -4,9 +4,10 @@ import { TypeOrmModuleOptions, TypeOrmOptionsFactory } from '@nestjs/typeorm';
 
 @Injectable()
 export class TypeOrmConfigService implements TypeOrmOptionsFactory {
-  constructor(private configService: ConfigService) {}
+  constructor(private configService: ConfigService) { }
 
   createTypeOrmOptions(): TypeOrmModuleOptions {
+
     return {
       type: this.configService.get('database.type'),
       url: this.configService.get('database.url'),
@@ -19,26 +20,27 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
       dropSchema: false,
       keepConnectionAlive: true,
       logging: this.configService.get('app.nodeEnv') !== 'production',
-      entities: [__dirname + '/../core/**/*.entity{.ts,.js}'],
+      entities: [__dirname + '/../core/**/**/*.entity{.ts,.js}'],
       migrations: [__dirname + '/migrations/**/*{.ts,.js}'],
       seeds: [__dirname + '/seeds/**/*{.ts,.js}'],
       factories: [__dirname + '/factories/**/*{.ts,.js}'],
       cli: {
-        entitiesDir: 'src',
+        //entitiesDir: 'src/core/**/**',
         migrationsDir: 'src/database/migrations',
-        subscribersDir: 'subscriber',
+        //subscribersDir: 'src/database/subscriber',
       },
+
       extra: {
         // based on https://node-postgres.com/api/pool
         // max connection pool size
         max: this.configService.get('database.maxConnections'),
         ssl: this.configService.get('database.sslEnabled')
           ? {
-              rejectUnauthorized: this.configService.get('database.rejectUnauthorized'),
-              ca: this.configService.get('database.ca') ? this.configService.get('database.ca') : undefined,
-              key: this.configService.get('database.key') ? this.configService.get('database.key') : undefined,
-              cert: this.configService.get('database.cert') ? this.configService.get('database.cert') : undefined,
-            }
+            rejectUnauthorized: this.configService.get('database.rejectUnauthorized'),
+            ca: this.configService.get('database.ca') ? this.configService.get('database.ca') : undefined,
+            key: this.configService.get('database.key') ? this.configService.get('database.key') : undefined,
+            cert: this.configService.get('database.cert') ? this.configService.get('database.cert') : undefined,
+          }
           : undefined,
       },
     } as TypeOrmModuleOptions;

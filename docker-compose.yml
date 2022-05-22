@@ -1,7 +1,7 @@
 version: '3'
 services: 
   postgres:
-    image: postgres
+    image: postgres:alpine
     restart: always
     ports:
       - ${DATABASE_PORT}:5432
@@ -16,7 +16,6 @@ services:
     build: 
       context: .
       dockerfile: Dockerfile
-    #image: tusharchy/nest-and-postgres-application:latest
     environment: 
       - DATABASE_TYPE=${DATABASE_TYPE}
       - DATABASE_HOST=${DATABASE_HOST}
@@ -31,11 +30,12 @@ services:
     ports: 
       - "3000:3000" # expose-to-the-world : only-in-the-docker
     container_name: 1001ref-api
-    depends_on: 
+    depends_on:
       - postgres
     volumes: 
       - .:/root/app
       - /root/app/node_modules
+    # command: npm run dev
   pgadmin:
     image: dpage/pgadmin4
     logging:
@@ -52,6 +52,11 @@ services:
       - ./.data/pgadmin-data:/var/lib/pgadmin
     depends_on: 
       - postgres
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8888:8080
 volumes:
   pgdata:
   pgadmin-data:

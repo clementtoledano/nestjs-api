@@ -3,32 +3,26 @@ import 'dotenv/config';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import 'reflect-metadata';
-import { Logger } from '@nestjs/common';
 import { runDbMigrations } from './shared/utils';
 
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
 
-const port = process.env.APP_PORT;
+import morgan from 'morgan';
+
+
+import * as fs from 'fs';
+const logStream = fs.createWriteStream('api.log', {
+  flags: 'a', // append
+});
+
+const port = +process.env.APP_PORT || 3000;
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  const port = +process.env.APP_PORT || 3000;
   app.setGlobalPrefix('api');
-  console.log('Port running on: ', port);
-
-  //Swagger
-  const config = new DocumentBuilder()
-    .setTitle('1001refs API')
-    .setDescription('La description de mon Api')
-    .setVersion('1.0')
-    .addBearerAuth()
-    .build();
-
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
 
   //Middleware set security-related HTTP headers
   app.use(helmet());
@@ -42,16 +36,27 @@ async function bootstrap() {
     }),
   );
 
-
-
-
   /**
    * Run DB migrations
    */
   await runDbMigrations();
 
+  //Swagger
+  const config = new DocumentBuilder()
+    .setTitle('1001refs API')
+    .setDescription('La description de mon Api')
+    .setVersion('1.0')
+    .addBearerAuth()
+    .build();
+
+  const document = SwaggerModule.createDocument(app, config);
+  SwaggerModule.setup('api', app, document);
+
+
+  app.use(morgan('tiny', { stream: logStream }));
+
   await app.listen(port);
-  await Logger.log(`Server started running on http://localhost:${port}`, 'Bootstrap');
+  console.log('Port running on: ', port);
 }
 
 bootstrap();
