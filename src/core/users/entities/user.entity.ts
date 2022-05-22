@@ -1,5 +1,5 @@
 import { Entity, Column, BeforeInsert, ManyToOne } from 'typeorm';
-// import * as bcrypt from 'bcryptjs';
+import * as bcrypt from 'bcrypt';
 import { BaseEntity } from '../../base.entity';
 import { Role } from '../../roles/entities/role.entity';
 import { Status } from '../../statuses/entities/status.entity';
@@ -16,7 +16,6 @@ export class User extends BaseEntity {
     @Column('varchar', { nullable: false }) lastname: string;
     @Column('varchar', { nullable: false }) companyName: string;
 
-    @ApiProperty({ example: 231654321, description: 'The age of the Cat' })
     @Column('numeric', { nullable: false }) siretNumber: number;
 
     @Column('numeric', { nullable: false }) phone: number;
@@ -24,8 +23,8 @@ export class User extends BaseEntity {
     @ManyToOne(() => Role, { eager: true }) role?: Role | null;
     @ManyToOne(() => Status, { eager: true }) status?: Status;
 
-    // @BeforeInsert()
-    // async hashPassword() {
-    //     this.password = await bcrypt.hash(this.password, 10);
-    // }
+    @BeforeInsert()
+    async hashPassword() {
+        this.password = await bcrypt.hash(this.password, 10);
+    }
 }

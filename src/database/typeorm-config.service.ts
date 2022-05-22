@@ -25,7 +25,6 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
       seeds: [__dirname + '/seeds/**/*{.ts,.js}'],
       factories: [__dirname + '/factories/**/*{.ts,.js}'],
       cli: {
-        //entitiesDir: 'src/core/**/**',
         migrationsDir: 'src/database/migrations',
         //subscribersDir: 'src/database/subscriber',
       },
