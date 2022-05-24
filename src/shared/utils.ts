@@ -12,6 +12,6 @@ export const runDbMigrations = async (connectionName = 'default') => {
 
 
 
-export const comparePasswords = async (userPassword, currentPassword) => {
+export const comparePasswords = async (currentPassword, userPassword) => {
     return await bcrypt.compare(currentPassword, userPassword);
 };

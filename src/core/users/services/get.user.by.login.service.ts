@@ -19,7 +19,7 @@ export class GetUserByLoginService {
         }
 
         // compare passwords
-        const areEqual = await comparePasswords(user.password, password);
+        const areEqual = await comparePasswords(password, user.password);
 
         if (!areEqual) {
             throw new HttpException('Invalid credentials', HttpStatus.UNAUTHORIZED);
