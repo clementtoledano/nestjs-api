@@ -1,45 +1,39 @@
 import { Test } from '@nestjs/testing';
 import { Repository } from 'typeorm';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { GetUserByLoginService } from './get.user.by.login.service';
+import { CreateUserService } from './create.user.service';
 import { User } from '../entities/user.entity';
 import { RoleEnum } from '../../roles/roles.enum';
 import { StatusEnum } from '../../statuses/statuses.enum';
-import * as bcrypt from 'bcrypt';
 
-// jest.mock('bcrypt');
-
-
-describe('GetUserByLoginService', () => {
-    let service: GetUserByLoginService;
+describe('CreateUserService', () => {
+    let service: CreateUserService;
     let repositoryMock: Repository<User>;
-    // let bcryptCompare: jest.Mock;
     beforeAll(async () => {
         const app = await Test.createTestingModule({
             providers: [
-                GetUserByLoginService,
+                CreateUserService,
                 {
+                    // how you provide the injection token in a test instance
                     provide: getRepositoryToken(User),
+                    // as a class value, Repository needs no generics
                     useClass: Repository,
                 },
             ],
         }).compile();
-        service = app.get<GetUserByLoginService>(GetUserByLoginService);
+
+        service = app.get<CreateUserService>(CreateUserService);
         repositoryMock = app.get<Repository<User>>(getRepositoryToken(User));
-        // bcryptCompare = jest.fn().mockReturnValue(false);
-        // (bcrypt.compare as jest.Mock) = bcryptCompare;
     });
 
-    describe('find By login', () => {
-        //jest.fn(comparePasswords).mockResolvedValue(true);
-
-        it('should find user by login', async () => {
+    describe('create', () => {
+        it('should create user', async () => {
             const user: User = {
                 id: '123123123',
                 firstname: 'clem',
                 lastname: 'tol',
                 email: 'clem.tol@example.com',
-                password: '$2a$15$sf5Aa/Xdr8cmsEQzsSxq7uAATnUG.HWyXZPc3lMtbWRDl05F7XdW2',
+                password: 'secret',
                 companyName: '1001ref',
                 siretNumber: 9875987,
                 phone: 75555555,
@@ -52,16 +46,12 @@ describe('GetUserByLoginService', () => {
                     name: 'Active',
                 },
                 newsletter: true,
-                async hashPassword(): Promise<any> {
-                    this.password = await bcrypt.hash(this.password, 10)
-                }
+                hashPassword(): any { }
 
             };
-            jest.spyOn(repositoryMock, 'findOne').mockResolvedValueOnce(user);
-
-            expect(await service.getByLogin({ email: user.email, password: 'password123' })).toEqual(user);
-            // expect(repositoryMock.findOne({ email: user.email })).toBeCalled();
-
+            jest.spyOn(repositoryMock, 'save').mockResolvedValueOnce(user);
+            expect(await service.create(user)).toEqual(user);
+            expect(repositoryMock.save).toBeCalled();
         });
     });
 });

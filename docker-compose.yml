@@ -52,11 +52,7 @@ services:
       - ./.data/pgadmin-data:/var/lib/pgadmin
     depends_on: 
       - postgres
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - 8888:8080
+
 volumes:
   pgdata:
   pgadmin-data:

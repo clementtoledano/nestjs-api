@@ -9,7 +9,6 @@ import { CreateUserDto } from '../dto/create.user.dto';
 export class CreateUserService {
     constructor(@InjectRepository(User) private readonly userRepo: Repository<User>) { }
 
-
     async create(userDto: CreateUserDto): Promise<UserDto> {
 
         const userInDb = await this.userRepo.findOne({ where: { email: userDto.email } });
