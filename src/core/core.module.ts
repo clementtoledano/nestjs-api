@@ -5,7 +5,6 @@ import { ProductionsModule } from './productions/productions.module';
 import { ProductsModule } from './products/products.module';
 import { SubscribersModule } from './subscribers/subscribers.module';
 import { GroupsModule } from './groups/groups.module';
-import { AddressModule } from './address/address.module';
 import { CompanyTypesModule } from './company-types/company-types.module';
 import { PackagingModule } from './packaging/packaging.module';
 import { DiscountModule } from './discount/discount.module';
@@ -31,7 +30,6 @@ import { AuthModule } from './auth/auth.module';
     ProductsModule,
     SubscribersModule,
     GroupsModule,
-    AddressModule,
     CompanyTypesModule,
     PackagingModule,
     DiscountModule,

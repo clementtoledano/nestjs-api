@@ -14,9 +14,10 @@ import { GetUserService } from './services/get.user.service';
 import { GetUsersService } from './services/get.users.service';
 import { CreateUserService } from './services/create.user.service';
 
-// import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+ import { /* ApiBearerAuth, */ ApiTags } from '@nestjs/swagger';
 
 
+ @ApiTags('users')
 @Controller('users')
 export class UsersController {
     constructor(
