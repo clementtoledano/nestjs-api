@@ -26,5 +26,8 @@ export class GetUserByLoginService {
         }
         return user;
     }
+    async findByPayload({ email }: any): Promise<UserDto> {
+        return await this.usersRepository.findOne({ where: { email } });
 
+    }
 }
