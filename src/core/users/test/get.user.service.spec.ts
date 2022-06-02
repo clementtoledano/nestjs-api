@@ -1,10 +1,10 @@
 import { Test } from '@nestjs/testing';
 import { Repository } from 'typeorm';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { User } from '../../entities/user.entity';
-import { RoleEnum } from '../../../roles/roles.enum';
-import { StatusEnum } from '../../../statuses/statuses.enum';
-import { UsersService } from '../../users.service';
+import { User } from '../entities/user.entity';
+import { RoleEnum } from '../../roles/roles.enum';
+import { StatusEnum } from '../../statuses/statuses.enum';
+import { UsersService } from '../users.service';
 
 describe('UsersService', () => {
     let service: UsersService;
