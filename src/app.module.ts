@@ -10,6 +10,7 @@ import appConfig from './config/app.config';
 import databaseConfig from './config/database.config';
 import { HeaderResolver, I18nJsonLoader, I18nModule } from 'nestjs-i18n';
 import * as path from 'path';
+import { UsersService } from './core/users/users.service';
 
 @Module({
   imports: [

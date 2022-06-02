@@ -1,19 +1,21 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { UsersService } from '../users/users.service';
 import { RegistrationStatus } from './interfaces/registration-status.interface';
 import { LoginStatus } from './interfaces/login-status.interface';
-import { UserDto } from '../users/dto/user.dto';
 import { JwtPayload } from './interfaces/payload.interface';
-import { JwtService } from '@nestjs/jwt';
+import { UserDto } from '../users/dto/user.dto';
 import { CreateUserDto } from '../users/dto/create.user.dto';
 import { LoginUserDto } from '../users/dto/login.user.dto';
-import { CreateUserService } from '../users/services/create.user.service';
-import { GetUserByLoginService } from '../users/services/get.user.by.login.service';
+
 
 @Injectable()
 export class AuthService {
-    constructor(private readonly createUserService: CreateUserService,
-        private readonly getUserByLoginService: GetUserByLoginService,
-        private readonly jwtService: JwtService) {}
+    constructor(
+        private readonly usersService: UsersService,
+
+        private readonly jwtService: JwtService
+        ) {}
 
     async register(userDto: CreateUserDto): Promise<RegistrationStatus> {
         let status: RegistrationStatus = {
@@ -22,7 +24,7 @@ export class AuthService {
         };
 
         try {
-            await this.createUserService.create(userDto);
+            await this.usersService.create(userDto);
         } catch (err) {
             status = {
                 success: false,
@@ -35,7 +37,7 @@ export class AuthService {
 
     async login(loginUserDto: LoginUserDto): Promise<LoginStatus> {
         // find user in db
-        const user = await this.getUserByLoginService.getByLogin(loginUserDto);
+        const user = await this.usersService.getByLogin(loginUserDto);
 
         // generate and sign token
         const token = this._createToken(user);
@@ -47,7 +49,7 @@ export class AuthService {
     }
 
     async validateUser(payload: JwtPayload): Promise<UserDto> {
-        const user = await this.getUserByLoginService.findByPayload(payload);
+        const user = await this.usersService.getByPayload(payload);
         if (!user) {
             throw new HttpException('Invalid token', HttpStatus.UNAUTHORIZED);
         }

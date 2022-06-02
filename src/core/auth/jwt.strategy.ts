@@ -1,5 +1,3 @@
-
-
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import * as dotenv from 'dotenv';

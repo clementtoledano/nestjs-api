@@ -1,16 +1,15 @@
 
 import { Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { UsersModule } from './../users/users.module';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
 import { JwtStrategy } from './jwt.strategy';
 import { AuthController } from './auth.controller';
+import { UsersModule } from '../users/users.module';
 
 
 @Module({
     imports: [
-        UsersModule,
         PassportModule.register({
             defaultStrategy: 'jwt',
             property: 'user',
@@ -22,6 +21,7 @@ import { AuthController } from './auth.controller';
                 expiresIn: process.env.AUTH_JWT_TOKEN_EXPIRES_IN,
             },
         }),
+        UsersModule,
     ],
     controllers: [AuthController],
     providers: [AuthService, JwtStrategy],

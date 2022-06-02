@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Allow } from "class-validator";
-import { BaseEntity } from "src/core/base.entity";
+import { BaseEntity } from "../../base.entity";
 import { Column, Entity } from "typeorm";
 
 

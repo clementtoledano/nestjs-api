@@ -10,32 +10,29 @@ import {
     NotFoundException,
 } from '@nestjs/common';
 import { CreateUserDto } from './dto/create.user.dto';
-import { GetUserService } from './services/get.user.service';
-import { GetUsersService } from './services/get.users.service';
-import { CreateUserService } from './services/create.user.service';
+
 
  import { /* ApiBearerAuth, */ ApiTags } from '@nestjs/swagger';
+import { UsersService } from './users.service';
 
 
  @ApiTags('users')
 @Controller('users')
 export class UsersController {
     constructor(
-        private readonly getUserService: GetUserService,
-        private readonly getUsersService: GetUsersService,
-        private readonly createUserService: CreateUserService
+        private readonly usersService: UsersService,
     ) { }
 
     @Get()
     @HttpCode(HttpStatus.OK)
     findAll() {
-        return this.getUsersService.findAll();
+        return this.usersService.getAll();
     }
 
     @Get(':id')
     @HttpCode(HttpStatus.OK)
     findOne(@Param('id') id: string) {
-        const user = this.getUserService.getById(id);
+        const user = this.usersService.getOne({id: id});
         if (!user) {
             throw new NotFoundException(`User with id ${id} was not found`);
         }
@@ -47,7 +44,7 @@ export class UsersController {
     @Post()
     @HttpCode(HttpStatus.CREATED)
     create(@Body() createUserDto: CreateUserDto) {
-        return this.createUserService.create(createUserDto);
+        return this.usersService.create(createUserDto);
     }
 
 

@@ -1,6 +1,6 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { BaseEntity } from "src/core/base.entity";
-import { CompanyType } from "src/core/company-types/entities/company-type.entity";
+import { BaseEntity } from "../../base.entity";
+import { CompanyType } from "../../company-types/entities/company-type.entity";
 import { Column, Entity, ManyToOne } from "typeorm";
 
 

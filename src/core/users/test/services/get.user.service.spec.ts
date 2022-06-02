@@ -1,18 +1,18 @@
 import { Test } from '@nestjs/testing';
 import { Repository } from 'typeorm';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { GetUserService } from './get.user.service';
-import { User } from '../entities/user.entity';
-import { RoleEnum } from '../../roles/roles.enum';
-import { StatusEnum } from '../../statuses/statuses.enum';
+import { User } from '../../entities/user.entity';
+import { RoleEnum } from '../../../roles/roles.enum';
+import { StatusEnum } from '../../../statuses/statuses.enum';
+import { UsersService } from '../../users.service';
 
-describe('GetUserService', () => {
-    let service: GetUserService;
+describe('UsersService', () => {
+    let service: UsersService;
     let repositoryMock: Repository<User>;
     beforeAll(async () => {
         const app = await Test.createTestingModule({
             providers: [
-                GetUserService,
+                UsersService,
                 {
                     provide: getRepositoryToken(User),
                     useClass: Repository,
@@ -20,7 +20,7 @@ describe('GetUserService', () => {
             ],
         }).compile();
 
-        service = app.get<GetUserService>(GetUserService);
+        service = app.get<UsersService>(UsersService);
         repositoryMock = app.get<Repository<User>>(getRepositoryToken(User));
     });
 
@@ -48,7 +48,7 @@ describe('GetUserService', () => {
 
             };
             jest.spyOn(repositoryMock, 'findOne').mockResolvedValueOnce(user);
-            expect(await service.getById(user.id)).toEqual(user);
+            expect(await service.getOne({id : user.id})).toEqual(user);
             expect(repositoryMock.findOne).toBeCalled();
         });
     });

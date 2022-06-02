@@ -15,9 +15,9 @@ import { RegistrationStatus } from "./interfaces/registration-status.interface";
 export class AuthController {
     constructor(private readonly authService: AuthService) {}
 
+    @Post('register')
     @ApiOperation({ summary: 'Create User xx' })
     @ApiResponse({ status: 403, description: 'Forbidden.' })
-    @Post('register')
     public async register(@Body() createUserDto: CreateUserDto): Promise<RegistrationStatus> {
         const result: RegistrationStatus = await this.authService.register(createUserDto);
 
@@ -27,7 +27,10 @@ export class AuthController {
         return result;
     }
 
+    
     @Post('login')
+    @ApiOperation({ summary: 'Creates a JWT token for an authorized user' })
+    @ApiResponse({ description: 'JWT token', type: String })
     public async login(@Body() loginUserDto: LoginUserDto): Promise<LoginStatus> {
         return await this.authService.login(loginUserDto);
     }
