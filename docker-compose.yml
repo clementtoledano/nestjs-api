@@ -29,6 +29,7 @@ services:
       - APP_PORT=${APP_PORT}
     ports: 
       - "3000:3000" # expose-to-the-world : only-in-the-docker
+      - "9229:9229"
     container_name: 1001ref-api
     depends_on:
       - postgres

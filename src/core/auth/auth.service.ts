@@ -8,13 +8,9 @@ import { CreateUserDto } from '../users/dto/create.user.dto';
 import { LoginUserDto } from '../users/dto/login.user.dto';
 import { UsersService } from '../users/users.service';
 
-
 @Injectable()
 export class AuthService {
-    constructor(
-        private readonly jwtService: JwtService,
-        private readonly usersService: UsersService
-        ) {}
+    constructor(private readonly jwtService: JwtService, private readonly usersService: UsersService) {}
 
     async register(userDto: CreateUserDto): Promise<RegistrationStatus> {
         let status: RegistrationStatus = {
@@ -37,6 +33,7 @@ export class AuthService {
     async login(loginUserDto: LoginUserDto): Promise<LoginStatus> {
         // find user in db
         const user = await this.usersService.getByLogin(loginUserDto);
+        console.log('XXXXXXXXXXXXX', user);
 
         // generate and sign token
         const token = this._createToken(user);

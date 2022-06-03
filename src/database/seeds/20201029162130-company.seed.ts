@@ -1,7 +1,7 @@
 import { plainToClass } from 'class-transformer';
 import { CompanyType } from 'src/core/company-types/entities/company-type.entity';
 import { User } from 'src/core/users/entities/user.entity';
-import { Connection } from 'typeorm';
+import { Connection, getRepository } from 'typeorm';
 import { Factory, Seeder } from 'typeorm-seeding';
 
 import { Company } from '../../core/companies/entities/company.entity';
@@ -10,9 +10,22 @@ export default class CreateCompany implements Seeder {
     public async run(factory: Factory, connection: Connection): Promise<void> {
         const count = await connection.createQueryBuilder().select().from(Company, 'Company').getCount();
 
-        const user = await connection.createQueryBuilder().select().from(User, 'User').where("User.sirenNumber = :sirenNumber", { sirenNumber: 847770948 }).getOne();
-        const brasserie = await connection.createQueryBuilder().select().from(CompanyType, 'CompanyType').where("code = :code", { code: '5630Z' }).getOne();
+        const user = await connection
+            .createQueryBuilder()
+            .select('user')
+            .from(User, 'user')
+            .where('user.sirenNumber = :sirenNumber', { sirenNumber: '847770948' })
+            .getOne();
 
+        const brasserie = await connection
+            .createQueryBuilder()
+            .select('companyType')
+            .from(CompanyType, 'companyType')
+            .where('companyType.code = :code', { code: '5630Z' })
+            .getOne();
+
+        console.log('user', user);
+        console.log('brasserie', brasserie);
 
         if (count === 0) {
             await connection
@@ -38,7 +51,6 @@ export default class CreateCompany implements Seeder {
                         user: user.id,
                         companyType: brasserie.id,
                     }),
-
                 ])
                 .execute();
         }

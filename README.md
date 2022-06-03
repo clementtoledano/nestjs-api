@@ -31,8 +31,6 @@ $ npm run migration:generate <migration name>
 $ npm run migration:run
 ```
 
-docker exec -it 1001ref-api //bin//sh
-
 ## Running the app
 
 ```bash
