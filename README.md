@@ -25,7 +25,7 @@ docker exec -it 1001ref-api  //bin//sh
 $ npm run migration:create <migration name>
 
 # generate migration
-$ npm run migration:migrate <migration name>
+$ npm run migration:generate <migration name>
 
 # run migration
 $ npm run migration:run

@@ -1,18 +1,18 @@
 import { Test } from '@nestjs/testing';
 import { Repository } from 'typeorm';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { CreateUserService } from './create.user.service';
 import { User } from '../entities/user.entity';
 import { RoleEnum } from '../../roles/roles.enum';
 import { StatusEnum } from '../../statuses/statuses.enum';
+import { UsersService } from '../users.service';
 
 describe('CreateUserService', () => {
-    let service: CreateUserService;
+    let service: UsersService;
     let repositoryMock: Repository<User>;
     beforeAll(async () => {
         const app = await Test.createTestingModule({
             providers: [
-                CreateUserService,
+                UsersService,
                 {
                     // how you provide the injection token in a test instance
                     provide: getRepositoryToken(User),
@@ -22,7 +22,7 @@ describe('CreateUserService', () => {
             ],
         }).compile();
 
-        service = app.get<CreateUserService>(CreateUserService);
+        service = app.get<UsersService>(UsersService);
         repositoryMock = app.get<Repository<User>>(getRepositoryToken(User));
     });
 

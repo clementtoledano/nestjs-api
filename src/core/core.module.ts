@@ -46,6 +46,6 @@ import { AuthModule } from './auth/auth.module';
     UnitCategoriesModule
   ],
   providers: [],
-  exports: [UsersModule],
+  exports: [],
 })
 export class CoreModule { }

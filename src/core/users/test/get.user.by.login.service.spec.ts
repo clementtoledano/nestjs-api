@@ -1,30 +1,30 @@
 import { Test } from '@nestjs/testing';
-import { Repository } from 'typeorm';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { GetUserByLoginService } from './get.user.by.login.service';
+import { Repository } from 'typeorm';
+import * as bcrypt from 'bcrypt';
 import { User } from '../entities/user.entity';
 import { RoleEnum } from '../../roles/roles.enum';
 import { StatusEnum } from '../../statuses/statuses.enum';
-import * as bcrypt from 'bcrypt';
+import { UsersService } from '../users.service';
 
 // jest.mock('bcrypt');
 
 
-describe('GetUserByLoginService', () => {
-    let service: GetUserByLoginService;
+describe('UsersService', () => {
+    let service: UsersService;
     let repositoryMock: Repository<User>;
     // let bcryptCompare: jest.Mock;
     beforeAll(async () => {
         const app = await Test.createTestingModule({
             providers: [
-                GetUserByLoginService,
+                UsersService,
                 {
                     provide: getRepositoryToken(User),
                     useClass: Repository,
                 },
             ],
         }).compile();
-        service = app.get<GetUserByLoginService>(GetUserByLoginService);
+        service = app.get<UsersService>(UsersService);
         repositoryMock = app.get<Repository<User>>(getRepositoryToken(User));
         // bcryptCompare = jest.fn().mockReturnValue(false);
         // (bcrypt.compare as jest.Mock) = bcryptCompare;
@@ -60,7 +60,7 @@ describe('GetUserByLoginService', () => {
             jest.spyOn(repositoryMock, 'findOne').mockResolvedValueOnce(user);
 
             expect(await service.getByLogin({ email: user.email, password: 'password123' })).toEqual(user);
-            // expect(repositoryMock.findOne({ email: user.email })).toBeCalled();
+            expect(repositoryMock.findOne(user.email)).toBeCalled();
 
         });
     });

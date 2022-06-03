@@ -4,16 +4,16 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { User } from '../entities/user.entity';
 import { RoleEnum } from '../../roles/roles.enum';
 import { StatusEnum } from '../../statuses/statuses.enum';
-import { GetUsersService } from './get.users.service';
+import { UsersService } from '../users.service';
 
 describe('GetUserService', () => {
-    let service: GetUsersService;
+    let service: UsersService;
     let repositoryMock: Repository<User>;
 
     beforeAll(async () => {
         const app = await Test.createTestingModule({
             providers: [
-                GetUsersService,
+                UsersService,
                 {
                     provide: getRepositoryToken(User),
                     useClass: Repository,
@@ -21,7 +21,7 @@ describe('GetUserService', () => {
             ],
         }).compile();
 
-        service = app.get<GetUsersService>(GetUsersService);
+        service = app.get<UsersService>(UsersService);
         repositoryMock = app.get<Repository<User>>(getRepositoryToken(User));
     });
 
@@ -70,9 +70,11 @@ describe('GetUserService', () => {
 
             }];
             jest.spyOn(repositoryMock, 'find').mockResolvedValue(users);
-            expect(await service.findAll()).toEqual(users);
+            expect(await service.getAll()).toEqual(users);
             expect(repositoryMock.find).toBeCalled();
-            expect(await service.findAll()).toHaveLength(2);
+            expect(await service.getAll()).toHaveLength(2);
+            expect(repositoryMock.find).toBeCalled();
+
         });
     });
 });

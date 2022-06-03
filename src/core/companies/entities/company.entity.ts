@@ -1,7 +1,8 @@
-import { ApiProperty } from "@nestjs/swagger";
-import { BaseEntity } from "src/core/base.entity";
-import { CompanyType } from "src/core/company-types/entities/company-type.entity";
 import { Column, Entity, ManyToOne } from "typeorm";
+import { ApiProperty } from "@nestjs/swagger";
+import { BaseEntity } from "../../base.entity";
+import { CompanyType } from "../../company-types/entities/company-type.entity";
+import { User } from "../../users/entities/user.entity";
 
 
 
@@ -63,5 +64,7 @@ export class Company extends BaseEntity {
     @Column('varchar', { nullable: false })
     linkedin?: string;
 
-    @ManyToOne(() => CompanyType, { eager: true }) companyType?: CompanyType | null;
+    @ManyToOne(() => User, { eager: true }) user: User;
+    
+    @ManyToOne(() => CompanyType, { eager: true }) companyType: CompanyType;
 }
