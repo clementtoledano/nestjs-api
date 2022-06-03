@@ -15,7 +15,7 @@ export class UpdateCompanyDto extends PartialType(CreateCompanyDto) {
 
     @ApiProperty()
     @IsNotEmpty()
-    siret: string;
+    siretNumber: string;
 
     @ApiProperty()
     @IsNotEmpty()

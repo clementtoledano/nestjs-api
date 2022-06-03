@@ -13,7 +13,7 @@ export class CreateCompanyDto {
 
     @ApiProperty()
     @IsNotEmpty()
-    siret: string;
+    siretNumber: string;
 
     @ApiProperty()
     @IsNotEmpty()

@@ -18,7 +18,7 @@ export class Company extends BaseEntity {
 
     @ApiProperty({ example: '123123132132' })
     @Column('varchar', { nullable: false })
-    siret: string;
+    siretNumber: string;
     
     @ApiProperty({ example: '19 rue de la peste' })
     @Column('varchar', { nullable: false })

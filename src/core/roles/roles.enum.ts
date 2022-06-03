@@ -3,4 +3,5 @@ export enum RoleEnum {
     'visiteur' = 2,
     'revendeur' = 3,
     'producteur' = 4,
+    'distributeur' = 5,
 }

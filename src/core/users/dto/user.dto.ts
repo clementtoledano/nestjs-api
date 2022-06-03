@@ -12,8 +12,8 @@ export class UserDto {
 
     companyName: string;
 
-    siretNumber: number;
-    @ApiProperty({ example: 231654321, description: 'The age of the Cat' })
+    sirenNumber: number;
+    // @ApiProperty({ example: 231654321, description: 'The age of the Cat' })
     phone: number;
 
     newsletter: boolean;

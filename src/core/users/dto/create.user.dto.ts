@@ -28,7 +28,7 @@ export class CreateUserDto {
     @ApiProperty()
     @IsNotEmpty()
     @IsNumber()
-    siretNumber: number;
+    sirenNumber: number;
 
     @ApiProperty()
     @IsNotEmpty()

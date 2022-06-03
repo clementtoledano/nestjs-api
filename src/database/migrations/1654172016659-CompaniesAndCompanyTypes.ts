@@ -16,5 +16,4 @@ export class CompaniesAndCompanyTypes1654172016659 implements MigrationInterface
         await queryRunner.query(`DROP TABLE "company"`);
         await queryRunner.query(`DROP TABLE "company_type"`);
     }
-
 }

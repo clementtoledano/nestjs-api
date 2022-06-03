@@ -16,7 +16,7 @@ export class User extends BaseEntity {
     @Column('varchar', { nullable: false }) lastname: string;
     @Column('varchar', { nullable: false }) companyName: string;
 
-    @Column('numeric', { nullable: false }) siretNumber: number;
+    @Column('numeric', { nullable: false }) sirenNumber: number;
 
     @Column('numeric', { nullable: false }) phone: number;
     @Column('boolean', { default: false }) newsletter: boolean;
