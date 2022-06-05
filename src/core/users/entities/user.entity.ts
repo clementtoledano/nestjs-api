@@ -1,17 +1,16 @@
-import { Entity, Column, BeforeInsert, ManyToOne } from 'typeorm';
+import { Entity, Column, BeforeInsert, ManyToOne, Unique } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { BaseEntity } from '../../base.entity';
 import { Role } from '../../roles/entities/role.entity';
 import { Status } from '../../statuses/entities/status.entity';
 
-import { ApiProperty } from '@nestjs/swagger';
-
 @Entity('user')
+@Unique(["email"])
 export class User extends BaseEntity {
 
 
-    @Column('varchar', { nullable: false }) password: string;
-    @Column('varchar', { nullable: false, unique: true }) email: string;
+    @Column('varchar', { nullable: false, select: false }) password: string;
+    @Column('varchar', { nullable: false }) email: string;
     @Column('varchar', { nullable: false }) firstname: string;
     @Column('varchar', { nullable: false }) lastname: string;
     @Column('varchar', { nullable: false }) companyName: string;

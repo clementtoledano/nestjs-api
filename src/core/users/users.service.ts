@@ -1,58 +1,66 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { forwardRef, HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { comparePasswords } from '../../shared/utils';
 import { CreateUserDto } from './dto/create.user.dto';
 import { LoginUserDto } from './dto/login.user.dto';
-import { UserDto } from './dto/user.dto';
+import { UserI } from './interfaces/user.interface';
 import { User } from './entities/user.entity';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable()
 export class UsersService {
-    constructor(@InjectRepository(User) private readonly userRepo: Repository<User>) {}
+    constructor(
+        @InjectRepository(User) private readonly userRepository: Repository<User>,
+        @Inject(forwardRef(() => AuthService))
+        private readonly authService: AuthService
+    ) { }
 
-    async getAll(): Promise<UserDto[]> {
-        const user = await this.userRepo.find();
+    async create(newUser: CreateUserDto): Promise<UserI> {
+        const exists: boolean = await this._mailExists(newUser.email);
+
+        if (!exists) {
+            const user = await this.userRepository.save(this.userRepository.create(newUser));
+            return this._sanitizeUser(user);
+        } else {
+            throw new HttpException('Email is already in use', HttpStatus.CONFLICT);
+        }
+    }
+
+    async getAll(): Promise<UserI[]> {
+        const user = await this.userRepository.find();
         return user;
     }
 
-    async getOne(options?: object): Promise<UserDto> {
-        const user = await this.userRepo.findOne(options);
+    async getOne(options?: object): Promise<UserI> {
+        const user = await this.userRepository.findOne(options);
         return user;
     }
 
-    async getByLogin({ email, password }: LoginUserDto): Promise<UserDto> {
-        const user = await this.userRepo.findOne({ email });
+    async getByLogin(user: LoginUserDto): Promise<UserI> {
+        const foundUser: UserI = await this.getByEmail({ email: user.email });
 
-        if (!user) {
-            throw new HttpException('User not found', HttpStatus.UNAUTHORIZED);
+        if (!foundUser) {
+            throw new HttpException('User not found', HttpStatus.NOT_FOUND);
         }
 
         // compare passwords
-        const areEqual = await comparePasswords(user.password, password);
+        const areEqual: boolean = await this.authService.comparePasswords(user.password, foundUser.password);
 
         if (!areEqual) {
-            throw new HttpException('Invalid credentials', HttpStatus.UNAUTHORIZED);
+            throw new HttpException('Login was not successfull, wrong credentials', HttpStatus.UNAUTHORIZED);
         }
-        return user;
+        const payload: UserI = await this.findOne(foundUser.id);
+        return payload;
     }
 
-    async getByPayload({ email }: any): Promise<UserDto> {
-        return await this.getOne({ email });
+    async getByEmail({ email }: any): Promise<UserI> {
+        return await this.userRepository.findOne({ email }, { select: ['id', 'email', 'password', 'role', 'status'] });
     }
 
-    async create(userDto: CreateUserDto): Promise<UserDto> {
-        // check if the user exists in the db
-        const userInDb = await this.userRepo.findOne({ where: { email: userDto.email } });
-        if (userInDb) {
-            throw new HttpException('User already exists', HttpStatus.BAD_REQUEST);
-        }
-
-        const user: User = await this.userRepo.create(userDto);
-        await this.userRepo.save(user);
-
-        return UsersService._sanitizeUser(user);
+    private async findOne(id: string): Promise<UserI> {
+        return this.userRepository.findOne({ id });
     }
+
 
 
 
@@ -60,12 +68,12 @@ export class UsersService {
     //     email: string, 
     //     newUser: UserUpdateDto
     //   ): Promise<UserDetailDto | null> {
-    //     const user = await this.userRepository.findOne({ email });
+    //     const user = await this.userRepositorysitory.findOne({ email });
     //     console.log(user);
     //     if (!user) {
     //       throw new NotFoundException('The requested user could not be found');
     //     }
-    //     const updatedUser = await this.userRepository.save({
+    //     const updatedUser = await this.userRepositorysitory.save({
     //       email,
     //       ...user,
     //       ...newUser,
@@ -75,9 +83,17 @@ export class UsersService {
     //     return new UserDetailDto(updatedUser);
     //   }
 
+    private async _mailExists(email: string): Promise<boolean> {
+        const user = await this.userRepository.findOne({ email });
+        if (user) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 
-    private static _sanitizeUser(user: User) {
+    private _sanitizeUser(user: User) {
         delete user.password;
         return user;
     }

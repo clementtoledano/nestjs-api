@@ -1,5 +1,5 @@
 
-import { Module } from '@nestjs/common';
+import { forwardRef, Module } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { JwtModule } from '@nestjs/jwt';
 import { PassportModule } from '@nestjs/passport';
@@ -10,6 +10,7 @@ import { UsersModule } from '../users/users.module';
 
 @Module({
     imports: [
+        forwardRef(() => UsersModule),
         PassportModule.register({
             defaultStrategy: 'jwt',
             property: 'user',
@@ -21,10 +22,9 @@ import { UsersModule } from '../users/users.module';
                 expiresIn: process.env.AUTH_JWT_TOKEN_EXPIRES_IN,
             },
         }),
-        UsersModule,
     ],
     controllers: [AuthController],
     providers: [AuthService, JwtStrategy],
-    exports: [PassportModule, JwtModule],
+    exports: [AuthService],
 })
-export class AuthModule {}
+export class AuthModule { }

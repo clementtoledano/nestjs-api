@@ -1,23 +1,18 @@
-import { ApiProperty } from "@nestjs/swagger";
+import { Role } from "src/core/roles/entities/role.entity";
+import { Status } from "src/core/statuses/entities/status.entity";
 
-// import { RoleEnum } from '../../../enum/role.enum';
-export class UserDto {
+export interface UserI {
     id: string;
-
     email: string;
-
+    password: string;
     firstname: string;
-
     lastname: string;
-
     companyName: string;
-
     sirenNumber: number;
-    // @ApiProperty({ example: 231654321, description: 'The age of the Cat' })
     phone: number;
-
     newsletter: boolean;
-
+    role?: Role;
+    status?: Status;
     createdOn?: Date;
     updatedOn?: Date;
 }

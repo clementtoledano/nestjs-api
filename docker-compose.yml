@@ -1,21 +1,12 @@
-version: '3'
+version: '3.8'
 services: 
-  postgres:
-    image: postgres:alpine
-    restart: always
-    ports:
-      - ${DATABASE_PORT}:5432
-    environment: 
-      - POSTGRES_USER=${DATABASE_USER}
-      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
-      - POSTGRES_DB=${DATABASE_NAME}
-    container_name: 1001ref-db
-    volumes:
-      - ./.data/pgdata:/var/lib/postgresql/data
-  nestjs:
+  # Our NestJS Api
+  api:
     build: 
       context: .
       dockerfile: Dockerfile
+          # Only build development stage from Dockerfile
+      target: ${NODE_ENV}
     environment: 
       - DATABASE_TYPE=${DATABASE_TYPE}
       - DATABASE_HOST=${DATABASE_HOST}
@@ -30,14 +21,30 @@ services:
     ports: 
       - "3000:3000" # expose-to-the-world : only-in-the-docker
       - "9229:9229"
-    container_name: 1001ref-api
+    command: npm run start:debug
     depends_on:
       - postgres
     volumes: 
       - .:/root/app
       - /root/app/node_modules
     # command: npm run dev
-  pgadmin:
+  
+  # Our Postgres Database for NestJS to connect to
+  postgres:
+    image: postgres:alpine
+    restart: always
+    ports:
+      - ${DATABASE_PORT}:5432
+    expose:
+      - "35000:5432"
+    environment: 
+      - POSTGRES_USER=${DATABASE_USER}
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+      - POSTGRES_DB=${DATABASE_NAME}
+    container_name: 1001ref-db
+    volumes:
+      - ./.data/pgdata:/var/lib/postgresql/data
+  postgres_admin:
     image: dpage/pgadmin4
     logging:
       driver: none
@@ -48,7 +55,7 @@ services:
       - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}
       - PGADMIN_LISTEN_PORT=${PGADMIN_LISTEN_PORT}
     ports: 
-      - "8080:80"
+      - "5050:80"
     volumes: 
       - ./.data/pgadmin-data:/var/lib/pgadmin
     depends_on: 

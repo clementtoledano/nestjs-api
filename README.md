@@ -53,3 +53,5 @@ $ npm run test:e2e
 # test coverage
 $ npm run test:cov
 ```
+
+https://github.com/ThomasOliver545/real-time-chat-nestjs-angular

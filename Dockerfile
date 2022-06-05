@@ -1,4 +1,4 @@
-FROM node:13-alpine
+FROM node:13-alpine AS development
 
 #RUN apk upgrade
 
@@ -17,6 +17,26 @@ RUN npm install
 # Copy current directory to APP folder
 COPY . .
 
+RUN npm run build
+
 EXPOSE 3000
 
-CMD ["npm", "run", "dev"]
+
+################
+## PRODUCTION ##
+################
+# Build another image named production
+FROM node:14 AS production
+
+ARG NODE_ENV=production
+ENV NODE_ENV=${NODE_ENV}
+
+# Set work dir
+WORKDIR /root/app
+
+COPY --from=development /root/app/ .
+
+EXPOSE 3000
+
+# run app
+CMD [ "node", "dist/main"]
