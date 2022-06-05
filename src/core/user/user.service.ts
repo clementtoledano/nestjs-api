@@ -1,4 +1,4 @@
-import { forwardRef, HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
+import { BadRequestException, forwardRef, HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create.user.dto';
@@ -11,8 +11,7 @@ import { AuthService } from '../auth/auth.service';
 export class UserService {
     constructor(
         @InjectRepository(UserEntity) private readonly userRepository: Repository<UserEntity>,
-        @Inject(forwardRef(() => AuthService))
-        private readonly authService: AuthService
+        @Inject(forwardRef(() => AuthService)) private readonly authService: AuthService
     ) { }
 
     async create(newUser: CreateUserDto): Promise<UserI> {
@@ -49,8 +48,8 @@ export class UserService {
         if (!areEqual) {
             throw new HttpException('Login was not successfull, wrong credentials', HttpStatus.UNAUTHORIZED);
         }
-        const payload: UserI = await this.findOne(foundUser.id);
-        return payload;
+
+        return foundUser;
     }
 
     async getByEmail({ email }: any): Promise<UserI> {
@@ -84,12 +83,18 @@ export class UserService {
     //   }
 
     private async _mailExists(email: string): Promise<boolean> {
-        const user = await this.userRepository.findOne({ email });
-        if (user) {
-            return true;
+        if (email) {
+            const user = await this.userRepository.findOne({ email });
+            if (user) {
+                return true;
+            } else {
+                return false;
+            }
         } else {
-            return false;
+            throw new BadRequestException("Email is needed");
+
         }
+
     }
 
 

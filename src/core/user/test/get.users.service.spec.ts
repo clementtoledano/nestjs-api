@@ -1,33 +1,40 @@
-import { Test } from '@nestjs/testing';
+import { Test, TestingModule } from '@nestjs/testing';
 import { Repository } from 'typeorm';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { User } from '../entities/user.entity';
+import { UserEntity } from '../entities/user.entity';
 import { RoleEnum } from '../../role/role.enum';
 import { StatusEnum } from '../../status/status.enum';
 import { UserService } from '../user.service';
+import { AuthService } from '../../auth/auth.service';
 
 describe('GetUserService', () => {
     let service: UserService;
-    let repositoryMock: Repository<User>;
+    let repositoryMock: Repository<UserEntity>;
 
     beforeAll(async () => {
-        const app = await Test.createTestingModule({
+        const module: TestingModule = await Test.createTestingModule({
             providers: [
                 UserService,
                 {
-                    provide: getRepositoryToken(User),
-                    useClass: Repository,
+                    provide: getRepositoryToken(UserEntity),
+                    useValue: {
+                        find: jest.fn().mockResolvedValue([]),
+                    }
                 },
+                {
+                    provide: AuthService,
+                    useValue: AuthService
+                }
             ],
         }).compile();
 
-        service = app.get<UserService>(UserService);
-        repositoryMock = app.get<Repository<User>>(getRepositoryToken(User));
+        service = module.get<UserService>(UserService);
+        repositoryMock = module.get<Repository<UserEntity>>(getRepositoryToken(UserEntity));
     });
 
     describe('findAll', () => {
-        it('should find all user', async () => {
-            const users: User[] = [{
+        it('should find all users', async () => {
+            const users: UserEntity[] = [{
                 id: '123123123',
                 firstname: 'clem',
                 lastname: 'tol',
@@ -45,7 +52,12 @@ describe('GetUserService', () => {
                     name: 'Active',
                 },
                 newsletter: true,
-                hashPassword(): any { }
+                hashPassword: function (): Promise<void> {
+                    throw new Error('Function not implemented.');
+                },
+                emailToLowerCase: function (): void {
+                    throw new Error('Function not implemented.');
+                }
 
             },
             {
@@ -66,13 +78,20 @@ describe('GetUserService', () => {
                     name: 'Active',
                 },
                 newsletter: false,
-                hashPassword(): any { }
+                hashPassword: function (): Promise<void> {
+                    throw new Error('Function not implemented.');
+                },
+                emailToLowerCase: function (): void {
+                    throw new Error('Function not implemented.');
+                }
 
             }];
             jest.spyOn(repositoryMock, 'find').mockResolvedValue(users);
+
             expect(await service.getAll()).toEqual(users);
-            expect(repositoryMock.find).toBeCalled();
+
             expect(await service.getAll()).toHaveLength(2);
+
             expect(repositoryMock.find).toBeCalled();
 
         });

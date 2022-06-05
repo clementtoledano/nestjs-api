@@ -77,6 +77,8 @@ export class AuthService {
     }
 
     async comparePasswords(password: string, storedPasswordHash: string): Promise<any> {
+        console.log("🚀AuthService ~ comparePasswords ~ password: string, storedPasswordHash: string", password, storedPasswordHash)
+
         return bcrypt.compare(password, storedPasswordHash);
     }
 

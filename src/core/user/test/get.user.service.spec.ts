@@ -1,32 +1,41 @@
-import { Test } from '@nestjs/testing';
-import { Repository } from 'typeorm';
+import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { User } from '../entities/user.entity';
+import { Repository } from 'typeorm';
+
+import { UserEntity } from '../entities/user.entity';
 import { RoleEnum } from '../../role/role.enum';
 import { StatusEnum } from '../../status/status.enum';
 import { UserService } from '../user.service';
+import { AuthService } from '../../auth/auth.service';
 
 describe('UserService', () => {
     let service: UserService;
-    let repositoryMock: Repository<User>;
+    let repositoryMock: Repository<UserEntity>;
+
     beforeAll(async () => {
-        const app = await Test.createTestingModule({
+        const module: TestingModule = await Test.createTestingModule({
             providers: [
                 UserService,
                 {
-                    provide: getRepositoryToken(User),
-                    useClass: Repository,
+                    provide: getRepositoryToken(UserEntity),
+                    useValue: {
+                        findOne: jest.fn().mockResolvedValue({}),
+                    }
                 },
+                {
+                    provide: AuthService,
+                    useValue: AuthService
+                }
             ],
         }).compile();
 
-        service = app.get<UserService>(UserService);
-        repositoryMock = app.get<Repository<User>>(getRepositoryToken(User));
+        service = module.get<UserService>(UserService);
+        repositoryMock = module.get<Repository<UserEntity>>(getRepositoryToken(UserEntity));
     });
 
     describe('findById', () => {
         it('should find user by id', async () => {
-            const user: User = {
+            const user: UserEntity = {
                 id: '123123123',
                 firstname: 'clem',
                 lastname: 'tol',
@@ -44,10 +53,15 @@ describe('UserService', () => {
                     name: 'Active',
                 },
                 newsletter: true,
-                hashPassword(): any { }
-
+                hashPassword: function (): Promise<void> {
+                    throw new Error('Function not implemented.');
+                },
+                emailToLowerCase: function (): void {
+                    throw new Error('Function not implemented.');
+                }
             };
             jest.spyOn(repositoryMock, 'findOne').mockResolvedValueOnce(user);
+
             expect(await service.getOne({ id: user.id })).toEqual(user);
             expect(repositoryMock.findOne).toBeCalled();
         });
