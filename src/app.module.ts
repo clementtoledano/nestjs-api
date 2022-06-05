@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
@@ -10,7 +10,8 @@ import appConfig from './config/app.config';
 import databaseConfig from './config/database.config';
 import { HeaderResolver, I18nJsonLoader, I18nModule } from 'nestjs-i18n';
 import * as path from 'path';
-import { UsersService } from './core/users/users.service';
+import { UserService } from './core/user/user.service';
+import { AuthMiddleware } from './middleware/auth.middleware';
 
 @Module({
   imports: [
@@ -37,5 +38,16 @@ import { UsersService } from './core/users/users.service';
     CoreModule,
   ],
   providers: [],
+  exports: []
 })
-export class AppModule { }
+export class AppModule {
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(AuthMiddleware)
+      .exclude(
+        { path: '/api/auth/register', method: RequestMethod.POST },
+        { path: '/api/auth/login', method: RequestMethod.POST }
+      )
+      .forRoutes('')
+  }
+}

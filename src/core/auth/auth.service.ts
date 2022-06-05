@@ -1,30 +1,36 @@
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import { Injectable, HttpException, HttpStatus, Inject, forwardRef } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { UsersService } from '../users/users.service';
-import { RegistrationStatus } from './interfaces/registration-status.interface';
-import { LoginStatus } from './interfaces/login-status.interface';
-import { JwtPayload } from './interfaces/payload.interface';
-import { UserDto } from '../users/dto/user.dto';
-import { CreateUserDto } from '../users/dto/create.user.dto';
-import { LoginUserDto } from '../users/dto/login.user.dto';
+import * as bcrypt from 'bcrypt';
 
+import { UserService } from '../user/user.service';
+
+import { RegistrationStatusI } from './interfaces/registration-status.interface';
+import { LoginStatusI } from './interfaces/login-status.interface';
+import { JwtPayloadI } from './interfaces/payload.interface';
+import { UserI } from '../user/interfaces/user.interface';
+
+import { CreateUserDto } from '../user/dto/create.user.dto';
+import { LoginUserDto } from '../user/dto/login.user.dto';
 
 @Injectable()
 export class AuthService {
     constructor(
-        private readonly usersService: UsersService,
+        private readonly jwtService: JwtService,
+        private readonly configService: ConfigService,
+        @Inject(forwardRef(() => UserService))
+        private readonly userService: UserService,
 
-        private readonly jwtService: JwtService
-        ) {}
+    ) { }
 
-    async register(userDto: CreateUserDto): Promise<RegistrationStatus> {
-        let status: RegistrationStatus = {
+    async register(user: CreateUserDto): Promise<RegistrationStatusI> {
+        let status: RegistrationStatusI = {
             success: true,
             message: 'user registered',
         };
 
         try {
-            await this.usersService.create(userDto);
+            await this.userService.create(user);
         } catch (err) {
             status = {
                 success: false,
@@ -35,12 +41,12 @@ export class AuthService {
         return status;
     }
 
-    async login(loginUserDto: LoginUserDto): Promise<LoginStatus> {
+    async login(loginUserDto: LoginUserDto): Promise<LoginStatusI> {
         // find user in db
-        const user = await this.usersService.getByLogin(loginUserDto);
+        const user: UserI = await this.userService.getByLogin(loginUserDto);
 
         // generate and sign token
-        const token = this._createToken(user);
+        const token = this.generateJwt(user);
 
         return {
             email: user.email,
@@ -48,22 +54,35 @@ export class AuthService {
         };
     }
 
-    async validateUser(payload: JwtPayload): Promise<UserDto> {
-        const user = await this.usersService.getByPayload(payload);
+    async validateUser(payload: JwtPayloadI): Promise<UserI> {
+        const user = await this.userService.getByEmail(payload.user);
         if (!user) {
             throw new HttpException('Invalid token', HttpStatus.UNAUTHORIZED);
         }
         return user;
     }
 
-    private _createToken({ email }: UserDto): any {
-        const expiresIn = process.env.AUTH_JWT_TOKEN_EXPIRES_IN;
+    private generateJwt(user: UserI): any {
+        const expiresIn = this.configService.get('AUTH_JWT_TOKEN_EXPIRES_IN');
 
-        const user: JwtPayload = { email };
-        const accessToken = this.jwtService.sign(user);
+        const accessToken = this.jwtService.sign({ user });
         return {
             expiresIn,
             accessToken,
         };
     }
+
+    async hashPassword(password: string): Promise<string> {
+        return bcrypt.hash(password, 12);
+    }
+
+    async comparePasswords(password: string, storedPasswordHash: string): Promise<any> {
+        return bcrypt.compare(password, storedPasswordHash);
+    }
+
+    verifyJwt(jwt: string): Promise<any> {
+        return this.jwtService.verifyAsync(jwt);
+    }
+
+
 }

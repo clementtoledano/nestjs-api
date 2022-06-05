@@ -31,8 +31,6 @@ $ npm run migration:generate <migration name>
 $ npm run migration:run
 ```
 
-docker exec -it 1001ref-api //bin//sh
-
 ## Running the app
 
 ```bash
@@ -55,3 +53,5 @@ $ npm run test:e2e
 # test coverage
 $ npm run test:cov
 ```
+
+https://github.com/ThomasOliver545/real-time-chat-nestjs-angular
