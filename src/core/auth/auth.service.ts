@@ -3,23 +3,23 @@ import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 
-import { UsersService } from '../users/users.service';
+import { UserService } from '../user/user.service';
 
 import { RegistrationStatusI } from './interfaces/registration-status.interface';
 import { LoginStatusI } from './interfaces/login-status.interface';
 import { JwtPayloadI } from './interfaces/payload.interface';
-import { UserI } from '../users/interfaces/user.interface';
+import { UserI } from '../user/interfaces/user.interface';
 
-import { CreateUserDto } from '../users/dto/create.user.dto';
-import { LoginUserDto } from '../users/dto/login.user.dto';
+import { CreateUserDto } from '../user/dto/create.user.dto';
+import { LoginUserDto } from '../user/dto/login.user.dto';
 
 @Injectable()
 export class AuthService {
     constructor(
         private readonly jwtService: JwtService,
         private readonly configService: ConfigService,
-        @Inject(forwardRef(() => UsersService))
-        private readonly usersService: UsersService,
+        @Inject(forwardRef(() => UserService))
+        private readonly userService: UserService,
 
     ) { }
 
@@ -30,7 +30,7 @@ export class AuthService {
         };
 
         try {
-            await this.usersService.create(user);
+            await this.userService.create(user);
         } catch (err) {
             status = {
                 success: false,
@@ -43,7 +43,7 @@ export class AuthService {
 
     async login(loginUserDto: LoginUserDto): Promise<LoginStatusI> {
         // find user in db
-        const user: UserI = await this.usersService.getByLogin(loginUserDto);
+        const user: UserI = await this.userService.getByLogin(loginUserDto);
 
         // generate and sign token
         const token = this.generateJwt(user);
@@ -55,7 +55,7 @@ export class AuthService {
     }
 
     async validateUser(payload: JwtPayloadI): Promise<UserI> {
-        const user = await this.usersService.getByEmail(payload.user);
+        const user = await this.userService.getByEmail(payload.user);
         if (!user) {
             throw new HttpException('Invalid token', HttpStatus.UNAUTHORIZED);
         }

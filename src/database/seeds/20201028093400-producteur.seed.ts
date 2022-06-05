@@ -2,9 +2,9 @@ import { Connection } from 'typeorm';
 import { Factory, Seeder } from 'typeorm-seeding';
 import { plainToClass } from 'class-transformer';
 
-import { User } from '../../core/users/entities/user.entity';
-import { RoleEnum } from '../../core/roles/roles.enum';
-import { StatusEnum } from '../../core/statuses/statuses.enum';
+import { User } from '../../core/user/entities/user.entity';
+import { RoleEnum } from '../../core/role/role.enum';
+import { StatusEnum } from '../../core/status/status.enum';
 
 export default class CreateProducteur implements Seeder {
     public async run(factory: Factory, connection: Connection): Promise<void> {

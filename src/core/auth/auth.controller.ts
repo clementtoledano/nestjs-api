@@ -1,8 +1,8 @@
 import { Body, Controller, Get, HttpException, HttpStatus, Post, Req, UseGuards } from "@nestjs/common";
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
-import { CreateUserDto } from "../users/dto/create.user.dto";
-import { LoginUserDto } from "../users/dto/login.user.dto";
+import { CreateUserDto } from "../user/dto/create.user.dto";
+import { LoginUserDto } from "../user/dto/login.user.dto";
 import { AuthService } from "./auth.service";
 import { LoginStatusI } from "./interfaces/login-status.interface";
 import { JwtPayloadI } from "./interfaces/payload.interface";

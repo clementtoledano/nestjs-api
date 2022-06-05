@@ -1,10 +1,10 @@
 import { plainToClass } from 'class-transformer';
-import { CompanyType } from 'src/core/company-types/entities/company-type.entity';
-import { User } from 'src/core/users/entities/user.entity';
+import { CompanyType } from 'src/core/company-type/entities/company-type.entity';
+import { User } from 'src/core/user/entities/user.entity';
 import { Connection, getRepository } from 'typeorm';
 import { Factory, Seeder } from 'typeorm-seeding';
 
-import { Company } from '../../core/companies/entities/company.entity';
+import { Company } from '../../core/company/entities/company.entity';
 
 export default class CreateCompany implements Seeder {
     public async run(factory: Factory, connection: Connection): Promise<void> {

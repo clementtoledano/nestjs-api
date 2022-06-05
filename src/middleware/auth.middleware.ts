@@ -1,8 +1,8 @@
 import { HttpException, HttpStatus, Injectable, NestMiddleware } from '@nestjs/common';
 import { Request, Response, NextFunction } from 'express';
 import { AuthService } from '../core/auth/auth.service';
-import { UserI } from '../core/users/interfaces/user.interface';
-import { UsersService } from '../core/users/users.service';
+import { UserI } from '../core/user/interfaces/user.interface';
+import { UserService } from '../core/user/user.service';
 
 export interface RequestModel extends Request {
     user: UserI
@@ -12,7 +12,7 @@ export interface RequestModel extends Request {
 @Injectable()
 export class AuthMiddleware implements NestMiddleware {
 
-    constructor(private readonly authService: AuthService, private readonly usersService: UsersService) { }
+    constructor(private readonly authService: AuthService, private readonly userService: UserService) { }
 
     async use(req: RequestModel, res: Response, next: NextFunction) {
         try {
@@ -20,7 +20,7 @@ export class AuthMiddleware implements NestMiddleware {
             const decodedToken = await this.authService.verifyJwt(tokenArray[1]);
 
             // make sure that the user is not deleted, or that props or rights changed compared to the time when the jwt was issued
-            const user: UserI = await this.usersService.getOne(decodedToken.user.id);
+            const user: UserI = await this.userService.getOne(decodedToken.user.id);
             if (user) {
                 // add the user to our req object, so that we can access it later when we need it
                 // if it would be here, we would like overwrite

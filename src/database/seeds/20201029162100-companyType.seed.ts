@@ -2,7 +2,7 @@ import { plainToClass } from 'class-transformer';
 import { Connection } from 'typeorm';
 import { Factory, Seeder } from 'typeorm-seeding';
 
-import { CompanyType } from '../../core/company-types/entities/company-type.entity';
+import { CompanyType } from '../../core/company-type/entities/company-type.entity';
 
 export default class CreateCompanyType implements Seeder {
     public async run(factory: Factory, connection: Connection): Promise<void> {

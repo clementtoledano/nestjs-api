@@ -3,7 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 import * as dotenv from 'dotenv';
 import { ExtractJwt, Strategy } from 'passport-jwt';
-import { UserI } from '../users/interfaces/user.interface';
+import { UserI } from '../user/interfaces/user.interface';
 import { AuthService } from './auth.service';
 import { JwtPayloadI } from './interfaces/payload.interface';
 dotenv.config();
