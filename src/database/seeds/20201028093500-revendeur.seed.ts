@@ -27,16 +27,13 @@ export default class CreateRevendeur implements Seeder {
                         email: 'andrew.toledano@antol.com',
                         password: 'rahrahrah',
                         companyName: 'Antol Cafe',
-                        sirenNumber: '847771948',
+                        sirenNumber: '847771947',
                         phone: '0630201000',
                         role: {
                             id: RoleEnum.revendeur,
                             name: 'Revendeur',
                         },
-                        status: {
-                            id: StatusEnum.active,
-                            name: 'Active',
-                        },
+                        status: StatusEnum.active,
                     }),
                 ])
                 .execute();

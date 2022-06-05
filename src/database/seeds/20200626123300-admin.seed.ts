@@ -24,7 +24,7 @@ export default class CreateAdmin implements Seeder {
                     plainToClass(UserEntity, {
                         firstname: 'Super',
                         lastname: 'Admin',
-                        email: 'admin@example.com',
+                        email: 'ADMIN@example.com',
                         password: 'secret',
                         companyName: 'Nash',
                         sirenNumber: '321564321',
@@ -33,10 +33,9 @@ export default class CreateAdmin implements Seeder {
                             id: RoleEnum.admin,
                             name: 'Admin',
                         },
-                        status: {
-                            id: StatusEnum.active,
-                            name: 'Active',
-                        },
+                        status: StatusEnum.active,
+
+
                     }),
                 ])
                 .execute();

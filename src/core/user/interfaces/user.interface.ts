@@ -1,5 +1,5 @@
-import { Role } from "src/core/role/entities/role.entity";
-import { Status } from "src/core/status/entities/status.entity";
+import { RoleI } from "src/core/role/interface/role.interface";
+import { StatusI } from "src/core/status/interface/status.interface";
 
 export interface UserI {
     id: string;
@@ -11,8 +11,8 @@ export interface UserI {
     sirenNumber: number;
     phone: number;
     newsletter: boolean;
-    role?: Role;
-    status?: Status;
+    role?: RoleI;
+    status?: StatusI;
     createdOn?: Date;
     updatedOn?: Date;
 }

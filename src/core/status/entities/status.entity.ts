@@ -4,7 +4,7 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Allow } from 'class-validator';
 
 @Entity('status')
-export class Status {
+export class StatusEntity {
     @ApiProperty({ example: 1 })
     @PrimaryColumn()
     id: number;
@@ -12,5 +12,5 @@ export class Status {
     @Allow()
     @ApiProperty({ example: 'Active' })
     @Column()
-    name?: string;
+    name: string;
 }

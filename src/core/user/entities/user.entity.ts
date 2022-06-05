@@ -1,8 +1,8 @@
 import { Entity, Column, BeforeInsert, ManyToOne } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { BaseEntity } from '../../base.entity';
-import { Role } from '../../role/entities/role.entity';
-import { Status } from '../../status/entities/status.entity';
+import { RoleEntity } from '../../role/entities/role.entity';
+import { StatusEntity } from '../../status/entities/status.entity';
 
 @Entity('user')
 export class UserEntity extends BaseEntity {
@@ -11,13 +11,12 @@ export class UserEntity extends BaseEntity {
     @Column('varchar', { nullable: false }) firstname: string;
     @Column('varchar', { nullable: false }) lastname: string;
     @Column('varchar', { nullable: false }) companyName: string;
-
     @Column('numeric', { nullable: false }) sirenNumber: number;
-
     @Column('numeric', { nullable: false }) phone: number;
     @Column('boolean', { default: false }) newsletter: boolean;
-    @ManyToOne(() => Role, { eager: true }) role?: Role | null;
-    @ManyToOne(() => Status, { eager: true }) status?: Status;
+
+    @ManyToOne(() => RoleEntity, { eager: true }) role?: RoleEntity | null;
+    @ManyToOne(() => StatusEntity, { eager: true }) status?: StatusEntity;
 
     @BeforeInsert()
     async hashPassword() {

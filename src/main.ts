@@ -47,7 +47,7 @@ async function bootstrap() {
   /**
    * Run DB migrations
    */
-  await runDbMigrations();
+  //await runDbMigrations();
 
   //Swagger
   const config = new DocumentBuilder()

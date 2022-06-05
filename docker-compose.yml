@@ -22,6 +22,7 @@ services:
       - "3000:3000" # expose-to-the-world : only-in-the-docker
       - "9229:9229"
     command: npm run start:debug
+    container_name: 1001ref-api
     depends_on:
       - postgres
     volumes: 
@@ -49,7 +50,7 @@ services:
     logging:
       driver: none
     restart: always
-    container_name: nest-pgadmin4
+    container_name: postgres-admin
     environment: 
       - PGADMIN_DEFAULT_EMAIL=${PGADMIN_DEFAULT_EMAIL}
       - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_DEFAULT_PASSWORD}

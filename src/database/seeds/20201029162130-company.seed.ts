@@ -24,9 +24,6 @@ export default class CreateCompany implements Seeder {
             .where('companyType.code = :code', { code: '5630Z' })
             .getOne();
 
-        console.log('user', user);
-        console.log('brasserie', brasserie);
-
         if (count === 0) {
             await connection
                 .createQueryBuilder()

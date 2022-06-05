@@ -33,10 +33,7 @@ export default class CreateProducteur implements Seeder {
                             id: RoleEnum.producteur,
                             name: 'Producteur',
                         },
-                        status: {
-                            id: StatusEnum.active,
-                            name: 'Active',
-                        },
+                        status: StatusEnum.active,
                     }),
                 ])
                 .execute();
