@@ -2,7 +2,7 @@ import { Connection } from 'typeorm';
 import { Factory, Seeder } from 'typeorm-seeding';
 import { plainToClass } from 'class-transformer';
 
-import { User } from '../../core/user/entities/user.entity';
+import { UserEntity } from '../../core/user/entities/user.entity';
 import { RoleEnum } from '../../core/role/role.enum';
 import { StatusEnum } from '../../core/status/status.enum';
 
@@ -11,7 +11,7 @@ export default class CreateAdmin implements Seeder {
         const countAdmin = await connection
             .createQueryBuilder()
             .select()
-            .from(User, 'User')
+            .from(UserEntity, 'User')
             .where('"User"."roleId" = :roleId', { roleId: RoleEnum.admin })
             .getCount();
 
@@ -19,9 +19,9 @@ export default class CreateAdmin implements Seeder {
             await connection
                 .createQueryBuilder()
                 .insert()
-                .into(User)
+                .into(UserEntity)
                 .values([
-                    plainToClass(User, {
+                    plainToClass(UserEntity, {
                         firstname: 'Super',
                         lastname: 'Admin',
                         email: 'admin@example.com',

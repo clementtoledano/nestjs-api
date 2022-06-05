@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty } from 'class-validator';
-import { CompanyType } from '../../company-type/entities/company-type.entity';
+import { CompanyTypeI } from 'src/core/company-type/interfaces/company-type.interface';
 
 export class CreateCompanyDto {
     @ApiProperty()
@@ -56,5 +56,5 @@ export class CreateCompanyDto {
     linkedin?: string;
 
     @ApiProperty()
-    companyType?: CompanyType;
+    companyType?: CompanyTypeI;
 }

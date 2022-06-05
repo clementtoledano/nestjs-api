@@ -1,8 +1,8 @@
 import { Column, Entity, ManyToOne, Unique } from "typeorm";
 import { ApiProperty } from "@nestjs/swagger";
 import { BaseEntity } from "../../base.entity";
-import { CompanyType } from "../../company-type/entities/company-type.entity";
-import { User } from "../../user/entities/user.entity";
+import { CompanyTypeEntity } from "../../company-type/entities/company-type.entity";
+import { UserEntity } from "../../user/entities/user.entity";
 
 
 
@@ -65,7 +65,8 @@ export class Company extends BaseEntity {
     @Column('varchar', { nullable: false })
     linkedin?: string;
 
-    @ManyToOne(() => User, { eager: true }) user: User;
+    @ManyToOne(() => UserEntity, { eager: true }) user: UserEntity;
 
-    @ManyToOne(() => CompanyType, { eager: true }) companyType: CompanyType;
+    @ManyToOne(() => CompanyTypeEntity, { eager: true }) companyType: CompanyTypeEntity;
 }
+

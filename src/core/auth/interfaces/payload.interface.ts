@@ -1,10 +1,10 @@
 
-import { User } from "src/core/user/entities/user.entity";
+import { UserI } from "src/core/user/interfaces/user.interface";
 
 export interface JwtPayloadI {
 
     exp: number;
     iat: number;
-    user: User;
+    user: UserI;
 
 }

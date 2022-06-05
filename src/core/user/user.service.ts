@@ -4,13 +4,13 @@ import { Repository } from 'typeorm';
 import { CreateUserDto } from './dto/create.user.dto';
 import { LoginUserDto } from './dto/login.user.dto';
 import { UserI } from './interfaces/user.interface';
-import { User } from './entities/user.entity';
+import { UserEntity } from './entities/user.entity';
 import { AuthService } from '../auth/auth.service';
 
 @Injectable()
 export class UserService {
     constructor(
-        @InjectRepository(User) private readonly userRepository: Repository<User>,
+        @InjectRepository(UserEntity) private readonly userRepository: Repository<UserEntity>,
         @Inject(forwardRef(() => AuthService))
         private readonly authService: AuthService
     ) { }
@@ -93,7 +93,7 @@ export class UserService {
     }
 
 
-    private _sanitizeUser(user: User) {
+    private _sanitizeUser(user: UserI) {
         delete user.password;
         return user;
     }

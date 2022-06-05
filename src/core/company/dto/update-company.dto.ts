@@ -1,6 +1,6 @@
 import { ApiProperty, PartialType } from '@nestjs/swagger';
 import { IsNotEmpty } from 'class-validator';
-import { CompanyType } from '../../company-type/entities/company-type.entity';
+import { CompanyTypeI } from 'src/core/company-type/interfaces/company-type.interface';
 import { CreateCompanyDto } from './create-company.dto';
 
 export class UpdateCompanyDto extends PartialType(CreateCompanyDto) {
@@ -58,6 +58,6 @@ export class UpdateCompanyDto extends PartialType(CreateCompanyDto) {
     linkedin?: string;
 
     @ApiProperty()
-    companyType?: CompanyType;
+    companyType?: CompanyTypeI;
 
 }

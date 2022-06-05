@@ -1,7 +1,7 @@
 import { plainToClass } from 'class-transformer';
-import { CompanyType } from 'src/core/company-type/entities/company-type.entity';
-import { User } from 'src/core/user/entities/user.entity';
-import { Connection, getRepository } from 'typeorm';
+import { CompanyTypeEntity } from 'src/core/company-type/entities/company-type.entity';
+import { UserEntity } from 'src/core/user/entities/user.entity';
+import { Connection } from 'typeorm';
 import { Factory, Seeder } from 'typeorm-seeding';
 
 import { Company } from '../../core/company/entities/company.entity';
@@ -13,14 +13,14 @@ export default class CreateCompany implements Seeder {
         const user = await connection
             .createQueryBuilder()
             .select('user')
-            .from(User, 'user')
+            .from(UserEntity, 'user')
             .where('user.sirenNumber = :sirenNumber', { sirenNumber: '847770948' })
             .getOne();
 
         const brasserie = await connection
             .createQueryBuilder()
             .select('companyType')
-            .from(CompanyType, 'companyType')
+            .from(CompanyTypeEntity, 'companyType')
             .where('companyType.code = :code', { code: '5630Z' })
             .getOne();
 

@@ -5,8 +5,8 @@ import { Column, Entity } from "typeorm";
 
 
 @Entity('company_type')
-export class CompanyType extends BaseEntity {
-    
+export class CompanyTypeEntity extends BaseEntity {
+
     @Allow() //si rien de mieux
     @ApiProperty({ example: '5630Z' })
     @Column()

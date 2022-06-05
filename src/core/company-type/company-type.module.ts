@@ -2,10 +2,10 @@ import { Module } from '@nestjs/common';
 import { CompanyTypeService } from './company-type.service';
 import { CompanyTypeController } from './company-type.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { CompanyType } from './entities/company-type.entity';
+import { CompanyTypeEntity } from './entities/company-type.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([CompanyType])],
+  imports: [TypeOrmModule.forFeature([CompanyTypeEntity])],
 
   controllers: [CompanyTypeController],
   providers: [CompanyTypeService]
