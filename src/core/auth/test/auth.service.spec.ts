@@ -35,10 +35,10 @@ describe('AuthService', () => {
     service = module.get<AuthService>(AuthService);
   });
 
-  it('throw an error', () => {
+  it('throw an error', async () => {
 
     try {
-      service.validateUser({ exp: 0, iat: 0, user: userMock })
+      await service.validateUser({ exp: 0, iat: 0, user: userMock })
 
     } catch (e) {
       expect(e).toBeInstanceOf(HttpException);

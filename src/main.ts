@@ -10,7 +10,7 @@ import morgan from 'morgan';
 import * as fs from 'fs';
 
 import { AppModule } from './app.module';
-import { runDbMigrations } from './shared/utils';
+// import { runDbMigrations } from './shared/utils';
 
 
 const logStream = fs.createWriteStream('api.log', {

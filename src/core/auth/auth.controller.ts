@@ -1,5 +1,4 @@
-import { Body, Controller, Get, HttpException, HttpStatus, Post, Req, UseGuards } from "@nestjs/common";
-import { AuthGuard } from '@nestjs/passport';
+import { Body, Controller, Get, HttpException, HttpStatus, Post, Req } from "@nestjs/common";
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from "@nestjs/swagger";
 import { CreateUserDto } from "../user/dto/create.user.dto";
 import { LoginUserDto } from "../user/dto/login.user.dto";
@@ -35,8 +34,7 @@ export class AuthController {
     }
 
     @Get('whoami')
-    // @UseGuards(AuthGuard())
-    public async testAuth(@Req() req: any): Promise<JwtPayloadI> {
+    public testAuth(@Req() req: any): Promise<JwtPayloadI> {
         console.log(req);
 
         return req.user;
