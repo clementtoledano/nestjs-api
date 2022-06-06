@@ -10,7 +10,7 @@ export class CompanyService {
   constructor(@InjectRepository(CompanyEntity) private readonly companyRepo: Repository<CompanyEntity>) { }
 
   create(createCompanyDto: CreateCompanyDto) {
-    return 'This action adds a new company';
+    return createCompanyDto;
   }
 
   async findAll() {
@@ -23,7 +23,7 @@ export class CompanyService {
   }
 
   update(id: number, updateCompanyDto: UpdateCompanyDto) {
-    return `This action updates a #${id} company`;
+    return updateCompanyDto;
   }
 
   remove(id: number) {

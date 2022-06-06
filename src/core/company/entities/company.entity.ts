@@ -13,12 +13,12 @@ export class CompanyEntity extends BaseEntity {
     @Column('varchar', { nullable: false })
     label: string;
 
-    @ApiProperty({ example: 'Brasserie Malpest' })
+    @ApiProperty({ example: 'super bar blab bla bla' })
     @Column('text', { nullable: false })
     description: string;
 
     @ApiProperty({ example: '123123132132' })
-    @Column('varchar', { nullable: false })
+    @Column('varchar', { nullable: false, unique: true })
     siretNumber: string;
 
     @ApiProperty({ example: '19 rue de la peste' })

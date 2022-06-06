@@ -9,7 +9,7 @@ export class CompanyTypeEntity extends BaseEntity {
 
     @Allow() //si rien de mieux
     @ApiProperty({ example: '5630Z' })
-    @Column()
+    @Column({ unique: true, })
     code: string;
 
     @Allow() //si rien de mieux
