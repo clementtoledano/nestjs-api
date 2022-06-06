@@ -29,6 +29,12 @@ $ npm run migration:generate <migration name>
 
 # run migration
 $ npm run migration:run
+
+# run remove all table
+$ npm run schema:drop
+
+# run seeds
+$ npm run seed:run
 ```
 
 ## Running the app
