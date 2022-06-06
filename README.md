@@ -55,3 +55,7 @@ $ npm run test:cov
 ```
 
 https://github.com/ThomasOliver545/real-time-chat-nestjs-angular
+https://github.com/maciejcieslar/nest-unit-tests/tree/master/src/app/playlist
+https://github.com/TusharRoy23/todoAppOnNestJs
+https://github.com/mwanago/nestjs-typescript/tree/master/src/users/tests
+https://github.com/mwanago/nestjs-typescript/blob/master/src/users/tests/users.service.spec.ts
