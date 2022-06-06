@@ -4,11 +4,11 @@ import { UserEntity } from 'src/core/user/entities/user.entity';
 import { Connection } from 'typeorm';
 import { Factory, Seeder } from 'typeorm-seeding';
 
-import { Company } from '../../core/company/entities/company.entity';
+import { CompanyEntity } from '../../core/company/entities/company.entity';
 
 export default class CreateCompany implements Seeder {
     public async run(factory: Factory, connection: Connection): Promise<void> {
-        const count = await connection.createQueryBuilder().select().from(Company, 'Company').getCount();
+        const count = await connection.createQueryBuilder().select().from(CompanyEntity, 'Company').getCount();
 
         const user = await connection
             .createQueryBuilder()
@@ -28,9 +28,9 @@ export default class CreateCompany implements Seeder {
             await connection
                 .createQueryBuilder()
                 .insert()
-                .into(Company)
+                .into(CompanyEntity)
                 .values([
-                    plainToClass(Company, {
+                    plainToClass(CompanyEntity, {
                         label: 'Brasserie Malpest',
                         description: 'Production de bière artisanale',
                         siretNumber: '84777094800028',

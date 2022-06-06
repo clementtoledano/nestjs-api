@@ -8,7 +8,7 @@ import { UserEntity } from "../../user/entities/user.entity";
 
 @Entity('company')
 @Unique(["siretNumber"])
-export class Company extends BaseEntity {
+export class CompanyEntity extends BaseEntity {
     @ApiProperty({ example: 'Brasserie Malpest' })
     @Column('varchar', { nullable: false })
     label: string;

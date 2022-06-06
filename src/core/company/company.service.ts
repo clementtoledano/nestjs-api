@@ -3,11 +3,11 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateCompanyDto } from './dto/create-company.dto';
 import { UpdateCompanyDto } from './dto/update-company.dto';
-import { Company } from './entities/company.entity';
+import { CompanyEntity } from './entities/company.entity';
 
 @Injectable()
 export class CompanyService {
-  constructor(@InjectRepository(Company) private readonly companyRepo: Repository<Company>) { }
+  constructor(@InjectRepository(CompanyEntity) private readonly companyRepo: Repository<CompanyEntity>) { }
 
   create(createCompanyDto: CreateCompanyDto) {
     return 'This action adds a new company';

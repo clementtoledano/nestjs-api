@@ -8,7 +8,6 @@ import { LoginStatusI } from "./interfaces/login-status.interface";
 import { JwtPayloadI } from "./interfaces/payload.interface";
 import { RegistrationStatusI } from "./interfaces/registration-status.interface";
 
-
 @ApiBearerAuth()
 @ApiTags('Authentication')
 @Controller('auth')
