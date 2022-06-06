@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
 import { CompanyTypeService } from './company-type.service';
 import { CreateCompanyTypeDto } from './dto/create-company-type.dto';
 import { UpdateCompanyTypeDto } from './dto/update-company-type.dto';
@@ -17,21 +17,21 @@ export class CompanyTypeController {
 
   @Get()
   findAll() {
-    return this.companyTypeService.findAll();
+    return this.companyTypeService.getAll();
   }
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.companyTypeService.findOne(+id);
+    return this.companyTypeService.findOneByIdOrThrow(id);
   }
 
-  @Patch(':id')
+  @Put(':id')
   update(@Param('id') id: string, @Body() updateCompanyTypeDto: UpdateCompanyTypeDto) {
-    return this.companyTypeService.update(+id, updateCompanyTypeDto);
+    return this.companyTypeService.update(id, updateCompanyTypeDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.companyTypeService.remove(+id);
+    return this.companyTypeService.remove(id);
   }
 }
