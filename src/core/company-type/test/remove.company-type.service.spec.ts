@@ -2,10 +2,10 @@ import { BadRequestException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { CompanyTypeService } from '../company-type.service';
-import { CompanyTypeEntity } from '../entities/company-type.entity';
+import { CompanyTypeService } from '../../company-type/company-type.service';
+import { CompanyTypeEntity } from '../../company-type/entities/company-type.entity';
 
-import companyTypeMock from './company-type.mock';
+import companyTypeMock from '../../../shared/mock/company-type.mock';
 
 describe('Create CompanyTypeService', () => {
   let service: CompanyTypeService;

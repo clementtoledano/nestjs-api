@@ -23,12 +23,12 @@ export class CompanyController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.companyService.findOne(+id);
+    return this.companyService.findOneByIdOrThrow(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateCompanyDto: UpdateCompanyDto) {
-    return this.companyService.update(+id, updateCompanyDto);
+    return this.companyService.update(id, updateCompanyDto);
   }
 
   @Delete(':id')

@@ -7,7 +7,7 @@ import { UserService } from '../user.service';
 import { AuthService } from '../../auth/auth.service';
 import { HttpException } from '@nestjs/common';
 
-import userMock from './user.mock';
+import userMock from '../../../shared/mock/user.mock';
 
 describe('UserService', () => {
     let service: UserService;

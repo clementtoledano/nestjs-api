@@ -1,23 +1,24 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { Repository } from 'typeorm';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { CompanyTypeEntity } from '../../company-type/entities/company-type.entity';
-import { CompanyTypeService } from '../../company-type/company-type.service';
-import companyTypeMock from '../../../shared/mock/company-type.mock';
+
+
+import companyMock from '../../../shared/mock/company.mock';
+import { CompanyService } from '../company.service';
+import { CompanyEntity } from '../entities/company.entity';
 
 
 
-
-describe('GetOne CompanyTypeService', () => {
-    let service: CompanyTypeService;
-    let repositoryMock: Repository<CompanyTypeEntity>;
+describe('GetOne CompanyService', () => {
+    let service: CompanyService;
+    let repositoryMock: Repository<CompanyEntity>;
 
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
             providers: [
-                CompanyTypeService,
+                CompanyService,
                 {
-                    provide: getRepositoryToken(CompanyTypeEntity),
+                    provide: getRepositoryToken(CompanyEntity),
                     useValue: {
                         // find: jest.fn().mockResolvedValue([]),
                         // findOneOrFail: jest.fn().mockResolvedValue({}),
@@ -30,18 +31,18 @@ describe('GetOne CompanyTypeService', () => {
                 },],
         }).compile();
 
-        service = module.get<CompanyTypeService>(CompanyTypeService);
-        repositoryMock = module.get<Repository<CompanyTypeEntity>>(getRepositoryToken(CompanyTypeEntity));
+        service = module.get<CompanyService>(CompanyService);
+        repositoryMock = module.get<Repository<CompanyEntity>>(getRepositoryToken(CompanyEntity));
 
     });
 
     describe('getOne', () => {
         it('should find one user', async () => {
-            const companyType: CompanyTypeEntity = companyTypeMock;
+            const company: CompanyEntity = companyMock;
 
-            jest.spyOn(repositoryMock, 'findOne').mockResolvedValue(companyType);
+            jest.spyOn(repositoryMock, 'findOne').mockResolvedValue(company);
 
-            expect(await service.findOneByIdOrThrow(companyType.id)).toEqual(companyType);
+            expect(await service.findOneByIdOrThrow(company.id)).toEqual(company);
 
             expect(repositoryMock.findOne).toBeCalled();
         });

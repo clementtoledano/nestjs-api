@@ -24,7 +24,7 @@ export class CompanyTypeService {
     }
   }
 
-  async getAll(): Promise<CompanyTypeI[]> {
+  async findAll(): Promise<CompanyTypeI[]> {
     const companyTypes = await this.companyTypeRepository.find();
     return companyTypes;
   }

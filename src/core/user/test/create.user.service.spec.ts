@@ -6,7 +6,7 @@ import { UserService } from '../user.service';
 import { AuthService } from '../../auth/auth.service';
 import { BadRequestException, HttpException } from '@nestjs/common';
 
-import userMock from './user.mock';
+import userMock from '../../../shared/mock/user.mock';
 
 
 describe('CreateUserService', () => {

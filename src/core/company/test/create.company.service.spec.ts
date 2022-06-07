@@ -1,11 +1,13 @@
-import { BadRequestException } from '@nestjs/common';
+import { BadRequestException, HttpException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
 import { CompanyTypeService } from '../../company-type/company-type.service';
 import { CompanyTypeEntity } from '../../company-type/entities/company-type.entity';
-
 import companyTypeMock from '../../../shared/mock/company-type.mock';
+import { Repository } from 'typeorm';
+
+
+
 
 describe('Create CompanyTypeService', () => {
   let service: CompanyTypeService;
@@ -23,7 +25,7 @@ describe('Create CompanyTypeService', () => {
             findOne: jest.fn().mockResolvedValue({}),
             create: jest.fn().mockReturnValue({}),
             save: jest.fn(),
-            update: jest.fn().mockResolvedValue(true),
+            // update: jest.fn().mockResolvedValue(true),
             // delete: jest.fn().mockResolvedValue(true),
           },
         },],
@@ -38,44 +40,39 @@ describe('Create CompanyTypeService', () => {
     expect(service).toBeDefined();
   });
 
+  describe('create', () => {
 
-  it('throws an error no data provided', async () => {
-    const { id, ...emptyType }: CompanyTypeEntity = new CompanyTypeEntity();
+    it('throws an error no email provided', async () => {
+      const emptyUser: CompanyTypeEntity = new CompanyTypeEntity();
 
-    try {
-      await service.update(id, emptyType);
-    } catch (e) {
-      expect(e).toBeInstanceOf(BadRequestException);
-    }
+      try {
+        await service.create(emptyUser);
+      } catch (e) {
+        expect(e).toBeInstanceOf(BadRequestException);
+      }
+    });
+
+    it('throws an error when email allready exist', async () => {
+      jest.spyOn(repositoryMock, 'save').mockResolvedValueOnce(companyTypeMock);
+
+      try {
+        await service.create(companyTypeMock);
+      } catch (e) {
+        expect(e).toBeInstanceOf(HttpException);
+        expect(e.message).toBe('Code already exist');
+      }
+    });
+
+
+    it('should create company type', async () => {
+
+      jest.spyOn(repositoryMock, 'save').mockResolvedValueOnce(companyTypeMock);
+      expect(await service.create(companyTypeMock)).toEqual(companyTypeMock);
+      expect(repositoryMock.save).toBeCalled();
+    });
   });
 
-  it('throws an error when no id', async () => {
-
-    try {
-      await service.update(companyTypeMock.id, companyTypeMock);
-    } catch (e) {
-      expect(e).toBeInstanceOf(BadRequestException);
-    }
-  });
 
 
-  it('should create company type', async () => {
 
-    const newCompanyType: CompanyTypeEntity = {
-      id: companyTypeMock.id,
-      code: 'XXXX',
-      name: 'blabla',
-    }
-
-    const { id, code, name } = newCompanyType
-
-    jest.spyOn(repositoryMock, 'save').mockResolvedValueOnce(companyTypeMock);
-    expect(await service.update(id, { code, name })).toEqual(companyTypeMock);
-    expect(repositoryMock.save).toBeCalled();
-    expect(repositoryMock.create).toBeCalled();
-  });
 });
-
-
-
-

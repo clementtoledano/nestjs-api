@@ -6,7 +6,7 @@ import { UserEntity } from '../entities/user.entity';
 import { UserService } from '../user.service';
 import { AuthService } from '../../auth/auth.service';
 
-import userMock from './user.mock';
+import userMock from '../../../shared/mock/user.mock';
 
 
 describe('UserService', () => {

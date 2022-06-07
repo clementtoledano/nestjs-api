@@ -1,6 +1,6 @@
-import { RoleEnum } from "../../role/role.enum";
-import { StatusEnum } from "../../status/status.enum";
-import { UserEntity } from "../entities/user.entity";
+import { RoleEnum } from "../../core/role/role.enum";
+import { StatusEnum } from "../../core/status/status.enum";
+import { UserEntity } from "../../core/user/entities/user.entity";
 import * as bcrypt from 'bcrypt';
 
 

@@ -17,7 +17,7 @@ export class CompanyTypeController {
 
   @Get()
   findAll() {
-    return this.companyTypeService.getAll();
+    return this.companyTypeService.findAll();
   }
 
   @Get(':id')

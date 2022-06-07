@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { Repository } from 'typeorm';
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { CompanyTypeEntity } from '../entities/company-type.entity';
-import { CompanyTypeService } from '../company-type.service';
-import companyTypeMock from './company-type.mock';
+import { CompanyTypeEntity } from '../../company-type/entities/company-type.entity';
+import { CompanyTypeService } from '../../company-type/company-type.service';
+import companyTypeMock from '../../../shared/mock/company-type.mock';
 
 
 
@@ -35,7 +35,7 @@ describe('GetAll CompanyTypeService', () => {
 
     });
 
-    describe('getAll', () => {
+    describe('findAll', () => {
         it('should find all users', async () => {
             const companyTypes: CompanyTypeEntity[] = [
                 companyTypeMock,
@@ -48,9 +48,9 @@ describe('GetAll CompanyTypeService', () => {
                 }];
             jest.spyOn(repositoryMock, 'find').mockResolvedValue(companyTypes);
 
-            expect(await service.getAll()).toEqual(companyTypes);
+            expect(await service.findAll()).toEqual(companyTypes);
 
-            expect(await service.getAll()).toHaveLength(2);
+            expect(await service.findAll()).toHaveLength(2);
 
             expect(repositoryMock.find).toBeCalled();
 

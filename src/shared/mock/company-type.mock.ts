@@ -1,4 +1,4 @@
-import { CompanyTypeEntity } from "../entities/company-type.entity";
+import { CompanyTypeEntity } from "../../core/company-type/entities/company-type.entity";
 
 
 const companyTypeMock: CompanyTypeEntity = {

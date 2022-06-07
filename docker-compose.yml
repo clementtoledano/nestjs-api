@@ -5,7 +5,6 @@ services:
     build: 
       context: .
       dockerfile: Dockerfile
-          # Only build development stage from Dockerfile
       target: ${NODE_ENV}
     environment: 
       - DATABASE_TYPE=${DATABASE_TYPE}
@@ -30,14 +29,11 @@ services:
       - /root/app/node_modules
     # command: npm run dev
   
-  # Our Postgres Database for NestJS to connect to
   postgres:
     image: postgres:alpine
     restart: always
     ports:
       - ${DATABASE_PORT}:5432
-    expose:
-      - "35000:5432"
     environment: 
       - POSTGRES_USER=${DATABASE_USER}
       - POSTGRES_PASSWORD=${DATABASE_PASSWORD}

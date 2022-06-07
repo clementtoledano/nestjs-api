@@ -7,8 +7,8 @@ import { AuthService } from '../auth.service';
 import { UserEntity } from '../../user/entities/user.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { HttpException } from '@nestjs/common';
+import userMock from '../../../shared/mock/user.mock';
 
-import userMock from '../../user/test/user.mock'
 
 
 describe('AuthService', () => {
