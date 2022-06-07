@@ -1,14 +1,14 @@
 import { BadRequestException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
+
+import { CompanyService } from '../company.service';
+import { CompanyEntity, CompanyRepositoryFake } from '../entities/company.entity';
+
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { CompanyService } from '../company.service';
-import { CompanyEntity } from '../entities/company.entity';
-import { CompanyTypeEntity } from 'src/core/company-type/entities/company-type.entity';
-import { UserEntity } from 'src/core/user/entities/user.entity';
 
-import companyMock from '../../../shared/mock/company.mock';
+import dataMock from '../../../shared/mock/company.mock';
 
 describe('Create CompanyService', () => {
   let service: CompanyService;
@@ -20,15 +20,8 @@ describe('Create CompanyService', () => {
         CompanyService,
         {
           provide: getRepositoryToken(CompanyEntity),
-          useValue: {
-            // find: jest.fn().mockResolvedValue([]),
-            // findOneOrFail: jest.fn().mockResolvedValue({}),
-            findOne: jest.fn().mockResolvedValue({}),
-            create: jest.fn().mockReturnValue({}),
-            save: jest.fn(),
-            update: jest.fn().mockResolvedValue(true),
-            // delete: jest.fn().mockResolvedValue(true),
-          },
+          useClass: CompanyRepositoryFake
+
         },],
     }).compile();
 
@@ -55,41 +48,51 @@ describe('Create CompanyService', () => {
   it('throws an error when no id', async () => {
 
     try {
-      await service.update(companyMock.id, companyMock);
+      await service.update(dataMock.id, dataMock);
     } catch (e) {
       expect(e).toBeInstanceOf(BadRequestException);
     }
   });
 
 
-//   it('should update company ', async () => {
-    
+  it('should update company', async () => {
+    const address = '20 rue du chateau';
 
-// // const { id, ...companyMock }: CompanyEntity = companyMock;
+    const newCompany: CompanyEntity = {
+      ...dataMock,
+      address
+    }
+    const savedCompany = { ...newCompany }
 
-//     jest.spyOn(repositoryMock, 'save').mockResolvedValueOnce(companyMock);
-//     const newCompany: CompanyEntity = {
-//       id: '',
-//       address: '20 rue du chateau',
-//       label: '',
-//       description: '',
-//       siretNumber: '',
-//       city: '',
-//       region: '',
-//       zipcode: '',
-//       country: '',
-//       phone: '',
-//       email: '',
-//       user: new UserEntity,
-//       companyType: new CompanyTypeEntity
-//     }
 
-//     const { id, address, ...newCompany } = newCompany
+    const companyServiceFindOneByIdOrThrowSpy = jest
+      .spyOn(service, 'findOneByIdOrThrow')
+      .mockResolvedValue(dataMock);
 
-//     expect(await service.update(id, { address, ...companyMock })).toEqual(companyMock);
-//     expect(repositoryMock.save).toBeCalled();
-//     expect(repositoryMock.create).toBeCalled();
-//   });
+    const companyRepositoryCreateSpy = jest
+      .spyOn(repositoryMock, 'create')
+      .mockReturnValue(newCompany);
+
+    const companyRepositorySaveSpy = jest
+      .spyOn(repositoryMock, 'save')
+      .mockResolvedValue(savedCompany);
+
+
+    const result = await service.update(newCompany.id, newCompany);
+
+    expect(companyServiceFindOneByIdOrThrowSpy).toHaveBeenCalledWith(
+      newCompany.id,
+    );
+
+    expect(companyRepositoryCreateSpy).toHaveBeenCalledWith({
+      ...dataMock,
+      address,
+    });
+
+    expect(companyRepositorySaveSpy).toHaveBeenCalledWith(newCompany);
+    expect(result).toEqual(savedCompany);
+
+  });
 });
 
 

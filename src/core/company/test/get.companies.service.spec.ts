@@ -1,11 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
-import { CompanyEntity } from '../entities/company.entity';
+import { CompanyEntity, CompanyRepositoryFake } from '../entities/company.entity';
 import { CompanyService } from '../company.service';
-import companyMock from '../../../shared/mock/company.mock';
-import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { getRepositoryToken } from '@nestjs/typeorm';
 
+import dataMock from '../../../shared/mock/company.mock';
 
 
 
@@ -19,15 +19,7 @@ describe('GetAll CompanyService', () => {
                 CompanyService,
                 {
                     provide: getRepositoryToken(CompanyEntity),
-                    useValue: {
-                        find: jest.fn().mockResolvedValue([]),
-                        // findOneOrFail: jest.fn().mockResolvedValue({}),
-                        //   findOne: jest.fn().mockResolvedValue({}),
-                        //   create: jest.fn().mockReturnValue({}),
-                        //   save: jest.fn(),
-                        // update: jest.fn().mockResolvedValue(true),
-                        // delete: jest.fn().mockResolvedValue(true),
-                    },
+                    useClass: CompanyRepositoryFake
                 },],
         }).compile();
 
@@ -39,10 +31,10 @@ describe('GetAll CompanyService', () => {
     describe('getAll', () => {
         it('should find all users', async () => {
             const companys: CompanyEntity[] = [
-                companyMock,
+                dataMock,
                 {
-                    id: '4214532',
-                    ...companyMock
+                    ...dataMock,
+                    id: '4214532'
                 }];
             jest.spyOn(repositoryMock, 'find').mockResolvedValue(companys);
 

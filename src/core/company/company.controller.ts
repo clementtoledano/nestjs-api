@@ -33,6 +33,6 @@ export class CompanyController {
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.companyService.remove(+id);
+    return this.companyService.remove(id);
   }
 }

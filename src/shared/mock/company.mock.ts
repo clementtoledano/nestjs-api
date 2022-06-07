@@ -1,9 +1,10 @@
 import userMock from './user.mock';
 import companyTypeMock from './company-type.mock';
 import { CompanyEntity } from '../../core/company/entities/company.entity';
+import { faker } from '@faker-js/faker';
 
 const companyMock: CompanyEntity = {
-    id: '98755642',
+    id: faker.datatype.uuid(),
     label: 'Brasserie Malpest',
     description: 'Production de bière artisanale',
     siretNumber: '84777094800028',
@@ -19,7 +20,7 @@ const companyMock: CompanyEntity = {
     instagram: 'www.instagram.fr',
     linkedin: 'www.linkedin.fr',
     user: userMock,
-    companyType: companyTypeMock,    
+    companyType: companyTypeMock,
 };
 
 export default companyMock;

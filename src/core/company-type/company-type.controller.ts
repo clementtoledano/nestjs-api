@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Put } from '@nestjs/common';
 import { CompanyTypeService } from './company-type.service';
 import { CreateCompanyTypeDto } from './dto/create-company-type.dto';
 import { UpdateCompanyTypeDto } from './dto/update-company-type.dto';

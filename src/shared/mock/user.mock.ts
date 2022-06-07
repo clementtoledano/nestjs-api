@@ -2,10 +2,11 @@ import { RoleEnum } from "../../core/role/role.enum";
 import { StatusEnum } from "../../core/status/status.enum";
 import { UserEntity } from "../../core/user/entities/user.entity";
 import * as bcrypt from 'bcrypt';
+import { faker } from '@faker-js/faker';
 
 
 const userMock: UserEntity = {
-    id: '123123123',
+    id: faker.datatype.uuid(),
     firstname: 'clem',
     lastname: 'tol',
     email: 'clem.tol@example.com',

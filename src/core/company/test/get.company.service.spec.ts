@@ -1,17 +1,18 @@
+import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { Repository } from 'typeorm';
 import { getRepositoryToken } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
 
-import companyMock from '../../../shared/mock/company.mock';
 import { CompanyService } from '../company.service';
-import { CompanyEntity } from '../entities/company.entity';
+import { CompanyEntity, CompanyRepositoryFake } from '../entities/company.entity';
 
+import dataMock from '../../../shared/mock/company.mock';
 
 
 describe('GetOne CompanyService', () => {
     let service: CompanyService;
-    let repositoryMock: Repository<CompanyEntity>;
+    let repository: Repository<CompanyEntity>;
 
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
@@ -19,32 +20,48 @@ describe('GetOne CompanyService', () => {
                 CompanyService,
                 {
                     provide: getRepositoryToken(CompanyEntity),
-                    useValue: {
-                        // find: jest.fn().mockResolvedValue([]),
-                        // findOneOrFail: jest.fn().mockResolvedValue({}),
-                        findOne: jest.fn().mockResolvedValue({}),
-                        //   create: jest.fn().mockReturnValue({}),
-                        //   save: jest.fn(),
-                        // update: jest.fn().mockResolvedValue(true),
-                        // delete: jest.fn().mockResolvedValue(true),
-                    },
+                    useClass: CompanyRepositoryFake
                 },],
         }).compile();
 
         service = module.get<CompanyService>(CompanyService);
-        repositoryMock = module.get<Repository<CompanyEntity>>(getRepositoryToken(CompanyEntity));
+        repository = module.get<Repository<CompanyEntity>>(getRepositoryToken(CompanyEntity));
 
     });
 
-    describe('getOne', () => {
-        it('should find one user', async () => {
-            const company: CompanyEntity = companyMock;
+    describe('finding a company', () => {
+        it('throws an error when a company doesnt exist', async () => {
 
-            jest.spyOn(repositoryMock, 'findOne').mockResolvedValue(company);
+            const repositoryFindOneSpy = jest
+                .spyOn(repository, 'findOne')
+                .mockResolvedValue(null);
 
-            expect(await service.findOneByIdOrThrow(company.id)).toEqual(company);
+            expect.assertions(3);
 
-            expect(repositoryMock.findOne).toBeCalled();
+            try {
+                await service.findOneByIdOrThrow(dataMock.id);
+            } catch (e) {
+                expect(e).toBeInstanceOf(NotFoundException);
+                expect(e.message).toBe('No company found.');
+            }
+
+            expect(repositoryFindOneSpy).toHaveBeenCalledWith({
+                id: dataMock.id,
+            });
+        });
+
+        it('returns the found company', async () => {
+
+            const repositoryFindOneSpy = jest
+                .spyOn(repository, 'findOne')
+                .mockResolvedValue(dataMock);
+
+            const result = await service.findOneByIdOrThrow(dataMock.id);
+
+            expect(result).toBe(dataMock);
+            expect(repositoryFindOneSpy).toHaveBeenCalledWith({
+                id: dataMock.id,
+            });
         });
     });
 });

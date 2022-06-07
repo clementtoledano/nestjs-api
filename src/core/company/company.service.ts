@@ -16,7 +16,7 @@ export class CompanyService {
       throw new HttpException('Company allready exist', HttpStatus.CONFLICT);
 
     }
-    }
+  }
 
   async findAll() {
     const user = await this.companyRepository.find();
@@ -27,12 +27,13 @@ export class CompanyService {
     const company = await this.companyRepository.findOne({ id });
 
     if (!company) {
-      throw new NotFoundException('No company  found.');
+      throw new NotFoundException('No company found.');
     }
     return company;
   }
 
   async update(id: string, updateCompanyDto: UpdateCompanyDto) {
+
     try {
 
       const existingCompany = await this.findOneByIdOrThrow(id);
@@ -47,7 +48,7 @@ export class CompanyService {
       return updatedCompany;
 
     } catch (error) {
-      throw new BadRequestException('No company  found.');
+      throw new BadRequestException('No company found.');
     }
   }
 

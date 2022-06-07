@@ -70,3 +70,20 @@ export class CompanyEntity extends BaseEntity {
     @ManyToOne(() => CompanyTypeEntity, { eager: true }) companyType: CompanyTypeEntity;
 }
 
+export class CompanyRepositoryFake {
+    public create(): void {
+        // do nothing.
+    }
+    public async save(): Promise<void> {
+        // do nothing.
+    }
+    public async remove(): Promise<void> {
+        // do nothing.
+    }
+    public async findOne(): Promise<void> {
+        // do nothing.
+    }
+    public async find(): Promise<void> {
+        // do nothing.
+    }
+}

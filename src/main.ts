@@ -66,4 +66,4 @@ async function bootstrap() {
   console.log('Port running on: ', port);
 }
 
-bootstrap();
+void bootstrap();

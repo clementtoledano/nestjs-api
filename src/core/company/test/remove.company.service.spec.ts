@@ -1,15 +1,14 @@
-import { BadRequestException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CompanyService } from '../company.service';
-import { CompanyEntity } from '../entities/company.entity';
+import { CompanyEntity, CompanyRepositoryFake } from '../entities/company.entity';
+import { getRepositoryToken } from '@nestjs/typeorm';
 
-import companyMock from '../../../shared/mock/company.mock';
+import dataMock from '../../../shared/mock/company.mock';
 
 describe('Create CompanyService', () => {
   let service: CompanyService;
-  let repositoryMock: Repository<CompanyEntity>;
+  let repository: Repository<CompanyEntity>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -17,43 +16,36 @@ describe('Create CompanyService', () => {
         CompanyService,
         {
           provide: getRepositoryToken(CompanyEntity),
-          useValue: {
-            // find: jest.fn().mockResolvedValue([]),
-            // findOneOrFail: jest.fn().mockResolvedValue({}),
-            findOne: jest.fn().mockResolvedValue({}),
-            // create: jest.fn().mockReturnValue({}),
-            save: jest.fn(),
-            // update: jest.fn().mockResolvedValue(true),
-            remove: jest.fn().mockResolvedValue(true),
-          },
-        },],
+          useClass: CompanyRepositoryFake
+        },
+      ],
     }).compile();
 
     service = module.get<CompanyService>(CompanyService);
-    repositoryMock = module.get<Repository<CompanyEntity>>(getRepositoryToken(CompanyEntity));
+    repository = module.get<Repository<CompanyEntity>>(getRepositoryToken(CompanyEntity));
 
   });
 
-  it('should be defined', () => {
-    expect(service).toBeDefined();
-  });
+  it('should delete company', async () => {
 
+    const serviceFindOneByIdOrThrowSpy = jest
+      .spyOn(service, 'findOneByIdOrThrow')
+      .mockResolvedValue(dataMock);
 
+    const repositoryRemoveSpy = jest
+      .spyOn(repository, 'remove')
+      .mockResolvedValue(null);
 
+    const result = await service.remove(dataMock.id);
 
+    expect(serviceFindOneByIdOrThrowSpy).toHaveBeenCalledWith(
+      dataMock.id,
+    );
 
-  it('should create company ', async () => {
+    expect(repositoryRemoveSpy).toHaveBeenCalledWith([
+      dataMock,
+    ]);
 
-    jest.spyOn(repositoryMock, 'save').mockResolvedValueOnce(companyMock);
-    jest.spyOn(service, 'findOneByIdOrThrow').mockResolvedValue(companyMock);
-
-
-
-    const result = await service.remove(companyMock.id);
-
-    expect(service.findOneByIdOrThrow).toHaveBeenCalledWith(companyMock.id);
-
-    expect(repositoryMock.remove).toBeCalled();
     expect(result).toBe(null);
 
   });
