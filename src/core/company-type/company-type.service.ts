@@ -32,7 +32,8 @@ export class CompanyTypeService {
 
   async findOneByIdOrThrow(id: string) {
     const companyType = await this.companyTypeRepository.findOne({ id });
-
+    
+		console.log('🚀: CompanyTypeService -> findOneByIdOrThrow -> companyType', companyType);
     if (!companyType) {
       throw new NotFoundException('No company type found.');
     }
