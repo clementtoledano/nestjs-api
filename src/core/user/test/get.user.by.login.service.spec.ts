@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { UserEntity } from '../entities/user.entity';
+import { UserEntity, UserRepositoryFake } from '../entities/user.entity';
 
 import { UserService } from '../user.service';
 import { AuthService } from '../../auth/auth.service';
@@ -12,7 +12,7 @@ import userMock from '../../../shared/mock/user.mock';
 describe('UserService', () => {
     let service: UserService;
     let authService: AuthService;
-    let repositoryMock: Repository<UserEntity>;
+    let repository: Repository<UserEntity>;
 
     beforeAll(async () => {
         const module: TestingModule = await Test.createTestingModule({
@@ -20,9 +20,8 @@ describe('UserService', () => {
                 UserService,
                 {
                     provide: getRepositoryToken(UserEntity),
-                    useValue: {
-                        findOne: jest.fn().mockResolvedValue(null),
-                    }
+                    useClass: UserRepositoryFake
+
                 },
                 {
                     provide: AuthService,
@@ -35,7 +34,7 @@ describe('UserService', () => {
 
         authService = module.get<AuthService>(AuthService);
         service = module.get<UserService>(UserService);
-        repositoryMock = module.get<Repository<UserEntity>>(getRepositoryToken(UserEntity));
+        repository = module.get<Repository<UserEntity>>(getRepositoryToken(UserEntity));
     });
 
 
@@ -51,7 +50,7 @@ describe('UserService', () => {
         })
 
         it('throw exeption when no password', async () => {
-            jest.spyOn(repositoryMock, 'findOne').mockResolvedValueOnce(userMock);
+            jest.spyOn(repository, 'findOne').mockResolvedValueOnce(userMock);
 
             try {
                 await service.getByLogin({ email: userMock.email, password: '' });
@@ -63,12 +62,12 @@ describe('UserService', () => {
 
         it('should find user by login', async () => {
 
-            jest.spyOn(repositoryMock, 'findOne').mockResolvedValueOnce(userMock);
+            jest.spyOn(repository, 'findOne').mockResolvedValueOnce(userMock);
             jest.spyOn(authService, 'comparePasswords').mockResolvedValueOnce({ email: userMock.email, password: 'password123' });
 
             expect(await service.getByLogin({ email: userMock.email, password: 'password123' })).toEqual(userMock);
             expect(authService.comparePasswords).toBeCalled();
-            expect(repositoryMock.findOne).toBeCalled();
+            expect(repository.findOne).toBeCalled();
 
         });
     });

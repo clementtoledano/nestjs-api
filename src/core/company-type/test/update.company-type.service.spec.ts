@@ -9,7 +9,7 @@ import companyTypeMock from '../../../shared/mock/company-type.mock';
 
 describe('Create CompanyTypeService', () => {
   let service: CompanyTypeService;
-  let repositoryMock: Repository<CompanyTypeEntity>;
+  let repository: Repository<CompanyTypeEntity>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -30,7 +30,7 @@ describe('Create CompanyTypeService', () => {
     }).compile();
 
     service = module.get<CompanyTypeService>(CompanyTypeService);
-    repositoryMock = module.get<Repository<CompanyTypeEntity>>(getRepositoryToken(CompanyTypeEntity));
+    repository = module.get<Repository<CompanyTypeEntity>>(getRepositoryToken(CompanyTypeEntity));
 
   });
 
@@ -69,10 +69,10 @@ describe('Create CompanyTypeService', () => {
 
     const { id, code, name } = newCompanyType
 
-    jest.spyOn(repositoryMock, 'save').mockResolvedValueOnce(companyTypeMock);
+    jest.spyOn(repository, 'save').mockResolvedValueOnce(companyTypeMock);
     expect(await service.update(id, { code, name })).toEqual(companyTypeMock);
-    expect(repositoryMock.save).toBeCalled();
-    expect(repositoryMock.create).toBeCalled();
+    expect(repository.save).toBeCalled();
+    expect(repository.create).toBeCalled();
   });
 });
 

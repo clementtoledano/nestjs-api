@@ -7,7 +7,7 @@ import { AuthService } from '../auth.service';
 import { UserEntity } from '../../user/entities/user.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { HttpException } from '@nestjs/common';
-import userMock from '../../../shared/mock/user.mock';
+import dataMock from '../../../shared/mock/user.mock';
 
 
 
@@ -24,7 +24,7 @@ describe('AuthService', () => {
         {
           provide: getRepositoryToken(UserEntity),
           useValue: {
-            findOne: jest.fn().mockResolvedValue(userMock),
+            findOne: jest.fn().mockResolvedValue(dataMock),
           }
           ,
         },
@@ -38,7 +38,7 @@ describe('AuthService', () => {
   it('throw an error', async () => {
 
     try {
-      await service.validateUser({ exp: 0, iat: 0, user: userMock })
+      await service.validateUser({ exp: 0, iat: 0, user: dataMock })
 
     } catch (e) {
       expect(e).toBeInstanceOf(HttpException);
@@ -50,7 +50,7 @@ describe('AuthService', () => {
 
   it('should be validate user', async () => {
 
-    expect(await service.validateUser({ exp: 0, iat: 0, user: userMock })).toEqual(userMock);
+    expect(await service.validateUser({ exp: 0, iat: 0, user: dataMock })).toEqual(dataMock);
 
     expect(service).toBeDefined();
 

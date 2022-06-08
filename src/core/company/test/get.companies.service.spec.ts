@@ -11,7 +11,7 @@ import dataMock from '../../../shared/mock/company.mock';
 
 describe('GetAll CompanyService', () => {
     let service: CompanyService;
-    let repositoryMock: Repository<CompanyEntity>;
+    let repository: Repository<CompanyEntity>;
 
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
@@ -24,7 +24,7 @@ describe('GetAll CompanyService', () => {
         }).compile();
 
         service = module.get<CompanyService>(CompanyService);
-        repositoryMock = module.get<Repository<CompanyEntity>>(getRepositoryToken(CompanyEntity));
+        repository = module.get<Repository<CompanyEntity>>(getRepositoryToken(CompanyEntity));
 
     });
 
@@ -36,13 +36,13 @@ describe('GetAll CompanyService', () => {
                     ...dataMock,
                     id: '4214532'
                 }];
-            jest.spyOn(repositoryMock, 'find').mockResolvedValue(companys);
+            jest.spyOn(repository, 'find').mockResolvedValue(companys);
 
             expect(await service.findAll()).toEqual(companys);
 
             expect(await service.findAll()).toHaveLength(2);
 
-            expect(repositoryMock.find).toBeCalled();
+            expect(repository.find).toBeCalled();
 
         });
     });

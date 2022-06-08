@@ -12,7 +12,7 @@ import dataMock from '../../../shared/mock/company.mock';
 
 describe('Create CompanyService', () => {
   let service: CompanyService;
-  let repositoryMock: Repository<CompanyEntity>;
+  let repository: Repository<CompanyEntity>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -26,7 +26,7 @@ describe('Create CompanyService', () => {
     }).compile();
 
     service = module.get<CompanyService>(CompanyService);
-    repositoryMock = module.get<Repository<CompanyEntity>>(getRepositoryToken(CompanyEntity));
+    repository = module.get<Repository<CompanyEntity>>(getRepositoryToken(CompanyEntity));
 
   });
 
@@ -66,11 +66,11 @@ describe('Create CompanyService', () => {
       .mockResolvedValue(dataMock);
 
     const companyRepositoryCreateSpy = jest
-      .spyOn(repositoryMock, 'create')
+      .spyOn(repository, 'create')
       .mockReturnValue(newCompany);
 
     const companyRepositorySaveSpy = jest
-      .spyOn(repositoryMock, 'save')
+      .spyOn(repository, 'save')
       .mockResolvedValue(savedCompany);
 
 

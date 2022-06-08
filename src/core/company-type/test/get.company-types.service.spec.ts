@@ -10,7 +10,7 @@ import companyTypeMock from '../../../shared/mock/company-type.mock';
 
 describe('GetAll CompanyTypeService', () => {
     let service: CompanyTypeService;
-    let repositoryMock: Repository<CompanyTypeEntity>;
+    let repository: Repository<CompanyTypeEntity>;
 
     beforeEach(async () => {
         const module: TestingModule = await Test.createTestingModule({
@@ -31,7 +31,7 @@ describe('GetAll CompanyTypeService', () => {
         }).compile();
 
         service = module.get<CompanyTypeService>(CompanyTypeService);
-        repositoryMock = module.get<Repository<CompanyTypeEntity>>(getRepositoryToken(CompanyTypeEntity));
+        repository = module.get<Repository<CompanyTypeEntity>>(getRepositoryToken(CompanyTypeEntity));
 
     });
 
@@ -46,13 +46,13 @@ describe('GetAll CompanyTypeService', () => {
 
 
                 }];
-            jest.spyOn(repositoryMock, 'find').mockResolvedValue(companyTypes);
+            jest.spyOn(repository, 'find').mockResolvedValue(companyTypes);
 
             expect(await service.findAll()).toEqual(companyTypes);
 
             expect(await service.findAll()).toHaveLength(2);
 
-            expect(repositoryMock.find).toBeCalled();
+            expect(repository.find).toBeCalled();
 
         });
     });
