@@ -4,7 +4,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { TypeOrmConfigService } from './database/typeorm-config.service';
 import { CoreModule } from './core/core.module';
-import { SharedModule } from './shared/shared.module';
 
 import appConfig from './config/app.config';
 import databaseConfig from './config/database.config';
@@ -33,7 +32,6 @@ import { AuthMiddleware } from './middleware/auth.middleware';
       resolvers: [new HeaderResolver(['x-custom-lang'])],
       inject: [ConfigService],
     }),
-    SharedModule,
     CoreModule,
   ],
   providers: [],

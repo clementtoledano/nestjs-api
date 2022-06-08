@@ -1,8 +1,8 @@
 import { Column, Entity, ManyToOne, Unique } from "typeorm";
 import { ApiProperty } from "@nestjs/swagger";
-import { BaseEntity } from "../../base.entity";
 import { CompanyTypeEntity } from "../../company-type/entities/company-type.entity";
 import { UserEntity } from "../../user/entities/user.entity";
+import { BaseEntity } from "../../../shared/base.entity";
 
 
 

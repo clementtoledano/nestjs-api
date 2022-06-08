@@ -1,8 +1,8 @@
 import { Entity, Column, BeforeInsert, ManyToOne } from 'typeorm';
 import * as bcrypt from 'bcrypt';
-import { BaseEntity } from '../../base.entity';
 import { RoleEntity } from '../../role/entities/role.entity';
 import { StatusEntity } from '../../status/entities/status.entity';
+import { BaseEntity } from '../../../shared/base.entity';
 
 @Entity('user')
 export class UserEntity extends BaseEntity {

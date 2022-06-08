@@ -1,7 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Allow } from "class-validator";
-import { BaseEntity } from "../../base.entity";
 import { Column, Entity } from "typeorm";
+import { BaseEntity } from '../../../shared/base.entity';
 
 
 @Entity('company_type')
