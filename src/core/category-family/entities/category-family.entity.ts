@@ -1,24 +1,23 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { Allow } from "class-validator";
-import { Column, Entity } from "typeorm";
-import { BaseEntity } from '../../../shared/base.entity';
+import { BaseEntity } from "../../../shared/base.entity";
+import { Column, Entity, Unique } from "typeorm";
 
 
-@Entity('company_type')
-export class CompanyTypeEntity extends BaseEntity {
+@Unique(["name"])
+@Entity('category_family')
+export class CategoryFamilyEntity extends BaseEntity {
+
 
     @Allow() //si rien de mieux
-    @ApiProperty({ example: '5630Z' })
-    @Column({ unique: true, })
-    code: string;
-
-    @Allow() //si rien de mieux
-    @ApiProperty({ example: 'Débits de boissons' })
+    @ApiProperty({ example: 'Boison alcoolisée' })
     @Column()
     name: string;
+
+
 }
 
-export class CompanyTypeRepositoryFake {
+export class CategoryFamilyRepositoryFake {
     public create(): void {
         // do nothing.
     }

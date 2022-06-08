@@ -30,10 +30,6 @@ describe('Create CompanyService', () => {
 
   });
 
-  it('should be defined', () => {
-    expect(service).toBeDefined();
-  });
-
 
   it('throws an error no data provided', async () => {
     const { id, ...emptyCompany }: CompanyEntity = new CompanyEntity();
