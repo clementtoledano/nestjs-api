@@ -4,7 +4,7 @@ import { Connection } from 'typeorm';
 import { Factory, Seeder } from 'typeorm-seeding';
 
 
-export default class CreateCFamily implements Seeder {
+export default class CreateFamily implements Seeder {
     public async run(factory: Factory, connection: Connection): Promise<void> {
         const count = await connection.createQueryBuilder().select().from(FamilyEntity, 'CatagoryFamily').getCount();
 
