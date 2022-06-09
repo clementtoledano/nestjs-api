@@ -1,5 +1,5 @@
 import { plainToClass } from 'class-transformer';
-import { CompanyTypeEntity } from 'src/core/company-type/entities/company-type.entity';
+import { CodeNafEntity } from 'src/core/code-naf/entities/code-naf.entity';
 import { UserEntity } from 'src/core/user/entities/user.entity';
 import { Connection } from 'typeorm';
 import { Factory, Seeder } from 'typeorm-seeding';
@@ -19,9 +19,9 @@ export default class CreateCompany implements Seeder {
 
         const brasserie = await connection
             .createQueryBuilder()
-            .select('companyType')
-            .from(CompanyTypeEntity, 'companyType')
-            .where('companyType.code = :code', { code: '5630Z' })
+            .select('codeNaf')
+            .from(CodeNafEntity, 'codeNaf')
+            .where('codeNaf.code = :code', { code: '5630Z' })
             .getOne();
 
         if (count === 0) {
@@ -46,7 +46,7 @@ export default class CreateCompany implements Seeder {
                         instagram: 'www.instagram.fr',
                         linkedin: 'www.linkedin.fr',
                         user: user.id,
-                        companyType: brasserie.id,
+                        codeNaf: brasserie.id,
                     }),
                 ])
                 .execute();

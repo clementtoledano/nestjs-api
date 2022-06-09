@@ -1,23 +1,23 @@
 import { plainToClass } from 'class-transformer';
-import { CategoryFamilyEntity } from 'src/core/category-family/entities/category-family.entity';
+import { FamilyEntity } from 'src/core/family/entities/family.entity';
 import { Connection } from 'typeorm';
 import { Factory, Seeder } from 'typeorm-seeding';
 
 
-export default class CreateCategoryFamily implements Seeder {
+export default class CreateCFamily implements Seeder {
     public async run(factory: Factory, connection: Connection): Promise<void> {
-        const count = await connection.createQueryBuilder().select().from(CategoryFamilyEntity, 'CatagoryFamily').getCount();
+        const count = await connection.createQueryBuilder().select().from(FamilyEntity, 'CatagoryFamily').getCount();
 
         if (count === 0) {
             await connection
                 .createQueryBuilder()
                 .insert()
-                .into(CategoryFamilyEntity)
+                .into(FamilyEntity)
                 .values([
-                    plainToClass(CategoryFamilyEntity, { name: 'Boisson alcoolisée' }),
-                    plainToClass(CategoryFamilyEntity, { name: 'Boisson sans alcool' }),
-                    plainToClass(CategoryFamilyEntity, { name: 'Epicerie salée' }),
-                    plainToClass(CategoryFamilyEntity, { name: 'Epicerie sucrée' }),
+                    plainToClass(FamilyEntity, { name: 'Boisson alcoolisée' }),
+                    plainToClass(FamilyEntity, { name: 'Boisson sans alcool' }),
+                    plainToClass(FamilyEntity, { name: 'Epicerie salée' }),
+                    plainToClass(FamilyEntity, { name: 'Epicerie sucrée' }),
                 ])
                 .execute();
         }

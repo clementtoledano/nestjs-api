@@ -1,31 +1,29 @@
 import { BadRequestException, HttpException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-
-import { Repository } from 'typeorm';
-import { CompanyEntity, CompanyRepositoryFake } from '../entities/company.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 
-import dataMock from '../../../shared/mock/company.mock';
-import { CompanyService } from '../company.service';
+import dataMock from '../../../shared/mock/family.mock'
+import { FamilyEntity, FamilyRepositoryFake } from '../entities/family.entity';
+import { FamilyService } from '../family.service';
 
 
-
-describe('Create CompanyService', () => {
-  let service: CompanyService;
-  let repository: Repository<CompanyEntity>;
+describe('Create FamilyService', () => {
+  let service: FamilyService;
+  let repository: Repository<FamilyEntity>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        CompanyService,
+        FamilyService,
         {
-          provide: getRepositoryToken(CompanyEntity),
-          useClass: CompanyRepositoryFake
+          provide: getRepositoryToken(FamilyEntity),
+          useClass: FamilyRepositoryFake
         },],
     }).compile();
 
-    service = module.get<CompanyService>(CompanyService);
-    repository = module.get<Repository<CompanyEntity>>(getRepositoryToken(CompanyEntity));
+    service = module.get<FamilyService>(FamilyService);
+    repository = module.get<Repository<FamilyEntity>>(getRepositoryToken(FamilyEntity));
 
   });
 
@@ -35,17 +33,17 @@ describe('Create CompanyService', () => {
 
   describe('create', () => {
 
-    it('throws an error no email provided', async () => {
-      const emptyUser: CompanyEntity = new CompanyEntity();
+    it('throws an error no data provided', async () => {
+      const emptyFamily: FamilyEntity = new FamilyEntity();
 
       try {
-        await service.create(emptyUser);
+        await service.create(emptyFamily);
       } catch (e) {
         expect(e).toBeInstanceOf(BadRequestException);
       }
     });
 
-    it('throws an error when code allready exist', async () => {
+    it('throws an error when data allready exist', async () => {
       jest.spyOn(repository, 'save').mockResolvedValueOnce(dataMock);
 
       try {
@@ -57,7 +55,7 @@ describe('Create CompanyService', () => {
     });
 
 
-    it('should create company', async () => {
+    it('should create family', async () => {
 
       jest.spyOn(repository, 'save').mockResolvedValueOnce(dataMock);
       expect(await service.create(dataMock)).toEqual(dataMock);

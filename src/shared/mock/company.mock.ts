@@ -1,5 +1,5 @@
 import userMock from './user.mock';
-import companyTypeMock from './company-type.mock';
+import codeNafMock from './codeNaf.mock';
 import { CompanyEntity } from '../../core/company/entities/company.entity';
 // import { faker } from '@faker-js/faker';
 
@@ -22,7 +22,7 @@ const companyMock: CompanyEntity = {
     instagram: 'www.instagram.fr',
     linkedin: 'www.linkedin.fr',
     user: userMock,
-    companyType: companyTypeMock,
+    codeNaf: codeNafMock,
 };
 
 export default companyMock;

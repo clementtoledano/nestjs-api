@@ -1,4 +1,4 @@
-import { CompanyTypeI } from "src/core/company-type/interfaces/company-type.interface";
+import { CodeNafI } from "src/core/code-naf/interfaces/code-naf.interface";
 import { UserI } from "src/core/user/interfaces/user.interface";
 
 export interface CompanyI {
@@ -20,5 +20,5 @@ export interface CompanyI {
     createdOn?: Date;
     updatedOn?: Date;
     user: UserI;
-    companyType: CompanyTypeI;
+    codeNaf: CodeNafI;
 }

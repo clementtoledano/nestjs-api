@@ -8,3 +8,6 @@ export const runDbMigrations = async (connectionName = 'default') => {
     const conn = await getDbConnection(connectionName);
     await conn.runMigrations();
 };
+
+// deux premiers chiffres du code naf
+export const DIVISION_NAF_ACCEPTED = [52, 56];

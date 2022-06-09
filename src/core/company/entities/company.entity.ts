@@ -1,6 +1,6 @@
 import { Column, Entity, ManyToOne, Unique } from "typeorm";
 import { ApiProperty } from "@nestjs/swagger";
-import { CompanyTypeEntity } from "../../company-type/entities/company-type.entity";
+import { CodeNafEntity } from "../../code-naf/entities/code-naf.entity";
 import { UserEntity } from "../../user/entities/user.entity";
 import { BaseEntity } from "../../../shared/base.entity";
 
@@ -67,7 +67,7 @@ export class CompanyEntity extends BaseEntity {
 
     @ManyToOne(() => UserEntity, { eager: true }) user: UserEntity;
 
-    @ManyToOne(() => CompanyTypeEntity, { eager: true }) companyType: CompanyTypeEntity;
+    @ManyToOne(() => CodeNafEntity, { eager: true }) codeNaf: CodeNafEntity;
 }
 
 export class CompanyRepositoryFake {

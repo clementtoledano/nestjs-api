@@ -1,6 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty } from 'class-validator';
-import { CompanyTypeI } from 'src/core/company-type/interfaces/company-type.interface';
+import { CodeNafI } from 'src/core/code-naf/interfaces/code-naf.interface';
 
 export class CreateCompanyDto {
     @ApiProperty()
@@ -56,5 +56,5 @@ export class CreateCompanyDto {
     linkedin?: string;
 
     @ApiProperty()
-    companyType?: CompanyTypeI;
+    codeNaf?: CodeNafI;
 }
