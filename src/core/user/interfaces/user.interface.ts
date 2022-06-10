@@ -1,5 +1,5 @@
-import { RoleI } from "src/core/role/interface/role.interface";
-import { StatusI } from "src/core/status/interface/status.interface";
+import { RoleEnum } from "src/core/role/role.enum";
+import { StatusEnum } from "src/core/status/status.enum";
 
 export interface UserI {
     id: string;
@@ -11,8 +11,10 @@ export interface UserI {
     sirenNumber: number;
     phone: number;
     newsletter: boolean;
-    role?: RoleI;
-    status?: StatusI;
+    role: RoleEnum;
+    status: StatusEnum;
     createdOn?: Date;
     updatedOn?: Date;
+    hashPassword(): Promise<any>;
+    emailToLowerCase(): void;
 }

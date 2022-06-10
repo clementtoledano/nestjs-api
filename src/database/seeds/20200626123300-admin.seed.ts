@@ -12,7 +12,7 @@ export default class CreateAdmin implements Seeder {
             .createQueryBuilder()
             .select()
             .from(UserEntity, 'User')
-            .where('"User"."roleId" = :roleId', { roleId: RoleEnum.admin })
+            .where('"User"."roleId" = :roleId', { roleId: RoleEnum.ADMIN })
             .getCount();
 
         if (countAdmin === 0) {
@@ -29,11 +29,8 @@ export default class CreateAdmin implements Seeder {
                         companyName: 'Nash',
                         sirenNumber: '321564321',
                         phone: '0651523225',
-                        role: {
-                            id: RoleEnum.admin,
-                            name: 'Admin',
-                        },
-                        status: StatusEnum.active,
+                        role: RoleEnum.PRODUCTEUR,
+                        status: StatusEnum.ACTIVE,
 
 
                     }),

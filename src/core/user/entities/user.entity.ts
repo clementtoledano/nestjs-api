@@ -1,8 +1,9 @@
 import { Entity, Column, BeforeInsert, ManyToOne } from 'typeorm';
 import * as bcrypt from 'bcrypt';
-import { RoleEntity } from '../../role/entities/role.entity';
-import { StatusEntity } from '../../status/entities/status.entity';
+
 import { BaseEntity } from '../../../shared/base.entity';
+import { RoleEnum } from 'src/core/role/role.enum';
+import { StatusEnum } from 'src/core/status/status.enum';
 
 @Entity('user')
 export class UserEntity extends BaseEntity {
@@ -14,9 +15,8 @@ export class UserEntity extends BaseEntity {
     @Column('numeric', { nullable: false }) sirenNumber: number;
     @Column('numeric', { nullable: false }) phone: number;
     @Column('boolean', { default: false }) newsletter: boolean;
-
-    @ManyToOne(() => RoleEntity, { eager: true }) role?: RoleEntity | null;
-    @ManyToOne(() => StatusEntity, { eager: true }) status?: StatusEntity;
+    @Column({ type: 'enum', enum: RoleEnum, default: RoleEnum.VISITEUR }) role: RoleEnum;
+    @Column({ type: 'enum', enum: RoleEnum, default: StatusEnum.ACTIVE }) status: StatusEnum;
 
     @BeforeInsert()
     async hashPassword() {

@@ -1,7 +1,7 @@
 export enum RoleEnum {
-    'admin' = 1,
-    'visiteur' = 2,
-    'revendeur' = 3,
-    'producteur' = 4,
-    'distributeur' = 5,
+    'ADMIN' = 1,
+    'VISITEUR' = 2,
+    'REVENDEUR' = 3,
+    'PRODUCTEUR' = 4,
+    'DISTRIBUTEUR' = 5,
 }

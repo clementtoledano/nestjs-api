@@ -61,14 +61,11 @@ describe('UserService', () => {
         })
 
         it('should find user by login', async () => {
-
             jest.spyOn(repository, 'findOne').mockResolvedValueOnce(userMock);
             jest.spyOn(authService, 'comparePasswords').mockResolvedValueOnce({ email: userMock.email, password: 'password123' });
-
             expect(await service.getByLogin({ email: userMock.email, password: 'password123' })).toEqual(userMock);
             expect(authService.comparePasswords).toBeCalled();
             expect(repository.findOne).toBeCalled();
-
         });
     });
 });

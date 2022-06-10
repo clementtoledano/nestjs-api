@@ -1,5 +1,7 @@
 import { IsNotEmpty, IsEmail, IsNumber } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { RoleEnum } from 'src/core/role/role.enum';
+import { StatusEnum } from 'src/core/status/status.enum';
 
 export class CreateUserDto {
     @ApiProperty()
@@ -35,8 +37,11 @@ export class CreateUserDto {
 
     @ApiProperty() newsletter: boolean;
 
-    // @ApiProperty({ enum: RoleEnum })
-    // roles: RoleEnum;
+    @ApiProperty({ enum: RoleEnum })
+    role: RoleEnum;
+
+    @ApiProperty({ enum: StatusEnum })
+    status: StatusEnum;
 
     @ApiProperty({ required: false, default: true })
     isEnabled?: boolean = true;

@@ -12,7 +12,7 @@ export default class CreateProducteur implements Seeder {
             .createQueryBuilder()
             .select()
             .from(UserEntity, 'User')
-            .where('"User"."roleId" = :roleId', { roleId: RoleEnum.producteur })
+            .where('"User"."roleId" = :roleId', { roleId: RoleEnum.PRODUCTEUR })
             .getCount();
 
         if (countUser === 0) {
@@ -29,11 +29,8 @@ export default class CreateProducteur implements Seeder {
                         companyName: 'Sarl Malpest',
                         sirenNumber: '847770948',
                         phone: '075599555',
-                        role: {
-                            id: RoleEnum.producteur,
-                            name: 'Producteur',
-                        },
-                        status: StatusEnum.active,
+                        role: RoleEnum.PRODUCTEUR,
+                        status: StatusEnum.ACTIVE,
                     }),
                 ])
                 .execute();
