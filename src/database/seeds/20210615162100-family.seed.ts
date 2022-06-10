@@ -1,12 +1,12 @@
 import { plainToClass } from 'class-transformer';
-import { FamilyEntity } from 'src/core/family/entities/family.entity';
 import { Connection } from 'typeorm';
 import { Factory, Seeder } from 'typeorm-seeding';
 
+import { FamilyEntity } from '../../core/family/entities/family.entity';
 
 export default class CreateFamily implements Seeder {
     public async run(factory: Factory, connection: Connection): Promise<void> {
-        const count = await connection.createQueryBuilder().select().from(FamilyEntity, 'CatagoryFamily').getCount();
+        const count = await connection.createQueryBuilder().select().from(FamilyEntity, 'Family').getCount();
 
         if (count === 0) {
             await connection

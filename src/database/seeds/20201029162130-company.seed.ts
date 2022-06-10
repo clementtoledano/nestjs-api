@@ -1,9 +1,9 @@
 import { plainToClass } from 'class-transformer';
-import { CodeNafEntity } from 'src/core/code-naf/entities/code-naf.entity';
-import { UserEntity } from 'src/core/user/entities/user.entity';
 import { Connection } from 'typeorm';
 import { Factory, Seeder } from 'typeorm-seeding';
 
+import { CodeNafEntity } from '../../core/code-naf/entities/code-naf.entity';
+import { UserEntity } from '../../core/user/entities/user.entity';
 import { CompanyEntity } from '../../core/company/entities/company.entity';
 
 export default class CreateCompany implements Seeder {
@@ -16,6 +16,7 @@ export default class CreateCompany implements Seeder {
             .from(UserEntity, 'user')
             .where('user.sirenNumber = :sirenNumber', { sirenNumber: '847770948' })
             .getOne();
+        console.log("🚀 . CreateCompany . run . user", user);
 
         const brasserie = await connection
             .createQueryBuilder()
@@ -23,6 +24,7 @@ export default class CreateCompany implements Seeder {
             .from(CodeNafEntity, 'codeNaf')
             .where('codeNaf.code = :code', { code: '5630Z' })
             .getOne();
+        console.log("🚀 . CreateCompany . run . brasserie", brasserie);
 
         if (count === 0) {
             await connection

@@ -12,7 +12,7 @@ export default class CreateProducteur implements Seeder {
             .createQueryBuilder()
             .select()
             .from(UserEntity, 'User')
-            .where('"User"."roleId" = :roleId', { roleId: RoleEnum.PRODUCTEUR })
+            .where('"User"."role" = :role', { role: RoleEnum.PRODUCTEUR })
             .getCount();
 
         if (countUser === 0) {

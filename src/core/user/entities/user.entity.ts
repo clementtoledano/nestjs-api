@@ -1,4 +1,4 @@
-import { Entity, Column, BeforeInsert, ManyToOne } from 'typeorm';
+import { Entity, Column, BeforeInsert } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 
 import { BaseEntity } from '../../../shared/base.entity';

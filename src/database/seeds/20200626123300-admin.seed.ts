@@ -8,14 +8,16 @@ import { StatusEnum } from '../../core/status/status.enum';
 
 export default class CreateAdmin implements Seeder {
     public async run(factory: Factory, connection: Connection): Promise<void> {
+
         const countAdmin = await connection
             .createQueryBuilder()
             .select()
             .from(UserEntity, 'User')
-            .where('"User"."roleId" = :roleId', { roleId: RoleEnum.ADMIN })
+            .where('"User"."role" = :role', { role: RoleEnum.ADMIN })
             .getCount();
+        console.log("🚀 . CreateAdmin . run . countAdmin", countAdmin);
 
-        if (countAdmin === 0) {
+        if (!countAdmin) {
             await connection
                 .createQueryBuilder()
                 .insert()
@@ -29,10 +31,8 @@ export default class CreateAdmin implements Seeder {
                         companyName: 'Nash',
                         sirenNumber: '321564321',
                         phone: '0651523225',
-                        role: RoleEnum.PRODUCTEUR,
+                        role: RoleEnum.ADMIN,
                         status: StatusEnum.ACTIVE,
-
-
                     }),
                 ])
                 .execute();

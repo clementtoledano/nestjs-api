@@ -18,7 +18,7 @@ export class UserService {
         const exists: boolean = await this._mailExists(newUser.email);
 
         if (!exists) {
-            const user = await this.userRepository.save(this.userRepository.create(newUser));
+            const user: UserI = await this.userRepository.save(this.userRepository.create(newUser));
             return this._sanitizeUser(user);
         } else {
             throw new HttpException('Email is already in use', HttpStatus.CONFLICT);

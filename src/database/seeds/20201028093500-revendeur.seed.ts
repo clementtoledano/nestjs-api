@@ -12,7 +12,7 @@ export default class CreateRevendeur implements Seeder {
             .createQueryBuilder()
             .select()
             .from(UserEntity, 'User')
-            .where('"User"."roleId" = :roleId', { roleId: RoleEnum.REVENDEUR })
+            .where('"User"."role" = :role', { role: RoleEnum.REVENDEUR })
             .getCount();
 
         if (countUser === 0) {
@@ -29,7 +29,7 @@ export default class CreateRevendeur implements Seeder {
                         companyName: 'Antol Cafe',
                         sirenNumber: '847771947',
                         phone: '0630201000',
-                        role: RoleEnum.PRODUCTEUR,
+                        role: RoleEnum.REVENDEUR,
                         status: StatusEnum.ACTIVE,
                     }),
                 ])
