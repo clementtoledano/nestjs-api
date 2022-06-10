@@ -7,7 +7,7 @@ import { CodeNafEntity, CodeNafRepositoryFake } from '../entities/code-naf.entit
 
 import dataMock from '../../../shared/mock/codeNaf.mock';
 
-describe('Create CodeNafService', () => {
+describe('Update CodeNafService', () => {
   let service: CodeNafService;
   let repository: Repository<CodeNafEntity>;
 
@@ -26,16 +26,11 @@ describe('Create CodeNafService', () => {
 
   });
 
-  it('should be defined', () => {
-    expect(service).toBeDefined();
-  });
-
-
   it('throws an error no data provided', async () => {
-    const { id, ...emptyType }: CodeNafEntity = new CodeNafEntity();
+    const { id, ...emptyCompany }: CodeNafEntity = new CodeNafEntity();
 
     try {
-      await service.update(id, emptyType);
+      await service.update(id, emptyCompany);
     } catch (e) {
       expect(e).toBeInstanceOf(BadRequestException);
     }
@@ -51,20 +46,44 @@ describe('Create CodeNafService', () => {
   });
 
 
-  it('should create company type', async () => {
+  it('should update codeNaf', async () => {
+    const name = 'Blabla Bli';
 
     const newCodeNaf: CodeNafEntity = {
-      id: dataMock.id,
-      code: 'XXXX',
-      name: 'blabla',
+      ...dataMock,
+      name,
     }
 
-    const { id, code, name } = newCodeNaf
+    const savedCompany = { ...newCodeNaf }
 
-    jest.spyOn(repository, 'save').mockResolvedValueOnce(dataMock);
-    expect(await service.update(id, { code, name })).toEqual(dataMock);
-    expect(repository.save).toBeCalled();
-    expect(repository.create).toBeCalled();
+
+    const codeNafServiceFindOneByIdOrThrowSpy = jest
+      .spyOn(service, 'findOneByIdOrThrow')
+      .mockResolvedValue(dataMock);
+
+    const codeNafRepositoryCreateSpy = jest
+      .spyOn(repository, 'create')
+      .mockReturnValue(newCodeNaf);
+
+    const codeNafRepositorySaveSpy = jest
+      .spyOn(repository, 'save')
+      .mockResolvedValue(savedCompany);
+
+
+    const result = await service.update(newCodeNaf.id, newCodeNaf);
+
+    expect(codeNafServiceFindOneByIdOrThrowSpy).toHaveBeenCalledWith(
+      newCodeNaf.id,
+    );
+
+    expect(codeNafRepositoryCreateSpy).toHaveBeenCalledWith({
+      ...dataMock,
+      name,
+    });
+
+    expect(codeNafRepositorySaveSpy).toHaveBeenCalledWith(newCodeNaf);
+    expect(result).toEqual(savedCompany);
+
   });
 });
 

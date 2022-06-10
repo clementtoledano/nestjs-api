@@ -2,8 +2,8 @@ import { Entity, Column, BeforeInsert } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 
 import { BaseEntity } from '../../../shared/base.entity';
-import { RoleEnum } from 'src/core/role/role.enum';
-import { StatusEnum } from 'src/core/status/status.enum';
+import { RoleEnum } from '../../../core/role/role.enum';
+import { StatusEnum } from '../../../core/status/status.enum';
 
 @Entity('user')
 export class UserEntity extends BaseEntity {

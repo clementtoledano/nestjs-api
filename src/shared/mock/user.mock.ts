@@ -2,8 +2,7 @@ import { RoleEnum } from "../../core/role/role.enum";
 import { StatusEnum } from "../../core/status/status.enum";
 import * as bcrypt from 'bcrypt';
 import { UserI } from "../../core/user/interfaces/user.interface";
-import * as faker  from "faker";
-import { UserEntity } from "src/core/user/entities/user.entity";
+import * as faker from "faker";
 
 
 const userMock: UserI = {

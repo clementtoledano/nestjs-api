@@ -1,5 +1,5 @@
 
-import { UserI } from "src/core/user/interfaces/user.interface";
+import { UserI } from "../../../core/user/interfaces/user.interface";
 
 export interface JwtPayloadI {
 
