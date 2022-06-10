@@ -1,5 +1,5 @@
-import { RoleEnum } from "../../../core/role/role.enum";
-import { StatusEnum } from "../../../core/status/status.enum";
+import { RoleEnum } from "../../../shared/enum/role.enum";
+import { StatusEnum } from "../../../shared/enum/status.enum";
 
 export interface UserI {
     id: string;

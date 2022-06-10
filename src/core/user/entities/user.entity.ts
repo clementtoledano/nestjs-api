@@ -2,8 +2,8 @@ import { Entity, Column, BeforeInsert } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 
 import { BaseEntity } from '../../../shared/base.entity';
-import { RoleEnum } from '../../../core/role/role.enum';
-import { StatusEnum } from '../../../core/status/status.enum';
+import { RoleEnum } from '../../../shared/enum/role.enum';
+import { StatusEnum } from '../../../shared/enum/status.enum';
 
 @Entity('user')
 export class UserEntity extends BaseEntity {
@@ -16,7 +16,7 @@ export class UserEntity extends BaseEntity {
     @Column('numeric', { nullable: false }) phone: number;
     @Column('boolean', { default: false }) newsletter: boolean;
     @Column({ type: 'enum', enum: RoleEnum, default: RoleEnum.VISITEUR }) role: RoleEnum;
-    @Column({ type: 'enum', enum: RoleEnum, default: StatusEnum.ACTIVE }) status: StatusEnum;
+    @Column({ type: 'enum', enum: StatusEnum, default: StatusEnum.ACTIVE }) status: StatusEnum;
 
     @BeforeInsert()
     async hashPassword() {

@@ -7,7 +7,7 @@ import { UserService } from '../user.service';
 import { AuthService } from '../../auth/auth.service';
 import { HttpException } from '@nestjs/common';
 
-import userMock from '../../../shared/mock/user.mock';
+import dataMock from '../../../shared/mock/user.mock';
 
 describe('UserService', () => {
     let service: UserService;
@@ -50,10 +50,10 @@ describe('UserService', () => {
         })
 
         it('throw exeption when no password', async () => {
-            jest.spyOn(repository, 'findOne').mockResolvedValueOnce(userMock);
+            jest.spyOn(repository, 'findOne').mockResolvedValueOnce(dataMock);
 
             try {
-                await service.getByLogin({ email: userMock.email, password: '' });
+                await service.getByLogin({ email: dataMock.email, password: '' });
             } catch (e) {
                 expect(e).toBeInstanceOf(HttpException);
                 expect(e.message).toBe('Login was not successfull, wrong credentials');
@@ -61,9 +61,9 @@ describe('UserService', () => {
         })
 
         it('should find user by login', async () => {
-            jest.spyOn(repository, 'findOne').mockResolvedValueOnce(userMock);
-            jest.spyOn(authService, 'comparePasswords').mockResolvedValueOnce({ email: userMock.email, password: 'password123' });
-            expect(await service.getByLogin({ email: userMock.email, password: 'password123' })).toEqual(userMock);
+            jest.spyOn(repository, 'findOne').mockResolvedValueOnce(dataMock);
+            jest.spyOn(authService, 'comparePasswords').mockResolvedValueOnce({ email: dataMock.email, password: 'password123' });
+            expect(await service.getByLogin({ email: dataMock.email, password: 'password123' })).toEqual(dataMock);
             expect(authService.comparePasswords).toBeCalled();
             expect(repository.findOne).toBeCalled();
         });

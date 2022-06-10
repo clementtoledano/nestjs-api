@@ -2,12 +2,12 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { Repository } from 'typeorm';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { UserEntity, UserRepositoryFake } from '../entities/user.entity';
-import { RoleEnum } from '../../role/role.enum';
-import { StatusEnum } from '../../status/status.enum';
+import { RoleEnum } from '../../../shared/enum/role.enum';
+import { StatusEnum } from '../../../shared/enum/status.enum';
 import { UserService } from '../user.service';
 import { AuthService } from '../../auth/auth.service';
 
-import userMock from '../../../shared/mock/user.mock';
+import dataMock from '../../../shared/mock/user.mock';
 
 describe('GetUserService', () => {
     let service: UserService;
@@ -35,7 +35,7 @@ describe('GetUserService', () => {
     describe('findAll', () => {
         it('should find all users', async () => {
             const users: UserEntity[] = [
-                userMock,
+                dataMock,
                 {
                     id: '45645664',
                     firstname: 'andrew',

@@ -1,31 +1,31 @@
 import { BadRequestException, HttpException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { getRepositoryToken } from '@nestjs/typeorm';
+
 import { Repository } from 'typeorm';
+import { CategoryEntity, CategoryRepositoryFake } from '../entities/category.entity';
+import { getRepositoryToken } from '@nestjs/typeorm';
 
-import { CompanyEntity, CompanyRepositoryFake } from '../entities/company.entity';
-
-import dataMock from '../../../shared/mock/company.mock';
-import { CompanyService } from '../company.service';
+import dataMock from '../../../shared/mock/category.mock';
+import { CategoryService } from '../category.service';
 
 
 
-describe('Create CompanyService', () => {
-  let service: CompanyService;
-  let repository: Repository<CompanyEntity>;
+describe('Create CategoryService', () => {
+  let service: CategoryService;
+  let repository: Repository<CategoryEntity>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        CompanyService,
+        CategoryService,
         {
-          provide: getRepositoryToken(CompanyEntity),
-          useClass: CompanyRepositoryFake
+          provide: getRepositoryToken(CategoryEntity),
+          useClass: CategoryRepositoryFake
         },],
     }).compile();
 
-    service = module.get<CompanyService>(CompanyService);
-    repository = module.get<Repository<CompanyEntity>>(getRepositoryToken(CompanyEntity));
+    service = module.get<CategoryService>(CategoryService);
+    repository = module.get<Repository<CategoryEntity>>(getRepositoryToken(CategoryEntity));
 
   });
 
@@ -35,8 +35,8 @@ describe('Create CompanyService', () => {
 
   describe('create', () => {
 
-    it('throws an error no email provided', async () => {
-      const emptyUser: CompanyEntity = new CompanyEntity();
+    it('throws an error no name provided', async () => {
+      const emptyUser: CategoryEntity = new CategoryEntity();
 
       try {
         await service.create(emptyUser);
@@ -45,7 +45,7 @@ describe('Create CompanyService', () => {
       }
     });
 
-    it('throws an error when code allready exist', async () => {
+    it('throws an error when name allready exist', async () => {
       jest.spyOn(repository, 'save').mockResolvedValueOnce(dataMock);
 
       try {
@@ -57,7 +57,7 @@ describe('Create CompanyService', () => {
     });
 
 
-    it('should create company', async () => {
+    it('should create category', async () => {
 
       jest.spyOn(repository, 'save').mockResolvedValueOnce(dataMock);
       expect(await service.create(dataMock)).toEqual(dataMock);

@@ -19,8 +19,8 @@ export class CompanyService {
   }
 
   async findAll() {
-    const user = await this.companyRepository.find();
-    return user;
+    const companies = await this.companyRepository.find();
+    return companies;
   }
 
   async findOneByIdOrThrow(id: string) {

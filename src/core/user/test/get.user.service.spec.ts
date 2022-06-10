@@ -6,7 +6,7 @@ import { UserEntity, UserRepositoryFake } from '../entities/user.entity';
 import { UserService } from '../user.service';
 import { AuthService } from '../../auth/auth.service';
 
-import userMock from '../../../shared/mock/user.mock';
+import dataMock from '../../../shared/mock/user.mock';
 
 
 describe('UserService', () => {
@@ -35,9 +35,9 @@ describe('UserService', () => {
     describe('findById', () => {
         it('should find user by id', async () => {
 
-            jest.spyOn(repository, 'findOne').mockResolvedValueOnce(userMock);
+            jest.spyOn(repository, 'findOne').mockResolvedValueOnce(dataMock);
 
-            expect(await service.getOne({ id: userMock.id })).toEqual(userMock);
+            expect(await service.getOne({ id: dataMock.id })).toEqual(dataMock);
             expect(repository.findOne).toBeCalled();
         });
     });

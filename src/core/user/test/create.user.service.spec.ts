@@ -6,7 +6,7 @@ import { UserService } from '../user.service';
 import { AuthService } from '../../auth/auth.service';
 import { BadRequestException, HttpException } from '@nestjs/common';
 
-import userMock from '../../../shared/mock/user.mock';
+import dataMock from '../../../shared/mock/user.mock';
 
 
 describe('CreateUserService', () => {
@@ -46,10 +46,10 @@ describe('CreateUserService', () => {
         });
 
         it('throws an error when email allready exist', async () => {
-            jest.spyOn(repository, 'save').mockResolvedValueOnce(userMock);
+            jest.spyOn(repository, 'save').mockResolvedValueOnce(dataMock);
 
             try {
-                await service.create(userMock);
+                await service.create(dataMock);
             } catch (e) {
                 expect(e).toBeInstanceOf(HttpException);
                 expect(e.message).toBe('Email is already in use');
@@ -58,12 +58,12 @@ describe('CreateUserService', () => {
 
         it('should create user', async () => {
 
-            jest.spyOn(repository, 'save').mockResolvedValueOnce(userMock);
+            jest.spyOn(repository, 'save').mockResolvedValueOnce(dataMock);
             jest.spyOn(repository, 'findOne').mockResolvedValue(null);
 
-            expect(await service.create(userMock)).toEqual(userMock);
+            expect(await service.create(dataMock)).toEqual(dataMock);
             expect(repository.save).toBeCalled();
-            expect(repository.findOne).toHaveBeenCalledWith({ email: userMock.email });
+            expect(repository.findOne).toHaveBeenCalledWith({ email: dataMock.email });
         });
     });
 });
