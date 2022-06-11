@@ -7,6 +7,8 @@ import { CodeNafModule } from './code-naf/code-naf.module';
 import { CategoryModule } from './category/category.module';
 import { FilterModule } from './filter/filter.module';
 import { UnitModule } from './unit/unit.module';
+import { ProductionModule } from './production/production.module';
+import { ProductModule } from './product/product.module';
 
 @Module({
   imports: [
@@ -17,7 +19,9 @@ import { UnitModule } from './unit/unit.module';
     FamilyModule,
     CategoryModule,
     FilterModule,
-    UnitModule
+    UnitModule,
+    ProductionModule,
+    ProductModule
   ],
   providers: [],
   exports: [UserModule, AuthModule],

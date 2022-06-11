@@ -1,11 +1,11 @@
 
 import * as faker from "faker";
-import { UnitI } from "../../core/unit/interfaces/company.interface";
+import { UnitI } from "../../core/unit/interfaces/unit.interface";
 import { UnitCategoryEnum } from "../enum/unit-category.enum";
 import { CountryCodeEnum } from "../enum/country-code.enum";
 
 
-const userMock: UnitI = {
+const unitMock: UnitI = {
     id: faker.datatype.uuid(),
     name: 'centilitre',
     symbol: 'cl',
@@ -16,4 +16,4 @@ const userMock: UnitI = {
 
 };
 
-export default userMock;
+export default unitMock;

@@ -3,7 +3,7 @@ import { CodeNafEntity } from "../../core/code-naf/entities/code-naf.entity";
 import faker from 'faker';
 
 
-const companyTypeMock: CodeNafEntity = {
+const codeNafMock: CodeNafEntity = {
     id: faker.datatype.uuid(),
     // id: "321654987",
     code: faker.datatype.string(5),
@@ -12,4 +12,4 @@ const companyTypeMock: CodeNafEntity = {
     // name: "Mock Company Type"
 };
 
-export default companyTypeMock;
+export default codeNafMock;

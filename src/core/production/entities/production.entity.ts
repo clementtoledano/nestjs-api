@@ -2,21 +2,21 @@ import { ApiProperty } from "@nestjs/swagger";
 import { Allow } from "class-validator";
 import { BaseEntity } from "../../../shared/base.entity";
 import { Column, Entity, ManyToOne, Unique } from "typeorm";
-import { UnitEntity } from "../../../core/unit/entities/unit.entity";
+import { CompanyEntity } from "../../company/entities/company.entity";
 
 @Unique(["name"])
-@Entity('Filter')
-export class FilterEntity extends BaseEntity {
+@Entity('Production')
+export class ProductionEntity extends BaseEntity {
     @Allow() //si rien de mieux
-    @ApiProperty({ example: 'Couleur' })
+    @ApiProperty({ example: 'Delirium' })
     @Column()
     name: string;
 
-    @ManyToOne(() => UnitEntity, { eager: true }) unit?: UnitEntity;
+    @ManyToOne(() => CompanyEntity, { eager: true }) company: CompanyEntity;
 
 }
 
-export class FilterRepositoryFake {
+export class ProductionRepositoryFake {
     public create(): void {
         // do nothing.
     }

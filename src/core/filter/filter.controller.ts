@@ -5,7 +5,7 @@ import { UpdateFilterDto } from './dto/update-filter.dto';
 
 @Controller('filter')
 export class FilterController {
-  constructor(private readonly filterService: FilterService) {}
+  constructor(private readonly filterService: FilterService) { }
 
   @Post()
   create(@Body() createFilterDto: CreateFilterDto) {
@@ -19,16 +19,16 @@ export class FilterController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.filterService.findOne(+id);
+    return this.filterService.findOneByIdOrThrow(id);
   }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateFilterDto: UpdateFilterDto) {
-    return this.filterService.update(+id, updateFilterDto);
+    return this.filterService.update(id, updateFilterDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.filterService.remove(+id);
+    return this.filterService.remove(id);
   }
 }

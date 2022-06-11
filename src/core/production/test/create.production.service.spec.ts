@@ -2,37 +2,37 @@ import { BadRequestException, HttpException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 
 import { Repository } from 'typeorm';
-import { CategoryEntity, CategoryRepositoryFake } from '../entities/category.entity';
+import { ProductionEntity, ProductionRepositoryFake } from '../entities/production.entity';
 import { getRepositoryToken } from '@nestjs/typeorm';
 
-import dataMock from '../../../shared/mock/category.mock';
-import { CategoryService } from '../category.service';
+import dataMock from '../../../shared/mock/production.mock';
+import { ProductionService } from '../production.service';
 
 
 
-describe('Create CategoryService', () => {
-  let service: CategoryService;
-  let repository: Repository<CategoryEntity>;
+describe('Create ProductionService', () => {
+  let service: ProductionService;
+  let repository: Repository<ProductionEntity>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        CategoryService,
+        ProductionService,
         {
-          provide: getRepositoryToken(CategoryEntity),
-          useClass: CategoryRepositoryFake
+          provide: getRepositoryToken(ProductionEntity),
+          useClass: ProductionRepositoryFake
         },],
     }).compile();
 
-    service = module.get<CategoryService>(CategoryService);
-    repository = module.get<Repository<CategoryEntity>>(getRepositoryToken(CategoryEntity));
+    service = module.get<ProductionService>(ProductionService);
+    repository = module.get<Repository<ProductionEntity>>(getRepositoryToken(ProductionEntity));
 
   });
 
   describe('create', () => {
 
     it('throws an error no name provided', async () => {
-      const emptyUser: CategoryEntity = new CategoryEntity();
+      const emptyUser: ProductionEntity = new ProductionEntity();
 
       try {
         await service.create(emptyUser);
@@ -53,7 +53,7 @@ describe('Create CategoryService', () => {
     });
 
 
-    it('should create category', async () => {
+    it('should create production', async () => {
 
       jest.spyOn(repository, 'save').mockResolvedValueOnce(dataMock);
       expect(await service.create(dataMock)).toEqual(dataMock);

@@ -1,34 +1,32 @@
-import { getRepositoryToken } from '@nestjs/typeorm';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Repository } from 'typeorm';
+import { ProductService } from '../product.service';
+import { ProductEntity, ProductRepositoryFake } from '../entities/product.entity';
+import { getRepositoryToken } from '@nestjs/typeorm';
 
-import { CodeNafService } from '../code-naf.service';
-import { CodeNafEntity, CodeNafRepositoryFake } from '../entities/code-naf.entity';
+import dataMock from '../../../shared/mock/product.mock';
 
-import dataMock from '../../../shared/mock/codeNaf.mock';
-
-describe('Create CodeNafService', () => {
-  let service: CodeNafService;
-  let repository: Repository<CodeNafEntity>;
+describe('Create ProductService', () => {
+  let service: ProductService;
+  let repository: Repository<ProductEntity>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        CodeNafService,
+        ProductService,
         {
-          provide: getRepositoryToken(CodeNafEntity),
-          useClass: CodeNafRepositoryFake
-
-        },],
+          provide: getRepositoryToken(ProductEntity),
+          useClass: ProductRepositoryFake
+        },
+      ],
     }).compile();
 
-    service = module.get<CodeNafService>(CodeNafService);
-    repository = module.get<Repository<CodeNafEntity>>(getRepositoryToken(CodeNafEntity));
+    service = module.get<ProductService>(ProductService);
+    repository = module.get<Repository<ProductEntity>>(getRepositoryToken(ProductEntity));
 
   });
 
-
-  it('should create company type', async () => {
+  it('should delete product', async () => {
 
     const serviceFindOneByIdOrThrowSpy = jest
       .spyOn(service, 'findOneByIdOrThrow')

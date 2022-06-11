@@ -1,38 +1,39 @@
 import { BadRequestException, HttpException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { getRepositoryToken } from '@nestjs/typeorm';
+
 import { Repository } from 'typeorm';
+import { FilterEntity, FilterRepositoryFake } from '../entities/filter.entity';
+import { getRepositoryToken } from '@nestjs/typeorm';
 
-import { CompanyEntity, CompanyRepositoryFake } from '../entities/company.entity';
-
-import dataMock from '../../../shared/mock/company.mock';
-import { CompanyService } from '../company.service';
+import dataMock from '../../../shared/mock/filter.mock';
+import { FilterService } from '../filter.service';
 
 
 
-describe('Create CompanyService', () => {
-  let service: CompanyService;
-  let repository: Repository<CompanyEntity>;
+describe('Create FilterService', () => {
+  let service: FilterService;
+  let repository: Repository<FilterEntity>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        CompanyService,
+        FilterService,
         {
-          provide: getRepositoryToken(CompanyEntity),
-          useClass: CompanyRepositoryFake
+          provide: getRepositoryToken(FilterEntity),
+          useClass: FilterRepositoryFake
         },],
     }).compile();
 
-    service = module.get<CompanyService>(CompanyService);
-    repository = module.get<Repository<CompanyEntity>>(getRepositoryToken(CompanyEntity));
+    service = module.get<FilterService>(FilterService);
+    repository = module.get<Repository<FilterEntity>>(getRepositoryToken(FilterEntity));
 
   });
 
+
   describe('create', () => {
 
-    it('throws an error no email provided', async () => {
-      const emptyUser: CompanyEntity = new CompanyEntity();
+    it('throws an error no name provided', async () => {
+      const emptyUser: FilterEntity = new FilterEntity();
 
       try {
         await service.create(emptyUser);
@@ -41,7 +42,7 @@ describe('Create CompanyService', () => {
       }
     });
 
-    it('throws an error when code allready exist', async () => {
+    it('throws an error when name allready exist', async () => {
       jest.spyOn(repository, 'save').mockResolvedValueOnce(dataMock);
 
       try {
@@ -53,11 +54,14 @@ describe('Create CompanyService', () => {
     });
 
 
-    it('should create company', async () => {
+    it('should create filter', async () => {
 
       jest.spyOn(repository, 'save').mockResolvedValueOnce(dataMock);
+
       expect(await service.create(dataMock)).toEqual(dataMock);
       expect(repository.save).toBeCalled();
+
+
     });
   });
 

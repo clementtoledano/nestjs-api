@@ -1,26 +1,64 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
 import { CreateFilterDto } from './dto/create-filter.dto';
 import { UpdateFilterDto } from './dto/update-filter.dto';
 
+import { FilterEntity } from './entities/filter.entity';
+
 @Injectable()
 export class FilterService {
-  create(createFilterDto: CreateFilterDto) {
-    return createFilterDto;
+  constructor(@InjectRepository(FilterEntity) private readonly filterRepository: Repository<FilterEntity>) { }
+
+  async create(createFilterDto: CreateFilterDto) {
+    try {
+      return await this.filterRepository.save(this.filterRepository.create(createFilterDto));
+    } catch (error) {
+      throw new HttpException('Filter allready exist', HttpStatus.CONFLICT);
+
+    }
   }
 
-  findAll() {
-    return `This action returns all filter`;
+  async findAll() {
+    const categories = await this.filterRepository.find();
+    return categories;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} filter`;
+  async findOneByIdOrThrow(id: string) {
+    const filter = await this.filterRepository.findOne({ id });
+
+    if (!filter) {
+      throw new NotFoundException('No filter found.');
+    }
+    return filter;
   }
 
-  update(id: number, updateFilterDto: UpdateFilterDto) {
-    return updateFilterDto;
+  async update(id: string, updateFilterDto: UpdateFilterDto) {
+
+    try {
+
+      const existingFilter = await this.findOneByIdOrThrow(id);
+
+      const filter = this.filterRepository.create({
+        ...existingFilter,
+        ...updateFilterDto,
+      });
+
+      const updatedFilter = await this.filterRepository.save(filter);
+
+      return updatedFilter;
+
+    } catch (error) {
+      throw new BadRequestException('No filter found.');
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} filter`;
+  async remove(id: string) {
+    const filter = await this.findOneByIdOrThrow(id);
+
+    await this.filterRepository.remove([filter]);
+
+    return null;
+
   }
 }

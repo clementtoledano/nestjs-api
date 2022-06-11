@@ -27,10 +27,6 @@ describe('Create FamilyService', () => {
 
   });
 
-  it('should be defined', () => {
-    expect(service).toBeDefined();
-  });
-
   describe('create', () => {
 
     it('throws an error no data provided', async () => {

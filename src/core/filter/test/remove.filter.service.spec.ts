@@ -1,34 +1,32 @@
-import { getRepositoryToken } from '@nestjs/typeorm';
 import { Test, TestingModule } from '@nestjs/testing';
 import { Repository } from 'typeorm';
+import { FilterService } from '../filter.service';
+import { FilterEntity, FilterRepositoryFake } from '../entities/filter.entity';
+import { getRepositoryToken } from '@nestjs/typeorm';
 
-import { CodeNafService } from '../code-naf.service';
-import { CodeNafEntity, CodeNafRepositoryFake } from '../entities/code-naf.entity';
+import dataMock from '../../../shared/mock/filter.mock';
 
-import dataMock from '../../../shared/mock/codeNaf.mock';
-
-describe('Create CodeNafService', () => {
-  let service: CodeNafService;
-  let repository: Repository<CodeNafEntity>;
+describe('Create FilterService', () => {
+  let service: FilterService;
+  let repository: Repository<FilterEntity>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
-        CodeNafService,
+        FilterService,
         {
-          provide: getRepositoryToken(CodeNafEntity),
-          useClass: CodeNafRepositoryFake
-
-        },],
+          provide: getRepositoryToken(FilterEntity),
+          useClass: FilterRepositoryFake
+        },
+      ],
     }).compile();
 
-    service = module.get<CodeNafService>(CodeNafService);
-    repository = module.get<Repository<CodeNafEntity>>(getRepositoryToken(CodeNafEntity));
+    service = module.get<FilterService>(FilterService);
+    repository = module.get<Repository<FilterEntity>>(getRepositoryToken(FilterEntity));
 
   });
 
-
-  it('should create company type', async () => {
+  it('should delete filter', async () => {
 
     const serviceFindOneByIdOrThrowSpy = jest
       .spyOn(service, 'findOneByIdOrThrow')
