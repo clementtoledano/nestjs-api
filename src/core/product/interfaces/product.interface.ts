@@ -1,6 +1,6 @@
 import { FamilyI } from "../../family/interfaces/family.interface";
 
-export interface CategoryI {
+export interface ProductI {
     id: string;
     name: string;
     createdOn?: Date;

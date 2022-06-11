@@ -5,8 +5,7 @@ import { FilterService } from '../filter.service';
 import { FilterEntity, FilterRepositoryFake } from '../entities/filter.entity';
 
 import { getRepositoryToken } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-
+import { Repository } from 'typeorm'
 
 import dataMock from '../../../shared/mock/filter.mock';
 
@@ -30,7 +29,6 @@ describe('Create FilterService', () => {
 
   });
 
-
   it('throws an error no data provided', async () => {
     const { id, ...emptyFilter }: FilterEntity = new FilterEntity();
 
@@ -53,7 +51,6 @@ describe('Create FilterService', () => {
 
   it('should update filter', async () => {
     const name = 'pourcentage';
-    const symbol = '%';
 
     const newFilter: FilterEntity = {
       ...dataMock,

@@ -4,7 +4,6 @@ import * as bcrypt from 'bcrypt';
 import { UserI } from "../../core/user/interfaces/user.interface";
 import * as faker from "faker";
 
-
 const userMock: UserI = {
     id: faker.datatype.uuid(),
     firstname: 'clem',

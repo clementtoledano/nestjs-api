@@ -4,7 +4,6 @@ import { UnitI } from "../../core/unit/interfaces/unit.interface";
 import { UnitCategoryEnum } from "../enum/unit-category.enum";
 import { CountryCodeEnum } from "../enum/country-code.enum";
 
-
 const unitMock: UnitI = {
     id: faker.datatype.uuid(),
     name: 'centilitre',
@@ -12,8 +11,6 @@ const unitMock: UnitI = {
 
     unitCategory: UnitCategoryEnum.VOLUME,
     countryCode: CountryCodeEnum.FR,
-
-
 };
 
 export default unitMock;

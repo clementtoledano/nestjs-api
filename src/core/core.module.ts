@@ -9,6 +9,7 @@ import { FilterModule } from './filter/filter.module';
 import { UnitModule } from './unit/unit.module';
 import { ProductionModule } from './production/production.module';
 import { ProductModule } from './product/product.module';
+import { ValueModule } from './value/value.module';
 
 @Module({
   imports: [
@@ -21,7 +22,8 @@ import { ProductModule } from './product/product.module';
     FilterModule,
     UnitModule,
     ProductionModule,
-    ProductModule
+    ProductModule,
+    ValueModule
   ],
   providers: [],
   exports: [UserModule, AuthModule],

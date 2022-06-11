@@ -1,7 +1,6 @@
 import userMock from './user.mock';
 import codeNafMock from './codeNaf.mock';
 import { CompanyEntity } from '../../core/company/entities/company.entity';
-// import { faker } from '@faker-js/faker';
 
 const companyMock: CompanyEntity = {
     // id: faker.datatype.uuid(),

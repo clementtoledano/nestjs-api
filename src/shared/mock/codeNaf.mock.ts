@@ -1,7 +1,5 @@
-// import { faker } from "@faker-js/faker";
 import { CodeNafEntity } from "../../core/code-naf/entities/code-naf.entity";
 import faker from 'faker';
-
 
 const codeNafMock: CodeNafEntity = {
     id: faker.datatype.uuid(),
