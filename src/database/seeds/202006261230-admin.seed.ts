@@ -2,7 +2,7 @@ import { Connection } from 'typeorm';
 import { Factory, Seeder } from 'typeorm-seeding';
 import { plainToClass } from 'class-transformer';
 
-import { UserEntity } from '../../core/user/entities/user.entity';
+import { UserEntity } from '../../modules/user/entities/user.entity';
 import { RoleEnum } from '../../shared/enum/role.enum';
 import { StatusEnum } from '../../shared/enum/status.enum';
 

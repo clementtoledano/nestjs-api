@@ -1,4 +1,4 @@
-import { CodeNafEntity } from "../../core/code-naf/entities/code-naf.entity";
+import { CodeNafEntity } from "../../modules/code-naf/entities/code-naf.entity";
 import faker from 'faker';
 
 const codeNafMock: CodeNafEntity = {

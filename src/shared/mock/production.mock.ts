@@ -1,5 +1,5 @@
 import faker from 'faker';
-import { ProductionEntity } from '../../core/production/entities/production.entity';
+import { ProductionEntity } from '../../modules/production/entities/production.entity';
 import companyMock from './company.mock';
 
 const productionMock: ProductionEntity = {

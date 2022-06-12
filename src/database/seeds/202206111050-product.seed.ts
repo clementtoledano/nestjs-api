@@ -2,10 +2,10 @@ import { plainToClass } from 'class-transformer';
 import { Connection } from 'typeorm';
 import { Factory, Seeder } from 'typeorm-seeding';
 
-import { ProductEntity } from '../../core/product/entities/product.entity';
-import { CompanyEntity } from '../../core/company/entities/company.entity';
-import { FamilyEntity } from '../../core/family/entities/family.entity';
-import { ProductionEntity } from '../../core/production/entities/production.entity';
+import { ProductEntity } from '../../modules/product/entities/product.entity';
+import { CompanyEntity } from '../../modules/company/entities/company.entity';
+import { FamilyEntity } from '../../modules/family/entities/family.entity';
+import { ProductionEntity } from '../../modules/production/entities/production.entity';
 
 export default class CreateProduct implements Seeder {
     public async run(factory: Factory, connection: Connection): Promise<void> {

@@ -3,8 +3,8 @@ import { Connection } from 'typeorm';
 import { Factory, Seeder } from 'typeorm-seeding';
 
 
-import { FamilyEntity } from '../../core/family/entities/family.entity';
-import { CategoryEntity } from '../../core/category/entities/category.entity';
+import { FamilyEntity } from '../../modules/family/entities/family.entity';
+import { CategoryEntity } from '../../modules/category/entities/category.entity';
 
 export default class CreateCategory implements Seeder {
     public async run(factory: Factory, connection: Connection): Promise<void> {

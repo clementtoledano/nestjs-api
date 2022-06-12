@@ -14,6 +14,7 @@
         "start:debug": "nest start --debug 0.0.0.0:9229 --watch",
         "start:prod": "node dist/main",
         "lint": "eslint \"{src,apps,libs,test}/**/*.ts\"",
+        "lint:fix": "eslint --fix . --ext .ts",
         "precommit": "lint-staged && npm run lint && npm run test",
         "prepare": "husky install",
         "prepush": "npm run test",

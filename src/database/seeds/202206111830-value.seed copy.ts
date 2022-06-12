@@ -1,10 +1,10 @@
 import { plainToClass } from 'class-transformer';
 import { Connection } from 'typeorm';
 import { Factory, Seeder } from 'typeorm-seeding';
-import { ValueEntity } from '../../core/value/entities/value.entity';
+import { ValueEntity } from '../../modules/value/entities/value.entity';
 
-import { ProductEntity } from '../../core/product/entities/product.entity';
-import { FilterEntity } from '../../core/filter/entities/filter.entity';
+import { ProductEntity } from '../../modules/product/entities/product.entity';
+import { FilterEntity } from '../../modules/filter/entities/filter.entity';
 
 export default class CreateValue implements Seeder {
     public async run(factory: Factory, connection: Connection): Promise<void> {

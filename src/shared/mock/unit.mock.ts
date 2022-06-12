@@ -1,6 +1,6 @@
 
 import * as faker from "faker";
-import { UnitI } from "../../core/unit/interfaces/unit.interface";
+import { UnitI } from "../../modules/unit/interfaces/unit.interface";
 import { UnitCategoryEnum } from "../enum/unit-category.enum";
 import { CountryCodeEnum } from "../enum/country-code.enum";
 

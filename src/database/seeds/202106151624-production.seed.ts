@@ -3,8 +3,8 @@ import { Connection } from 'typeorm';
 import { Factory, Seeder } from 'typeorm-seeding';
 
 
-import { CompanyEntity } from '../../core/company/entities/company.entity';
-import { ProductionEntity } from '../../core/production/entities/production.entity';
+import { CompanyEntity } from '../../modules/company/entities/company.entity';
+import { ProductionEntity } from '../../modules/production/entities/production.entity';
 
 export default class CreateProduction implements Seeder {
     public async run(factory: Factory, connection: Connection): Promise<void> {

@@ -4,7 +4,7 @@ import { Factory, Seeder } from 'typeorm-seeding';
 
 import { CountryCodeEnum } from '../../shared/enum/country-code.enum';
 import { UnitCategoryEnum } from '../../shared/enum/unit-category.enum';
-import { UnitEntity } from '../../core/unit/entities/unit.entity';
+import { UnitEntity } from '../../modules/unit/entities/unit.entity';
 
 export default class CreateUnit implements Seeder {
     public async run(factory: Factory, connection: Connection): Promise<void> {

@@ -2,7 +2,7 @@ import { plainToClass } from 'class-transformer';
 import { Connection } from 'typeorm';
 import { Factory, Seeder } from 'typeorm-seeding';
 
-import { FilterEntity } from '../../core/filter/entities/filter.entity';
+import { FilterEntity } from '../../modules/filter/entities/filter.entity';
 
 export default class CreateFilter implements Seeder {
     public async run(factory: Factory, connection: Connection): Promise<void> {

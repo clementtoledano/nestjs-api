@@ -2,7 +2,7 @@ import { plainToClass } from 'class-transformer';
 import { Connection } from 'typeorm';
 import { Factory, Seeder } from 'typeorm-seeding';
 
-import { FamilyEntity } from '../../core/family/entities/family.entity';
+import { FamilyEntity } from '../../modules/family/entities/family.entity';
 
 export default class CreateFamily implements Seeder {
     public async run(factory: Factory, connection: Connection): Promise<void> {

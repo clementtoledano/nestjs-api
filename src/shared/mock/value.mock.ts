@@ -1,5 +1,5 @@
 import faker from 'faker';
-import { ValueEntity } from '../../core/value/entities/value.entity';
+import { ValueEntity } from '../../modules/value/entities/value.entity';
 import productMock from './product.mock';
 import filterMock from './filter.mock';
 

@@ -2,9 +2,9 @@ import { plainToClass } from 'class-transformer';
 import { Connection } from 'typeorm';
 import { Factory, Seeder } from 'typeorm-seeding';
 
-import { CodeNafEntity } from '../../core/code-naf/entities/code-naf.entity';
-import { UserEntity } from '../../core/user/entities/user.entity';
-import { CompanyEntity } from '../../core/company/entities/company.entity';
+import { CodeNafEntity } from '../../modules/code-naf/entities/code-naf.entity';
+import { UserEntity } from '../../modules/user/entities/user.entity';
+import { CompanyEntity } from '../../modules/company/entities/company.entity';
 
 export default class CreateCompany implements Seeder {
     public async run(factory: Factory, connection: Connection): Promise<void> {

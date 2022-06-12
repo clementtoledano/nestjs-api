@@ -1,5 +1,5 @@
 import faker from 'faker';
-import { ProductEntity } from '../../core/product/entities/product.entity';
+import { ProductEntity } from '../../modules/product/entities/product.entity';
 import categoryMock from './category.mock';
 import familyMock from './family.mock';
 import productionMock from './production.mock';
