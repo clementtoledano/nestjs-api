@@ -2,11 +2,9 @@ import { MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { TypeOrmConfigService } from './database/typeorm-config.service';
 
 import appConfig from './config/app.config';
 import { HeaderResolver, I18nJsonLoader, I18nModule } from 'nestjs-i18n';
-import { DefaultAdminModule } from 'nestjs-admin';
 import * as path from 'path';
 
 import databaseConfig from './config/database.config';
@@ -22,6 +20,7 @@ import { UnitModule } from './modules/unit/unit.module';
 import { ProductionModule } from './modules/production/production.module';
 import { ProductModule } from './modules/product/product.module';
 import { ValueModule } from './modules/value/value.module';
+import { TypeOrmConfigService } from 'database/typeorm-config.service';
 
 @Module({
   imports: [
@@ -33,7 +32,6 @@ import { ValueModule } from './modules/value/value.module';
     TypeOrmModule.forRootAsync({
       useClass: TypeOrmConfigService,
     }),
-    DefaultAdminModule,
     I18nModule.forRootAsync({
       useFactory: (configService: ConfigService) => ({
         fallbackLanguage: configService.get('app.fallbackLanguage'),
@@ -66,9 +64,9 @@ export class AppModule {
     consumer
       .apply(AuthMiddleware)
       .exclude(
-        { path: '/auth/register', method: RequestMethod.POST },
-        { path: '/auth/login', method: RequestMethod.POST },
-        '/admin/(.*)',
+        { path: '/api/auth/register', method: RequestMethod.POST },
+        { path: '/api/auth/login', method: RequestMethod.POST },
+        '/api/admin/(.*)',
       )
       .forRoutes('')
   }
