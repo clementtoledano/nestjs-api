@@ -5,9 +5,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { TypeOrmConfigService } from './database/typeorm-config.service';
 
 import appConfig from './config/app.config';
-import databaseConfig from './config/database.config';
 import { HeaderResolver, I18nJsonLoader, I18nModule } from 'nestjs-i18n';
+import { DefaultAdminModule } from 'nestjs-admin';
 import * as path from 'path';
+
+import databaseConfig from './config/database.config';
 import { AuthMiddleware } from './middleware/auth.middleware';
 import { AuthModule } from './modules/auth/auth.module';
 import { UserModule } from './modules/user/user.module';
@@ -31,13 +33,15 @@ import { ValueModule } from './modules/value/value.module';
     TypeOrmModule.forRootAsync({
       useClass: TypeOrmConfigService,
     }),
+    DefaultAdminModule,
     I18nModule.forRootAsync({
       useFactory: (configService: ConfigService) => ({
         fallbackLanguage: configService.get('app.fallbackLanguage'),
         loaderOptions: {
-          path: path.join(configService.get('app.workingDirectory'), 'src', 'i18n'),
+          path: path.join(configService.get('app.workingDirectory') as string, 'src', 'i18n'),
         },
       }),
+
       loader: I18nJsonLoader,
       resolvers: [new HeaderResolver(['x-custom-lang'])],
       inject: [ConfigService],
@@ -52,7 +56,7 @@ import { ValueModule } from './modules/value/value.module';
     UnitModule,
     ProductionModule,
     ProductModule,
-    ValueModule
+    ValueModule,
   ],
   providers: [],
   exports: []
@@ -62,8 +66,9 @@ export class AppModule {
     consumer
       .apply(AuthMiddleware)
       .exclude(
-        { path: '/api/auth/register', method: RequestMethod.POST },
-        { path: '/api/auth/login', method: RequestMethod.POST }
+        { path: '/auth/register', method: RequestMethod.POST },
+        { path: '/auth/login', method: RequestMethod.POST },
+        '/admin/(.*)',
       )
       .forRoutes('')
   }

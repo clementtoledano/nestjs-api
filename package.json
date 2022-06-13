@@ -30,6 +30,7 @@
         "migration:create": "npm run typeorm -- migration:create -n",
         "migration:run": "npm run typeorm -- migration:run",
         "schema:drop": "npm run typeorm -- schema:drop",
+        "db:new": "npm run schema:drop && npm run migration:run && npm run seed:run",
         "seed:config": "npm run seeds -- config",
         "seed:run": "npm run seeds -- seed"
     },
@@ -49,6 +50,7 @@
         "express-rate-limit": "^6.4.0",
         "helmet": "^5.1.0",
         "morgan": "^1.10.0",
+        "nestjs-admin": "^0.4.1",
         "nestjs-i18n": "^9.0.12",
         "passport": "^0.5.3",
         "passport-jwt": "^4.0.0",

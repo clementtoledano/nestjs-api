@@ -3,7 +3,7 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   env: {
     jest: true,
-    es6: false,
+    // es6: false,
     node: true,
   },
   ignorePatterns: ['.eslintrc.js'],

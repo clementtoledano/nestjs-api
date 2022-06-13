@@ -17,12 +17,12 @@ const logStream = fs.createWriteStream('api.log', {
   flags: 'a', // append
 });
 
-const port = +process.env.APP_PORT || 3000;
+const port = process.env.APP_PORT || 3000 as number;
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
-  app.setGlobalPrefix('api');
+  // app.setGlobalPrefix('api');
   app.useGlobalPipes(new ValidationPipe({
     transform: true
   }));
