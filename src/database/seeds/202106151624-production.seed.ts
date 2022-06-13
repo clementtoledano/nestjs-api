@@ -24,8 +24,8 @@ export default class CreateProduction implements Seeder {
                 .insert()
                 .into(ProductionEntity)
                 .values([
-                    plainToClass(ProductionEntity, { name: 'Gamme Délirium', company: company.id }),
-                    plainToClass(ProductionEntity, { name: 'Gamme Floris', company: company.id }),
+                    plainToClass(ProductionEntity, { name: 'Gamme Délirium', company: company?.id }),
+                    plainToClass(ProductionEntity, { name: 'Gamme Floris', company: company?.id }),
                 ])
                 .execute();
         }

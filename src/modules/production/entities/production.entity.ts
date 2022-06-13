@@ -5,7 +5,7 @@ import { Column, Entity, ManyToOne, Unique } from "typeorm";
 import { CompanyEntity } from "../../company/entities/company.entity";
 
 @Unique(["name"])
-@Entity('Production')
+@Entity('production')
 export class ProductionEntity extends BaseEntity {
     @Allow() //si rien de mieux
     @ApiProperty({ example: 'Delirium' })

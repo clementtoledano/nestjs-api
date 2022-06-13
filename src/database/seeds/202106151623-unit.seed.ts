@@ -2,8 +2,8 @@ import { plainToClass } from 'class-transformer';
 import { Connection } from 'typeorm';
 import { Factory, Seeder } from 'typeorm-seeding';
 
-import { CountryCodeEnum } from '../../shared/enum/country-code.enum';
-import { UnitCategoryEnum } from '../../shared/enum/unit-category.enum';
+import { CountryCodeEnum } from '../../constants/country-code.enum';
+import { UnitCategoryEnum } from '../../constants/unit-category.enum';
 import { UnitEntity } from '../../modules/unit/entities/unit.entity';
 
 export default class CreateUnit implements Seeder {

@@ -2,11 +2,11 @@ import { ApiProperty } from "@nestjs/swagger";
 import { Allow } from "class-validator";
 import { BaseEntity } from "../../../shared/base.entity";
 import { Column, Entity, Unique } from "typeorm";
-import { UnitCategoryEnum } from "../../../shared/enum/unit-category.enum";
-import { CountryCodeEnum } from "../../../shared/enum/country-code.enum";
+import { UnitCategoryEnum } from "../../../constants/unit-category.enum";
+import { CountryCodeEnum } from "../../../constants/country-code.enum";
 
 @Unique(["name", "symbol"])
-@Entity('Unit')
+@Entity('unit')
 export class UnitEntity extends BaseEntity {
     @Allow() //si rien de mieux
     @ApiProperty({ example: 'centilitre' })

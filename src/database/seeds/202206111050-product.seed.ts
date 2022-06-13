@@ -44,9 +44,9 @@ export default class CreateProduct implements Seeder {
                         description: 'Biere blonde forte',
                         tag: '',
 
-                        company: company.id,
-                        family: family.id,
-                        production: production.id,
+                        company: company?.id,
+                        family: family?.id,
+                        production: production?.id,
                     }),
                 ])
                 .execute();

@@ -30,9 +30,9 @@ export default class CreateCategory implements Seeder {
                 .insert()
                 .into(CategoryEntity)
                 .values([
-                    plainToClass(CategoryEntity, { name: 'Bière', family: familyBA.id }),
-                    plainToClass(CategoryEntity, { name: 'Vin', family: familyBA.id }),
-                    plainToClass(CategoryEntity, { name: 'Jus de fruit', family: familyBSA.id }),
+                    plainToClass(CategoryEntity, { name: 'Bière', family: familyBA?.id }),
+                    plainToClass(CategoryEntity, { name: 'Vin', family: familyBA?.id }),
+                    plainToClass(CategoryEntity, { name: 'Jus de fruit', family: familyBSA?.id }),
                 ])
                 .execute();
         }

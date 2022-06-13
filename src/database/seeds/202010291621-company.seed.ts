@@ -47,8 +47,8 @@ export default class CreateCompany implements Seeder {
                         facebook: 'www.facebook.fr',
                         instagram: 'www.instagram.fr',
                         linkedin: 'www.linkedin.fr',
-                        user: user.id,
-                        codeNaf: brasserie.id,
+                        user: user?.id,
+                        codeNaf: brasserie?.id,
                     }),
                 ])
                 .execute();

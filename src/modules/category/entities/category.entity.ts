@@ -5,7 +5,7 @@ import { Column, Entity, ManyToOne, Unique } from "typeorm";
 import { FamilyEntity } from "../../../modules/family/entities/family.entity";
 
 @Unique(["name"])
-@Entity('Category')
+@Entity('category')
 export class CategoryEntity extends BaseEntity {
     @Allow() //si rien de mieux
     @ApiProperty({ example: 'Bière' })

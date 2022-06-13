@@ -2,8 +2,8 @@ import * as fs from 'fs';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
-import appConfig from 'src/config/app.config';
-import databaseConfig from 'src/config/database.config';
+import appConfig from '../../config/app.config';
+import databaseConfig from '../../config/database.config';
 import { TypeOrmConfigService } from '../typeorm-config.service';
 
 @Module({

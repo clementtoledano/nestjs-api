@@ -62,6 +62,9 @@ $ npm run test:cov
 
 https://github.com/typeorm/typeorm/tree/master/docs
 
+
+https://github.com/NarHakobyan/awesome-nest-boilerplate
+
 https://github.com/ThomasOliver545/real-time-chat-nestjs-angular
 https://github.com/maciejcieslar/nest-unit-tests/tree/master/src/app/playlist
 https://github.com/TusharRoy23/todoAppOnNestJs

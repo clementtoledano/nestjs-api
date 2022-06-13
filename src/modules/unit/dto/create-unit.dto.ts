@@ -1,7 +1,7 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsNotEmpty } from "class-validator";
-import { CountryCodeEnum } from "../../../shared/enum/country-code.enum";
-import { UnitCategoryEnum } from "../../../shared/enum/unit-category.enum";
+import { CountryCodeEnum } from "../../../constants/country-code.enum";
+import { UnitCategoryEnum } from "../../../constants/unit-category.enum";
 
 export class CreateUnitDto {
 

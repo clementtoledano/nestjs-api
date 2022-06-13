@@ -33,8 +33,8 @@ export default class CreateValue implements Seeder {
                 .values([
                     plainToClass(ValueEntity, {
                         value: 'Rouge',
-                        product: product.id,
-                        filter: filter.id,
+                        product: product?.id,
+                        filter: filter?.id,
                     }),
                 ])
                 .execute();

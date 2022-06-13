@@ -6,7 +6,7 @@ import { UnitEntity } from "../../../modules/unit/entities/unit.entity";
 import { ValueEntity } from "../../../modules/value/entities/value.entity";
 
 @Unique(["name"])
-@Entity('Filter')
+@Entity('filter')
 export class FilterEntity extends BaseEntity {
     @Allow() //si rien de mieux
     @ApiProperty({ example: 'Couleur' })

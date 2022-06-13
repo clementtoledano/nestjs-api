@@ -1,5 +1,5 @@
-import { CountryCodeEnum } from "../../../shared/enum/country-code.enum";
-import { UnitCategoryEnum } from "../../../shared/enum/unit-category.enum";
+import { CountryCodeEnum } from "../../../constants/country-code.enum";
+import { UnitCategoryEnum } from "../../../constants/unit-category.enum";
 
 
 export interface UnitI {

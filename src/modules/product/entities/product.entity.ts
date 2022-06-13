@@ -8,7 +8,7 @@ import { ProductionEntity } from "../../../modules/production/entities/productio
 import { ValueEntity } from "../../../modules/value/entities/value.entity";
 
 @Unique(["name"])
-@Entity('Product')
+@Entity('product')
 export class ProductEntity extends BaseEntity {
     @Allow() //si rien de mieux
     @ApiProperty({ example: 'Délirium Tremens' })
