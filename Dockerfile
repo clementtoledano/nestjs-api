@@ -1,4 +1,4 @@
-FROM node:13-alpine AS development
+FROM node:16.9.1-alpine AS development
 
 #RUN apk upgrade
 

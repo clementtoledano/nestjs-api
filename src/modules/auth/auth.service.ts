@@ -49,7 +49,18 @@ export class AuthService {
         const token = this.generateJwt(user);
 
         return {
-            email: user.email,
+            user: user,
+            ...token,
+        };
+    }
+
+    refreshToken(user: UserI): Promise<LoginStatusI> {
+
+        // generate and sign token
+        const token = this.generateJwt(user);
+
+        return {
+            user: user,
             ...token,
         };
     }

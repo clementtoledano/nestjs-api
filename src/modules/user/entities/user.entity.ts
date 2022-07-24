@@ -24,7 +24,7 @@ export class UserEntity extends BaseEntity {
     }
     @BeforeInsert()
     emailToLowerCase() {
-        this.email = this.email.toLowerCase();
+        this.email = (this.email).toLowerCase();
     }
 }
 

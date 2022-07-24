@@ -61,7 +61,8 @@ export class UserService {
     }
 
     async getByEmail({ email }: any): Promise<UserI> {
-        const user = await this.userRepository.findOne({ email }, { select: ['id', 'email', 'password', 'role', 'status'] });
+        const emailLowercase = email.toLowerCase();
+        const user = await this.userRepository.findOne({ email: emailLowercase }, { select: ['id', 'email', 'password', 'role', 'status'] });
 
         if (!user) {
             throw new NotFoundException('User not found by email');
