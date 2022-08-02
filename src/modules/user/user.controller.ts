@@ -17,7 +17,7 @@ import { UserService } from './user.service';
 
 
 @ApiTags('user')
-@Controller('users')
+@Controller('user')
 export class UserController {
     constructor(
         private readonly userService: UserService,
@@ -39,6 +39,14 @@ export class UserController {
         return user;
     }
 
+    @Post('email')
+    public async findByEmail(@Body() { email }: { email: string }) {
+        const user = await this.userService.getByEmail({ email: email });
+        if (!user) {
+            throw new NotFoundException(`User with email ${email} was not found`);
+        }
+        return user;
+    }
 
     @UsePipes(new ValidationPipe())
     @Post()

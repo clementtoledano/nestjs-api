@@ -66,6 +66,7 @@ export class AppModule {
       .exclude(
         { path: '/api/auth/register', method: RequestMethod.POST },
         { path: '/api/auth/login', method: RequestMethod.POST },
+        { path: '/api/user/email', method: RequestMethod.POST },
         '/api/admin/(.*)',
       )
       .forRoutes('')
