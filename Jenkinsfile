@@ -18,9 +18,6 @@ pipeline {
             steps {
                 bat 'npm install --force'
             }
-        }
-
-        stage('Test') {
             steps {
                 bat 'git fetch --all'
                 bat 'git checkout master'
