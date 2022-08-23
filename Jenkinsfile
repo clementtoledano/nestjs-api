@@ -5,9 +5,7 @@ pipeline {
         stage('Build') {
             steps {
                 // Get some code from a GitHub repository
-                git url: 'https://github.com/clementtoledano/nestjs-api.git',
-                // credentialsId: 'jenkins_ssh_key',
-                branch: dev
+                git url: 'https://github.com/clementtoledano/nestjs-api.git', branch: 'dev'
             // Change file permisson
             // sh 'chmod +x -R ./scripts'
             // Run shell script
@@ -18,38 +16,26 @@ pipeline {
             steps {
                 bat 'npm install --force'
             }
+        }
+
+        stage('Test') {
             steps {
-                bat 'git fetch --all'
-                bat 'git checkout master'
-            }
-            steps {
-                bat 'git pull'
-            }
-            steps {
-                bat 'git merge dev'
-            }
-            steps {
-                bat 'git push origin dev'
+                bat 'npm test'
             }
         }
 
-        // stage('Test') {
-        //     steps {
-        //         bat 'npm test'
-        //     }
-        // }
-
-    // stage('toProd') {
-    //     steps {
-    //         script {
-    //             if ('SUCCESS' != currentBuild.getPreviousBuild().getResult()) {
-    //                 bat git checkout master
-    //                 bat git pull
-    //                 bat git merge dev
-    //                 bat git push origin dev
-    //             }
-    //         }
-    //     }
-    // }
+        stage('toProd') {
+            steps {
+                script {
+                    if ('SUCCESS' != currentBuild.getPreviousBuild().getResult()) {
+                        bat 'git status'
+                        // bat 'git checkout master'
+                        // bat 'git pull'
+                        // bat 'git merge dev'
+                        // bat 'git push origin dev'
+                    }
+                }
+            }
+        }
     }
 }
