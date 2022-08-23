@@ -14,13 +14,13 @@ pipeline {
         }
         stage('Install dependencies') {
             steps {
-                sh 'npm install --force'
+                bat 'npm install --force'
             }
         }
 
         stage('Test') {
             steps {
-                sh 'npm test'
+                bat 'npm test'
             }
         }
     }
