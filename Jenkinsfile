@@ -20,16 +20,16 @@ pipeline {
 
         stage('Test') {
             steps {
-                bat git checkout master
+                bat 'git checkout master'
             }
             steps {
-                bat git pull
+                bat 'git pull'
             }
             steps {
-                bat git merge dev
+                bat 'git merge dev'
             }
             steps {
-                bat git push origin dev
+                bat 'git push origin dev'
             }
         }
 
