@@ -31,10 +31,10 @@ pipeline {
                 script {
                     if ('SUCCESS' != currentBuild.getPreviousBuild().getResult()) {
                         bat 'git fetch origin'
-                        bat 'git checkout main'
-                        bat 'git pull'
-                        bat 'git merge dev'
-                        bat 'git push origin dev'
+                        // bat 'git checkout main'
+                        // bat 'git pull'
+                        // bat 'git merge dev'
+                        // bat 'git push origin dev'
                     }
                 }
             }
