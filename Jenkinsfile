@@ -23,5 +23,20 @@ pipeline {
                 bat 'npm test'
             }
         }
+
+        stage('toProd') {
+            steps {
+                try {
+                    if ('SUCCESS' != currentBuild.getPreviousBuild().getResult()) {
+                        echo 'WAZAAAAAAAAA'
+                    }
+            } catch (e) {
+                    if ('FAILURE' != currentBuild.getPreviousBuild().getResult()) {
+                        echo 'BOOOOOOOOOOOOOOO'
+                    }
+                    throw e
+                }
+            }
+        }
     }
 }
