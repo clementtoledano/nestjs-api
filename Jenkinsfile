@@ -14,11 +14,11 @@ pipeline {
             // sh './scripts/primo.sh'
             }
         }
-        // stage('Install dependencies') {
-        //     steps {
-        //         bat 'npm install --force'
-        //     }
-        // }
+        stage('Install dependencies') {
+            steps {
+                bat 'npm install --force'
+            }
+        }
 
         // stage('Test') {
         //     steps {
