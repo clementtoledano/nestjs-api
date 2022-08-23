@@ -7,7 +7,7 @@ pipeline {
                 // Get some code from a GitHub repository
                 git url: 'https://github.com/clementtoledano/nestjs-api.git',
                 credentialsId: 'jenkins',
-    branch: develop
+                branch: develop
             // Change file permisson
             // sh 'chmod +x -R ./scripts'
             // Run shell script
@@ -20,11 +20,11 @@ pipeline {
             }
         }
 
-        stage('Test') {
-            steps {
-                bat 'npm test'
-            }
-        }
+        // stage('Test') {
+        //     steps {
+        //         bat 'npm test'
+        //     }
+        // }
 
         stage('toProd') {
             steps {
