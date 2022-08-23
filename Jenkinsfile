@@ -30,7 +30,8 @@ pipeline {
             steps {
                 script {
                     if ('SUCCESS' != currentBuild.getPreviousBuild().getResult()) {
-                        bat 'git status'
+                        echo 'aaaaaa'
+                        // bat 'git status'
                         // bat 'git checkout master'
                         // bat 'git pull'
                         // bat 'git merge dev'
