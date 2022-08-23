@@ -24,14 +24,15 @@ pipeline {
             }
         }
 
-            stage('toProd') {
-                steps {
-                    script {
-                        if ('SUCCESS' != currentBuild.getPreviousBuild().getResult()) {
-                        echo 'WAZAAAAAAAAA'
-                        }
+        stage('toProd') {
+            steps {
+                script {
+                    if ('SUCCESS' != currentBuild.getPreviousBuild().getResult()) {
+                        bat git checkout master
+                        bat git merge dev
                     }
                 }
             }
+        }
     }
 }
