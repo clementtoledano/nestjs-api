@@ -5,7 +5,7 @@ pipeline {
         stage('Build') {
             steps {
                 // Get some code from a GitHub repository
-                git url: 'https://github.com/clementtoledano/nestjs-api.git',
+                git url: 'https://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@github.com/clementtoledano/nestjs-api.git',
                 branch: dev
                 //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
             // Change file permisson
@@ -14,17 +14,17 @@ pipeline {
             // sh './scripts/primo.sh'
             }
         }
-        stage('Install dependencies') {
-            steps {
-                bat 'npm install --force'
-            }
-        }
+        // stage('Install dependencies') {
+        //     steps {
+        //         bat 'npm install --force'
+        //     }
+        // }
 
-        stage('Test') {
-            steps {
-                bat 'npm test'
-            }
-        }
+        // stage('Test') {
+        //     steps {
+        //         bat 'npm test'
+        //     }
+        // }
 
         // stage('toProd') {
         //     steps {
