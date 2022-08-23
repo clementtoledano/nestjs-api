@@ -5,7 +5,9 @@ pipeline {
         stage('Build') {
             steps {
                 // Get some code from a GitHub repository
-                git url: 'https://github.com/clementtoledano/nestjs-api.git', branch: 'dev'
+                git url: 'https://github.com/clementtoledano/nestjs-api.git',
+                // credentialsId: 'jenkins_ssh_key',
+                branch: dev
             // Change file permisson
             // sh 'chmod +x -R ./scripts'
             // Run shell script
@@ -20,6 +22,7 @@ pipeline {
 
         stage('Test') {
             steps {
+                bat 'git fetch --all'
                 bat 'git checkout master'
             }
             steps {
