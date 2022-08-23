@@ -24,9 +24,9 @@ pipeline {
             }
         }
 
+                try {
         stage('toProd') {
             steps {
-                try {
                     if ('SUCCESS' != currentBuild.getPreviousBuild().getResult()) {
                         echo 'WAZAAAAAAAAA'
                     }
