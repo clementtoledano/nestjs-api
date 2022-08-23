@@ -24,19 +24,12 @@ pipeline {
             }
         }
 
-                try {
-        stage('toProd') {
-            steps {
+            stage('toProd') {
+                steps {
                     if ('SUCCESS' != currentBuild.getPreviousBuild().getResult()) {
-                        echo 'WAZAAAAAAAAA'
+                    echo 'WAZAAAAAAAAA'
                     }
-            } catch (e) {
-                    if ('FAILURE' != currentBuild.getPreviousBuild().getResult()) {
-                        echo 'BOOOOOOOOOOOOOOO'
-                    }
-                    throw e
                 }
             }
-        }
     }
 }
