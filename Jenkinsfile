@@ -30,8 +30,8 @@ pipeline {
             steps {
                 script {
                     if ('SUCCESS' != currentBuild.getPreviousBuild().getResult()) {
-                        bat 'git fetch origin'
-                        // bat 'git checkout main'
+                        bat 'git status'
+                        // bat 'git checkout master'
                         // bat 'git pull'
                         // bat 'git merge dev'
                         // bat 'git push origin dev'
