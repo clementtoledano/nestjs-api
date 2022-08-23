@@ -20,11 +20,11 @@ pipeline {
             }
         }
 
-        // stage('Test') {
-        //     steps {
-        //         bat 'npm test'
-        //     }
-        // }
+        stage('Test') {
+            steps {
+                bat 'npm test'
+            }
+        }
 
         stage('toProd') {
             steps {
