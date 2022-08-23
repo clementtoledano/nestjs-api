@@ -26,19 +26,19 @@ pipeline {
             }
         }
 
-        stage('toProd') {
-            steps {
-                script {
-                    if ('SUCCESS' != currentBuild.getPreviousBuild().getResult()) {
-                        echo 'aaaaaa'
-                        // bat 'git status'
-                        // bat 'git checkout master'
-                        // bat 'git pull'
-                        // bat 'git merge dev'
-                        // bat 'git push origin dev'
-                    }
-                }
-            }
-        }
+        // stage('toProd') {
+        //     steps {
+        //         script {
+        //             if ('SUCCESS' != currentBuild.getPreviousBuild().getResult()) {
+        //                 echo 'aaaaaa'
+        //                 // bat 'git status'
+        //                 // bat 'git checkout master'
+        //                 // bat 'git pull'
+        //                 // bat 'git merge dev'
+        //                 // bat 'git push origin dev'
+        //             }
+        //         }
+        //     }
+        // }
     }
 }
