@@ -5,9 +5,9 @@ pipeline {
         stage('Build') {
             steps {
                 // Get some code from a GitHub repository
-                git url: 'https://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@github.com/clementtoledano/nestjs-api.git',
+                git url: 'https://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d@github.com/clementtoledano/nestjs-api.git',
                 branch: dev
-                //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
+                //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
             // Change file permisson
             // sh 'chmod +x -R ./scripts'
             // Run shell script
