@@ -20,19 +20,36 @@ pipeline {
 
         stage('Test') {
             steps {
-                bat 'npm test'
+                bat git checkout master
+            }
+            steps {
+                bat git pull
+            }
+            steps {
+                bat git merge dev
+            }
+            steps {
+                bat git push origin dev
             }
         }
 
-        stage('toProd') {
-            steps {
-                script {
-                    if ('SUCCESS' != currentBuild.getPreviousBuild().getResult()) {
-                        bat git checkout master
-                        bat git merge dev
-                    }
-                }
-            }
-        }
+        // stage('Test') {
+        //     steps {
+        //         bat 'npm test'
+        //     }
+        // }
+
+    // stage('toProd') {
+    //     steps {
+    //         script {
+    //             if ('SUCCESS' != currentBuild.getPreviousBuild().getResult()) {
+    //                 bat git checkout master
+    //                 bat git pull
+    //                 bat git merge dev
+    //                 bat git push origin dev
+    //             }
+    //         }
+    //     }
+    // }
     }
 }
