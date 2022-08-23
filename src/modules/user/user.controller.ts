@@ -43,7 +43,7 @@ export class UserController {
     public async findByEmail(@Body() { email }: { email: string }) {
         const user = await this.userService.getByEmail({ email: email });
         if (!user) {
-            throw new NotFoundException(`User with email ${email} was not found`);
+            return null
         }
         return user;
     }

@@ -2,12 +2,12 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { Repository } from 'typeorm';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { UserEntity, UserRepositoryFake } from '../entities/user.entity';
-import { RoleEnum } from '../../../shared/enum/role.enum';
-import { StatusEnum } from '../../../shared/enum/status.enum';
 import { UserService } from '../user.service';
 import { AuthService } from '../../auth/auth.service';
 
 import dataMock from '../../../shared/mock/user.mock';
+import { RoleEnum } from '../../../constants/role.enum';
+import { StatusEnum } from '../../../constants/status.enum';
 
 describe('GetUserService', () => {
     let service: UserService;

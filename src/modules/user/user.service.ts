@@ -64,10 +64,6 @@ export class UserService {
         const emailLowercase = email.toLowerCase();
         const user = await this.userRepository.findOne({ email: emailLowercase }, { select: ['id', 'email', 'password', 'role', 'status'] });
 
-        if (!user) {
-            throw new NotFoundException('User not found by email');
-        }
-
         return user;
 
 

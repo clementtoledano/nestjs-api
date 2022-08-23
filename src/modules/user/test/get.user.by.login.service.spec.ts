@@ -45,7 +45,7 @@ describe('UserService', () => {
                 await service.getByLogin({ email: '', password: '' });
             } catch (e) {
                 expect(e).toBeInstanceOf(NotFoundException);
-                expect(e.message).toBe('User not found by email');
+                expect(e.message).toBe('User not found');
             }
         })
 
