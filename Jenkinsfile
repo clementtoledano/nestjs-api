@@ -3,8 +3,12 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo 'foo'
-                echo 'bar'
+                // Get some code from a GitHub repository
+                git url: 'https://github.com/clementtoledano/nestjs-api', branch: 'dev'
+                // Change file permisson
+                // sh "chmod +x -R ./jenkins"
+                // Run shell script
+                sh 'npm run test'
             }
         }
     }
